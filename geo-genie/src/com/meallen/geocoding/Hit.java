@@ -1,7 +1,5 @@
 package com.meallen.geocoding;
 
-import java.util.Map;
-
 public class Hit {
 	String id;
 	StringCoordinate query;

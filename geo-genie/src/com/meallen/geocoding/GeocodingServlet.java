@@ -115,6 +115,16 @@ public class GeocodingServlet extends HttpServlet {
 				buildURL("http", "maps.googleapis.com",
 						"/maps/api/geocode/json", parms), parms);
 		String ip = getIP(buildURL("http", "ip.jsontest.com", null, null));
+		
+		
+		Map<String, String> weatherParms = new HashMap<String, String>();
+		weatherParms.put("lat", lat.toString());
+		weatherParms.put("lon", lon.toString());
+		weatherParms.put("cnt", "1");
+		//parms.put("sensor", "false");
+		
+		Map<String, String> weather = getWeather(buildURL("http", "api.openweathermap.org",
+				"/data/2.1/find/city", weatherParms));
 
 //		Map<String, String> resp = new HashMap<String, Object>();
 //		resp.put("address", address);
@@ -127,8 +137,8 @@ public class GeocodingServlet extends HttpServlet {
 		resp.setAddress(address);
 		resp.setSourceIp(ip);
 		resp.setTime((new Date()).getTime());
-		resp.setTemp(default_temp);
-		resp.setWeather(default_weather);
+		resp.setTemp(weather.get("temp"));
+		resp.setWeather(weather.get("weather"));
 		hit.setResponse(resp);
 		
 		
@@ -154,8 +164,26 @@ public class GeocodingServlet extends HttpServlet {
 		Map<String,String> map = new JSONDeserializer<HashMap<String,String>>().deserialize(entity, HashMap.class);		
 		return map.get("ip");
 	}
+	
+	private Map<String, String> getWeather(URI uri) {
+		Map<String, String> weather = new HashMap<String, String>();
+		String entity;	
+		entity = getResponseBody(uri);
+		WeatherHit hit = new JSONDeserializer<WeatherHit>().deserialize(entity, WeatherHit.class);
+		weather.put("temp", covertToFahrenheit(hit.getList().get(0).getMain().getTemp()).toString());  //TODO convert this from Kelvin to Fahrenheit
+		weather.put("weather", hit.getList().get(0).getWeather().get(0).getDescription());
+		
+		System.out.println(covertToFahrenheit(hit.getList().get(0).getMain().getTemp()).toString());
+		System.out.println(hit.getList().get(0).getWeather().get(0).getDescription());
+		
+		return weather;
+	}
+	
+	public Double covertToFahrenheit(Double kTemp) {
+		return (9/5)*(kTemp - 273) + 32;
+	}
 
-	private String getAddress(URI uri, Map<String, String> parms) {
+	private String getAddress(URI uri, Map<String, String> parms) { //TODO remove parms is used?
 		String entity;	
 		entity = getResponseBody(uri);
 		GoogleHit hit = new JSONDeserializer<GoogleHit>().deserialize(entity, GoogleHit.class);
