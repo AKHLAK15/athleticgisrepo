@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,6 +26,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
+
 /**
  * Servlet implementation class GeocodingServlet
  */
@@ -35,7 +41,9 @@ public class GeocodingServlet extends HttpServlet {
 	private static final Double min_latitude = -90.0;
 	private static final Double max_longitude = 180.0;
 	private static final Double max_latitude = 90.0;
-
+	private static final String default_temp = "44.01";
+	private static final String default_weather = "Sky is Clear";
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -57,8 +65,9 @@ public class GeocodingServlet extends HttpServlet {
 				default_longitude, min_longitude, max_longitude);
 		String id = getId();
 		// String address = "Sermersooq, Greenland";
-		String sourceIp = "138.49.37.14";
+		//String sourceIp = "138.49.37.14";
 		// long time = 1381175833227L;
+		
 
 		PrintWriter out = response.getWriter();
 
@@ -80,36 +89,77 @@ public class GeocodingServlet extends HttpServlet {
 		Map<String, String> parms = new HashMap<String, String>();
 		parms.put("latlng", lat + "," + lon);
 		parms.put("sensor", "false");
+		
+		Hit hit = new Hit();
+		hit.setId(id);
+		
+		//Map<String, String> query = new HashMap<String, String>();
+		//query.put("lat", lat.toString());
+		//query.put("lon", lon.toString());
+		//hit.setQuery(query);
+		//Coordinate coord = new Coordinate();
+		//coord.setLat(lat);
+		//coord.setLon(lon);
+		
+		//maybe call StringCoordinate Query
+		StringCoordinate coord = new StringCoordinate();
+		coord.setLat(lat.toString());
+		coord.setLon(lon.toString());
+		hit.setQuery(coord);
+	
+		
 
 		// URI uri;
 
 		String address = getAddress(
 				buildURL("http", "maps.googleapis.com",
 						"/maps/api/geocode/json", parms), parms);
+		String ip = getIP(buildURL("http", "ip.jsontest.com", null, null));
 
-		// try {
-		// //System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-		// //out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-		// } catch (Exception e) {
-		// //e.printStackTrace();
-		// } finally {
-		// //out.close();
-		// }
+//		Map<String, String> resp = new HashMap<String, Object>();
+//		resp.put("address", address);
+//		resp.put("sourceIp", ip);
+//		resp.put("time", (new Date()).getTime());
+//		hit.setResponse(resp);
+//		
+		
+		Response resp = new Response();
+		resp.setAddress(address);
+		resp.setSourceIp(ip);
+		resp.setTime((new Date()).getTime());
+		resp.setTemp(default_temp);
+		resp.setWeather(default_weather);
+		hit.setResponse(resp);
+		
+		
+		
+		 try {
+			// String hit1 = new JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
+				List<Hit> hits = new ArrayList<Hit>();
+				hits.add(hit);
+				System.out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
+				out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
+		 //System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+		 //out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+		 } catch (Exception e) {
+		 e.printStackTrace();
+		 } finally {
+		 out.close();
+		 }
+	}
+	
+	private String getIP(URI uri) {
+		String entity;
+		entity = getResponseBody(uri);
+		Map<String,String> map = new JSONDeserializer<HashMap<String,String>>().deserialize(entity, HashMap.class);		
+		return map.get("ip");
 	}
 
 	private String getAddress(URI uri, Map<String, String> parms) {
-		String entity;
-		String address = null;
-
-		// uri = buildURL("http","maps.googleapis.com",
-		// "/maps/api/geocode/json", parms);
+		String entity;	
 		entity = getResponseBody(uri);
-		System.out.println(entity);
-		
-		
-		
-		
-		return address;
+		GoogleHit hit = new JSONDeserializer<GoogleHit>().deserialize(entity, GoogleHit.class);
+		return hit.getResults().get(0).getFormatted_address();
 	}
 
 	private String getResponseBody(URI uri) {
@@ -140,9 +190,15 @@ public class GeocodingServlet extends HttpServlet {
 
 		URI uri = null;
 		URIBuilder uriBuilder = new URIBuilder().setScheme(scheme)
-				.setHost(host).setPath(path);
-		for (String key : parms.keySet()) {
-			uriBuilder.setParameter(key, parms.get(key));
+				.setHost(host);
+		if(path != null) {
+			uriBuilder.setPath(path);
+		}
+		
+		if(parms != null) {
+			for (String key : parms.keySet()) {
+				uriBuilder.setParameter(key, parms.get(key));
+			}
 		}
 		try {
 			uri = uriBuilder.build();
@@ -172,13 +228,15 @@ public class GeocodingServlet extends HttpServlet {
 	 */
 	private Double parseCoordinate(String coord_String, Double default_coord,
 			Double min, Double max) {
-		Double coordinate;
-		try {
-			coordinate = Double.parseDouble(coord_String);
-		} catch (NumberFormatException nfe) {
-			coordinate = default_coord;
+		Double coordinate = null;
+		if(coord_String != null) {
+			try {
+				coordinate = Double.parseDouble(coord_String);
+			} catch (NumberFormatException nfe) {
+				coordinate = default_coord;
+			}
 		}
-		if (coordinate > max || coordinate < min) {
+		if (coord_String == null || coordinate > max || coordinate < min) {
 			coordinate = default_coord;
 		}
 		return coordinate;
