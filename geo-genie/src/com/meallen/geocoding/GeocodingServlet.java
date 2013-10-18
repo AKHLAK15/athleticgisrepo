@@ -63,46 +63,24 @@ public class GeocodingServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// set up list here check number, don't all additions if already 10
 
-		List<Hit> hits = null; // = (List<Hit>)session.getAttribute("hitList");
-
+		PrintWriter out = response.getWriter();
 		session = request.getSession(true);
-		// remember to stop at 10 items
+
+		List<Hit> hits = null;
 		if (session.getAttribute("hitList") != null) {
 			hits = (ArrayList<Hit>) (session.getAttribute("hitList"));
 		} else {
 			hits = new ArrayList<Hit>();
 		}
-		PrintWriter out = response.getWriter();
-		if (hits.size() < 10) {
 
-			System.out.println("In Get");
+		// stop at 10 items
+		if (hits.size() < 10) {
 			Double lat = parseCoordinate(request.getParameter("lat"),
 					default_latitude, min_latitude, max_latitude);
 			Double lon = parseCoordinate(request.getParameter("lon"),
 					default_longitude, min_longitude, max_longitude);
 			String id = getId();
-			// String address = "Sermersooq, Greenland";
-			// String sourceIp = "138.49.37.14";
-			// long time = 1381175833227L;
-
-			
-
-			// System.out.println("[");
-			// System.out.println("{");
-			// System.out.println("\"id\": " + "\"" + id + "\",");
-			// System.out.println("\"query\": {");
-			// System.out.println("\"lat\": \"" + lat + "\",");
-			// System.out.println("\"lon\": \"" + lon + "\"},");
-			//
-			// System.out.println("\"response\": {");
-			// System.out.println("\"address\": \"" + address + "\",");
-			// System.out.println("\"sourceIp\": \"" + sourceIp + "\",");
-			// System.out.println("\"time\": " + time + "},");
-			//
-			// System.out.println("}");
-			// System.out.println("]");
 
 			Map<String, String> parms = new HashMap<String, String>();
 			parms.put("latlng", lat + "," + lon);
@@ -110,44 +88,23 @@ public class GeocodingServlet extends HttpServlet {
 
 			Hit hit = new Hit();
 			hit.setId(id);
-
-			// Map<String, String> query = new HashMap<String, String>();
-			// query.put("lat", lat.toString());
-			// query.put("lon", lon.toString());
-			// hit.setQuery(query);
-			// Coordinate coord = new Coordinate();
-			// coord.setLat(lat);
-			// coord.setLon(lon);
-
-			// maybe call StringCoordinate Query
 			StringCoordinate coord = new StringCoordinate();
 			coord.setLat(lat.toString());
 			coord.setLon(lon.toString());
 			hit.setQuery(coord);
-
-			// URI uri;
-
 			String address = getAddress(
 					buildURL("http", "maps.googleapis.com",
-							"/maps/api/geocode/json", parms), parms);
+							"/maps/api/geocode/json", parms));
 			String ip = getIP(buildURL("http", "ip.jsontest.com", null, null));
 
 			Map<String, String> weatherParms = new HashMap<String, String>();
 			weatherParms.put("lat", lat.toString());
 			weatherParms.put("lon", lon.toString());
 			weatherParms.put("cnt", "1");
-			// parms.put("sensor", "false");
 
 			Map<String, String> weather = getWeather(buildURL("http",
 					"api.openweathermap.org", "/data/2.1/find/city",
 					weatherParms));
-
-			// Map<String, String> resp = new HashMap<String, Object>();
-			// resp.put("address", address);
-			// resp.put("sourceIp", ip);
-			// resp.put("time", (new Date()).getTime());
-			// hit.setResponse(resp);
-			//
 
 			Response resp = new Response();
 			resp.setAddress(address);
@@ -156,43 +113,25 @@ public class GeocodingServlet extends HttpServlet {
 			resp.setTemp(weather.get("temp"));
 			resp.setWeather(weather.get("weather"));
 			hit.setResponse(resp);
-
-//			List<Hit> hits = null; // =
-//									// (List<Hit>)session.getAttribute("hitList");
-//
-//			session = request.getSession(true);
-//			// remember to stop at 10 items
-//			if (session.getAttribute("hitList") != null) {
-//				hits = (ArrayList<Hit>) (session.getAttribute("hitList"));
-//			} else {
-//				hits = new ArrayList<Hit>();
-//			}
-			// /TODO add this somewhere check size
-			// /if(hits.size()<10) {
 			hits.add(hit);
 		}
-			try {
-				// String hit1 = new
-				// JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
-				// hits = new ArrayList<Hit>();
-				
-				//System.out.println(new JSONSerializer().exclude("*.class")
-				//		.serialize(hits)); // .replace("\\", "")
-				out.println(new JSONSerializer().exclude("*.class").serialize(
-						hits)); // .replace("\\",
-								// "")
-				// System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-				// out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				out.close();
-			}
-		
+		try {
+			out.println(new JSONSerializer().exclude("*.class").serialize(hits));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			out.close();
+		}
 		session.setAttribute("hitList", hits);
 
 	}
 
+	/**
+	 * This method gets ip from service at http://ip.jsontest.com.
+	 * 
+	 * @param uri
+	 * @return
+	 */
 	private String getIP(URI uri) {
 		String entity;
 		entity = getResponseBody(uri);
@@ -201,53 +140,78 @@ public class GeocodingServlet extends HttpServlet {
 		return map.get("ip");
 	}
 
+	/**
+	 * This method gets weather information from service at example
+	 * http://api.openweathermap.org/data/2.1/find/city?lat=43&lon=-83&cnt=1
+	 * Returns null for temp and weather if distance is greater than 50 from observation.
+	 * 
+	 * @param uri
+	 * @return
+	 */
 	private Map<String, String> getWeather(URI uri) {
 		Map<String, String> weather = new HashMap<String, String>();
 		String entity;
 		entity = getResponseBody(uri);
 		WeatherHit hit = new JSONDeserializer<WeatherHit>().deserialize(entity,
 				WeatherHit.class);
-		weather.put("temp",
-				covertToFahrenheit(hit.getList().get(0).getMain().getTemp())
-						.toString()); // TODO convert this from Kelvin to
-										// Fahrenheit
-		weather.put("weather", hit.getList().get(0).getWeather().get(0)
-				.getDescription());
 
-		System.out.println(covertToFahrenheit(
-				hit.getList().get(0).getMain().getTemp()).toString());
-		System.out.println(hit.getList().get(0).getWeather().get(0)
-				.getDescription());
+		Double distanceFromObservation = hit.getList().get(0).getDistance();
+		String temp = null;
+		String weatherDesc = null;
+
+		// Check whether distance from observation is less than 50. If it is set
+		// the weather and temp otherwise leave null.
+		if (distanceFromObservation < 50.0) {
+			temp = covertToFahrenheit(hit.getList().get(0).getMain().getTemp())
+					.toString();
+			weatherDesc = hit.getList().get(0).getWeather().get(0)
+					.getDescription();
+		}
+		weather.put("temp", temp);
+		weather.put("weather", weatherDesc);
 
 		return weather;
 	}
 
+	/**
+	 * Converts Kelvin reading to Fahrenheit
+	 * 
+	 * @param kTemp
+	 * @return
+	 */
 	public Double covertToFahrenheit(Double kTemp) {
 		return (9 / 5) * (kTemp - 273) + 32;
 	}
 
-	private String getAddress(URI uri, Map<String, String> parms) { // TODO
-																	// remove
-																	// parms is
-																	// used?
+	/**
+	 * Uses service at http://maps.googleapis.com/maps/api/geocode/json?latlng=43.81,-91&sensor=false for example
+	 * To get location information based on latitude and longitude.
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	private String getAddress(URI uri) {																	
 		String entity;
 		entity = getResponseBody(uri);
 		GoogleHit hit = new JSONDeserializer<GoogleHit>().deserialize(entity,
 				GoogleHit.class);
-		System.out.println(hit.getResults());
-
-		System.out.println(uri);
 
 		List<Result> results = hit.getResults();
 		String address = null;
+		
+		//if no results leave address = null otherwise set it.
 		if (!results.isEmpty()) {
 			address = results.get(0).getFormatted_address();
 		}
-
-		// TODO check at get 0 if empty return default.
 		return address;
 	}
 
+	/**
+	 * Gets the body from http response at given uri.
+	 * 
+	 * @param uri
+	 * @return
+	 */
 	private String getResponseBody(URI uri) {
 		String responseBody = null;
 		CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -262,18 +226,25 @@ public class GeocodingServlet extends HttpServlet {
 			}
 			response.close();
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return responseBody;
 	}
 
+	/**
+	 * Creates url based on scheme, host, path, and query parameters.
+	 * 
+	 * @param scheme
+	 * @param host
+	 * @param path
+	 * @param parms
+	 * @return
+	 */
 	private URI buildURL(String scheme, String host, String path,
 			Map<String, String> parms) {
-
+		
 		URI uri = null;
 		URIBuilder uriBuilder = new URIBuilder().setScheme(scheme)
 				.setHost(host);
@@ -289,7 +260,6 @@ public class GeocodingServlet extends HttpServlet {
 		try {
 			uri = uriBuilder.build();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return uri;
@@ -301,26 +271,13 @@ public class GeocodingServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("In Post");
-
-		System.out.println(request.getParameter("id"));
+		
 		session = request.getSession();
 		List<Hit> hits = (ArrayList<Hit>) (session.getAttribute("hitList"));
 		Hit deleteHit = new Hit();
 		deleteHit.setId(request.getParameter("id").toString());
 
-		System.out.println(request.getParameter("id"));
-		// System.out.println(request.getParameter("id"));
-
-		// hits.remove(deleteHit);
-		// hits.remove(0);
-		// for(Hit h : hits) {
-		// if(h.getId().equals(request.getParameter("id").toString())) {
-		// hits.remove(h);
-		// }
-		// }
-
+		//remove hit with id in query parameter
 		for (int i = 0; i < hits.size(); i++) {
 			if (hits.get(i).getId()
 					.equals(request.getParameter("id").toString())) {
@@ -328,20 +285,10 @@ public class GeocodingServlet extends HttpServlet {
 			}
 		}
 
-		System.out.println("List Size " + hits.size());
 		session.setAttribute("hitList", hits);
 		PrintWriter out = response.getWriter();
 		try {
-			// String hit1 = new
-			// JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
-			// hits = new ArrayList<Hit>();
-			// hits.add(hit);
-			System.out.println(new JSONSerializer().exclude("*.class")
-					.serialize(hits)); // .replace("\\", "")
-			out.println(new JSONSerializer().exclude("*.class").serialize(hits)); // .replace("\\",
-																					// "")
-			// System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-			// out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+			out.println(new JSONSerializer().exclude("*.class").serialize(hits)); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -351,6 +298,9 @@ public class GeocodingServlet extends HttpServlet {
 	}
 
 	/**
+	 * Parses double to get coordinate. If parse fails coordinate will be a default coordinate.
+	 * Also if coordinate is not valid latitude or longitude, then coordinate will be default coordinate.
+	 * 
 	 * @param coord_String
 	 * @param default_coord
 	 * @param min
@@ -373,6 +323,12 @@ public class GeocodingServlet extends HttpServlet {
 		return coordinate;
 	}
 
+	
+	/**
+	 * Generates unique id across all users across time.
+	 * 
+	 * @return
+	 */
 	private String getId() {
 		return UUID.randomUUID().toString();
 	}
