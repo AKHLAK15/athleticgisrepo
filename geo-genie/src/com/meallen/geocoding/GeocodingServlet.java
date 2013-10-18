@@ -32,6 +32,9 @@ import flexjson.JSONSerializer;
 
 /**
  * Servlet implementation class GeocodingServlet
+ * 
+ * @author Matthew Allen
+ * @version October 18, 2013
  */
 @WebServlet(description = "This is a Geocoding Servlet", urlPatterns = { "/latlon" })
 public class GeocodingServlet extends HttpServlet {
@@ -44,16 +47,14 @@ public class GeocodingServlet extends HttpServlet {
 	private static final Double max_latitude = 90.0;
 	private static final String default_temp = "44.01";
 	private static final String default_weather = "Sky is Clear";
-	private static final String default_address = "1702-1720 King Street, La Crosse, WI 54601, USA"; 
-	
+	private static final String default_address = "1702-1720 King Street, La Crosse, WI 54601, USA";
 	private HttpSession session;
-	
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public GeocodingServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -62,160 +63,188 @@ public class GeocodingServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("In Get");
-		Double lat = parseCoordinate(request.getParameter("lat"),
-				default_latitude, min_latitude, max_latitude);
-		Double lon = parseCoordinate(request.getParameter("lon"),
-				default_longitude, min_longitude, max_longitude);
-		String id = getId();
-		// String address = "Sermersooq, Greenland";
-		//String sourceIp = "138.49.37.14";
-		// long time = 1381175833227L;
-		
+		// set up list here check number, don't all additions if already 10
 
-		PrintWriter out = response.getWriter();
-
-		// System.out.println("[");
-		// System.out.println("{");
-		// System.out.println("\"id\": " + "\"" + id + "\",");
-		// System.out.println("\"query\": {");
-		// System.out.println("\"lat\": \"" + lat + "\",");
-		// System.out.println("\"lon\": \"" + lon + "\"},");
-		//
-		// System.out.println("\"response\": {");
-		// System.out.println("\"address\": \"" + address + "\",");
-		// System.out.println("\"sourceIp\": \"" + sourceIp + "\",");
-		// System.out.println("\"time\": " + time + "},");
-		//
-		// System.out.println("}");
-		// System.out.println("]");
-
-		Map<String, String> parms = new HashMap<String, String>();
-		parms.put("latlng", lat + "," + lon);
-		parms.put("sensor", "false");
-		
-		Hit hit = new Hit();
-		hit.setId(id);
-		
-		//Map<String, String> query = new HashMap<String, String>();
-		//query.put("lat", lat.toString());
-		//query.put("lon", lon.toString());
-		//hit.setQuery(query);
-		//Coordinate coord = new Coordinate();
-		//coord.setLat(lat);
-		//coord.setLon(lon);
-		
-		//maybe call StringCoordinate Query
-		StringCoordinate coord = new StringCoordinate();
-		coord.setLat(lat.toString());
-		coord.setLon(lon.toString());
-		hit.setQuery(coord);
-	
-		
-
-		// URI uri;
-
-		String address = getAddress(
-				buildURL("http", "maps.googleapis.com",
-						"/maps/api/geocode/json", parms), parms);
-		String ip = getIP(buildURL("http", "ip.jsontest.com", null, null));
-		
-		
-		Map<String, String> weatherParms = new HashMap<String, String>();
-		weatherParms.put("lat", lat.toString());
-		weatherParms.put("lon", lon.toString());
-		weatherParms.put("cnt", "1");
-		//parms.put("sensor", "false");
-		
-		Map<String, String> weather = getWeather(buildURL("http", "api.openweathermap.org",
-				"/data/2.1/find/city", weatherParms));
-
-//		Map<String, String> resp = new HashMap<String, Object>();
-//		resp.put("address", address);
-//		resp.put("sourceIp", ip);
-//		resp.put("time", (new Date()).getTime());
-//		hit.setResponse(resp);
-//		
-		
-		Response resp = new Response();
-		resp.setAddress(address);
-		resp.setSourceIp(ip);
-		resp.setTime((new Date()).getTime());
-		resp.setTemp(weather.get("temp"));
-		resp.setWeather(weather.get("weather"));
-		hit.setResponse(resp);
-		
 		List<Hit> hits = null; // = (List<Hit>)session.getAttribute("hitList");
-		
+
 		session = request.getSession(true);
-		//remember to stop at 10 items
-		if(session.getAttribute("hitList") != null) {
-			hits = (ArrayList<Hit>)(session.getAttribute("hitList"));
+		// remember to stop at 10 items
+		if (session.getAttribute("hitList") != null) {
+			hits = (ArrayList<Hit>) (session.getAttribute("hitList"));
 		} else {
 			hits = new ArrayList<Hit>();
 		}
-		 ///TODO add this somewhere check size
-		///if(hits.size()<10) {
-		 
+		PrintWriter out = response.getWriter();
+		if (hits.size() < 10) {
+
+			System.out.println("In Get");
+			Double lat = parseCoordinate(request.getParameter("lat"),
+					default_latitude, min_latitude, max_latitude);
+			Double lon = parseCoordinate(request.getParameter("lon"),
+					default_longitude, min_longitude, max_longitude);
+			String id = getId();
+			// String address = "Sermersooq, Greenland";
+			// String sourceIp = "138.49.37.14";
+			// long time = 1381175833227L;
+
 			
+
+			// System.out.println("[");
+			// System.out.println("{");
+			// System.out.println("\"id\": " + "\"" + id + "\",");
+			// System.out.println("\"query\": {");
+			// System.out.println("\"lat\": \"" + lat + "\",");
+			// System.out.println("\"lon\": \"" + lon + "\"},");
+			//
+			// System.out.println("\"response\": {");
+			// System.out.println("\"address\": \"" + address + "\",");
+			// System.out.println("\"sourceIp\": \"" + sourceIp + "\",");
+			// System.out.println("\"time\": " + time + "},");
+			//
+			// System.out.println("}");
+			// System.out.println("]");
+
+			Map<String, String> parms = new HashMap<String, String>();
+			parms.put("latlng", lat + "," + lon);
+			parms.put("sensor", "false");
+
+			Hit hit = new Hit();
+			hit.setId(id);
+
+			// Map<String, String> query = new HashMap<String, String>();
+			// query.put("lat", lat.toString());
+			// query.put("lon", lon.toString());
+			// hit.setQuery(query);
+			// Coordinate coord = new Coordinate();
+			// coord.setLat(lat);
+			// coord.setLon(lon);
+
+			// maybe call StringCoordinate Query
+			StringCoordinate coord = new StringCoordinate();
+			coord.setLat(lat.toString());
+			coord.setLon(lon.toString());
+			hit.setQuery(coord);
+
+			// URI uri;
+
+			String address = getAddress(
+					buildURL("http", "maps.googleapis.com",
+							"/maps/api/geocode/json", parms), parms);
+			String ip = getIP(buildURL("http", "ip.jsontest.com", null, null));
+
+			Map<String, String> weatherParms = new HashMap<String, String>();
+			weatherParms.put("lat", lat.toString());
+			weatherParms.put("lon", lon.toString());
+			weatherParms.put("cnt", "1");
+			// parms.put("sensor", "false");
+
+			Map<String, String> weather = getWeather(buildURL("http",
+					"api.openweathermap.org", "/data/2.1/find/city",
+					weatherParms));
+
+			// Map<String, String> resp = new HashMap<String, Object>();
+			// resp.put("address", address);
+			// resp.put("sourceIp", ip);
+			// resp.put("time", (new Date()).getTime());
+			// hit.setResponse(resp);
+			//
+
+			Response resp = new Response();
+			resp.setAddress(address);
+			resp.setSourceIp(ip);
+			resp.setTime((new Date()).getTime());
+			resp.setTemp(weather.get("temp"));
+			resp.setWeather(weather.get("weather"));
+			hit.setResponse(resp);
+
+//			List<Hit> hits = null; // =
+//									// (List<Hit>)session.getAttribute("hitList");
+//
+//			session = request.getSession(true);
+//			// remember to stop at 10 items
+//			if (session.getAttribute("hitList") != null) {
+//				hits = (ArrayList<Hit>) (session.getAttribute("hitList"));
+//			} else {
+//				hits = new ArrayList<Hit>();
+//			}
+			// /TODO add this somewhere check size
+			// /if(hits.size()<10) {
+			hits.add(hit);
+		}
 			try {
-			// String hit1 = new JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
-				//hits = new ArrayList<Hit>();
-				hits.add(hit);
-				System.out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
-				out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
-		 //System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-		 //out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-		 } catch (Exception e) {
-		 e.printStackTrace();
-		 } finally {
-		 out.close();
-		 }
-		 
-		 session.setAttribute("hitList", hits);
-		 
+				// String hit1 = new
+				// JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
+				// hits = new ArrayList<Hit>();
+				
+				//System.out.println(new JSONSerializer().exclude("*.class")
+				//		.serialize(hits)); // .replace("\\", "")
+				out.println(new JSONSerializer().exclude("*.class").serialize(
+						hits)); // .replace("\\",
+								// "")
+				// System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+				// out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				out.close();
+			}
+		
+		session.setAttribute("hitList", hits);
+
 	}
-	
+
 	private String getIP(URI uri) {
 		String entity;
 		entity = getResponseBody(uri);
-		Map<String,String> map = new JSONDeserializer<HashMap<String,String>>().deserialize(entity, HashMap.class);		
+		Map<String, String> map = new JSONDeserializer<HashMap<String, String>>()
+				.deserialize(entity, HashMap.class);
 		return map.get("ip");
 	}
-	
+
 	private Map<String, String> getWeather(URI uri) {
 		Map<String, String> weather = new HashMap<String, String>();
-		String entity;	
+		String entity;
 		entity = getResponseBody(uri);
-		WeatherHit hit = new JSONDeserializer<WeatherHit>().deserialize(entity, WeatherHit.class);
-		weather.put("temp", covertToFahrenheit(hit.getList().get(0).getMain().getTemp()).toString());  //TODO convert this from Kelvin to Fahrenheit
-		weather.put("weather", hit.getList().get(0).getWeather().get(0).getDescription());
-		
-		System.out.println(covertToFahrenheit(hit.getList().get(0).getMain().getTemp()).toString());
-		System.out.println(hit.getList().get(0).getWeather().get(0).getDescription());
-		
+		WeatherHit hit = new JSONDeserializer<WeatherHit>().deserialize(entity,
+				WeatherHit.class);
+		weather.put("temp",
+				covertToFahrenheit(hit.getList().get(0).getMain().getTemp())
+						.toString()); // TODO convert this from Kelvin to
+										// Fahrenheit
+		weather.put("weather", hit.getList().get(0).getWeather().get(0)
+				.getDescription());
+
+		System.out.println(covertToFahrenheit(
+				hit.getList().get(0).getMain().getTemp()).toString());
+		System.out.println(hit.getList().get(0).getWeather().get(0)
+				.getDescription());
+
 		return weather;
 	}
-	
+
 	public Double covertToFahrenheit(Double kTemp) {
-		return (9/5)*(kTemp - 273) + 32;
+		return (9 / 5) * (kTemp - 273) + 32;
 	}
 
-	private String getAddress(URI uri, Map<String, String> parms) { //TODO remove parms is used?
-		String entity;	
+	private String getAddress(URI uri, Map<String, String> parms) { // TODO
+																	// remove
+																	// parms is
+																	// used?
+		String entity;
 		entity = getResponseBody(uri);
-		GoogleHit hit = new JSONDeserializer<GoogleHit>().deserialize(entity, GoogleHit.class);
+		GoogleHit hit = new JSONDeserializer<GoogleHit>().deserialize(entity,
+				GoogleHit.class);
 		System.out.println(hit.getResults());
-		
+
 		System.out.println(uri);
-		
+
 		List<Result> results = hit.getResults();
-		String address = default_address;
-		if(!results.isEmpty()) {
+		String address = null;
+		if (!results.isEmpty()) {
 			address = results.get(0).getFormatted_address();
 		}
-		
-		//TODO check at get 0 if empty return default.
+
+		// TODO check at get 0 if empty return default.
 		return address;
 	}
 
@@ -224,7 +253,7 @@ public class GeocodingServlet extends HttpServlet {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet(uri.toString());
 		CloseableHttpResponse response;
-		
+
 		try {
 			response = httpclient.execute(httpget);
 			HttpEntity entity = response.getEntity();
@@ -238,7 +267,7 @@ public class GeocodingServlet extends HttpServlet {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		return responseBody;
 	}
 
@@ -248,11 +277,11 @@ public class GeocodingServlet extends HttpServlet {
 		URI uri = null;
 		URIBuilder uriBuilder = new URIBuilder().setScheme(scheme)
 				.setHost(host);
-		if(path != null) {
+		if (path != null) {
 			uriBuilder.setPath(path);
 		}
-		
-		if(parms != null) {
+
+		if (parms != null) {
 			for (String key : parms.keySet()) {
 				uriBuilder.setParameter(key, parms.get(key));
 			}
@@ -274,48 +303,51 @@ public class GeocodingServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("In Post");
-		
+
 		System.out.println(request.getParameter("id"));
 		session = request.getSession();
-		List<Hit> hits = (ArrayList<Hit>)(session.getAttribute("hitList"));
+		List<Hit> hits = (ArrayList<Hit>) (session.getAttribute("hitList"));
 		Hit deleteHit = new Hit();
 		deleteHit.setId(request.getParameter("id").toString());
-		
+
 		System.out.println(request.getParameter("id"));
-		//System.out.println(request.getParameter("id"));
-		
-		//hits.remove(deleteHit);
-		//hits.remove(0);
-//		for(Hit h : hits) {
-//			if(h.getId().equals(request.getParameter("id").toString())) {
-//				hits.remove(h);
-//			}
-//		}
-		
-		for(int i = 0; i < hits.size(); i++) {
-			if(hits.get(i).getId().equals(request.getParameter("id").toString())) {
+		// System.out.println(request.getParameter("id"));
+
+		// hits.remove(deleteHit);
+		// hits.remove(0);
+		// for(Hit h : hits) {
+		// if(h.getId().equals(request.getParameter("id").toString())) {
+		// hits.remove(h);
+		// }
+		// }
+
+		for (int i = 0; i < hits.size(); i++) {
+			if (hits.get(i).getId()
+					.equals(request.getParameter("id").toString())) {
 				hits.remove(i);
 			}
 		}
-		
-		
+
 		System.out.println("List Size " + hits.size());
 		session.setAttribute("hitList", hits);
 		PrintWriter out = response.getWriter();
 		try {
-			// String hit1 = new JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
-				//hits = new ArrayList<Hit>();
-				//hits.add(hit);
-				System.out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
-				out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
-		 //System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-		 //out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
-		 } catch (Exception e) {
-		 e.printStackTrace();
-		 } finally {
-		 out.close();
-		 }
-		
+			// String hit1 = new
+			// JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
+			// hits = new ArrayList<Hit>();
+			// hits.add(hit);
+			System.out.println(new JSONSerializer().exclude("*.class")
+					.serialize(hits)); // .replace("\\", "")
+			out.println(new JSONSerializer().exclude("*.class").serialize(hits)); // .replace("\\",
+																					// "")
+			// System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+			// out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			out.close();
+		}
+
 	}
 
 	/**
@@ -328,7 +360,7 @@ public class GeocodingServlet extends HttpServlet {
 	private Double parseCoordinate(String coord_String, Double default_coord,
 			Double min, Double max) {
 		Double coordinate = null;
-		if(coord_String != null) {
+		if (coord_String != null) {
 			try {
 				coordinate = Double.parseDouble(coord_String);
 			} catch (NumberFormatException nfe) {
