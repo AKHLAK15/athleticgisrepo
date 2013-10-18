@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -43,6 +44,8 @@ public class GeocodingServlet extends HttpServlet {
 	private static final Double max_latitude = 90.0;
 	private static final String default_temp = "44.01";
 	private static final String default_weather = "Sky is Clear";
+	
+	private HttpSession session;
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -141,11 +144,19 @@ public class GeocodingServlet extends HttpServlet {
 		resp.setWeather(weather.get("weather"));
 		hit.setResponse(resp);
 		
+		List<Hit> hits = null; // = (List<Hit>)session.getAttribute("hitList");
 		
+		session = request.getSession(true);
+		//remember to stop at 10 items
+		if(session.getAttribute("hitList") != null) {
+			hits = (List<Hit>)(session.getAttribute("hitList"));
+		} else {
+			hits = new ArrayList<Hit>();
+		}
 		
 		 try {
 			// String hit1 = new JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
-				List<Hit> hits = new ArrayList<Hit>();
+				//hits = new ArrayList<Hit>();
 				hits.add(hit);
 				System.out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
 				out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
@@ -156,6 +167,9 @@ public class GeocodingServlet extends HttpServlet {
 		 } finally {
 		 out.close();
 		 }
+		 
+		 session.setAttribute("hitList", hits);
+		 
 	}
 	
 	private String getIP(URI uri) {
@@ -187,6 +201,9 @@ public class GeocodingServlet extends HttpServlet {
 		String entity;	
 		entity = getResponseBody(uri);
 		GoogleHit hit = new JSONDeserializer<GoogleHit>().deserialize(entity, GoogleHit.class);
+		System.out.println(hit.getResults());
+		
+		//TODO check at get 0 if empty return default.
 		return hit.getResults().get(0).getFormatted_address();
 	}
 
