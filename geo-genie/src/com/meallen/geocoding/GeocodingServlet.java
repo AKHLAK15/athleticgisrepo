@@ -44,6 +44,7 @@ public class GeocodingServlet extends HttpServlet {
 	private static final Double max_latitude = 90.0;
 	private static final String default_temp = "44.01";
 	private static final String default_weather = "Sky is Clear";
+	private static final String default_address = "1702-1720 King Street, La Crosse, WI 54601, USA"; 
 	
 	private HttpSession session;
 	
@@ -149,12 +150,15 @@ public class GeocodingServlet extends HttpServlet {
 		session = request.getSession(true);
 		//remember to stop at 10 items
 		if(session.getAttribute("hitList") != null) {
-			hits = (List<Hit>)(session.getAttribute("hitList"));
+			hits = (ArrayList<Hit>)(session.getAttribute("hitList"));
 		} else {
 			hits = new ArrayList<Hit>();
 		}
-		
-		 try {
+		 ///TODO add this somewhere check size
+		///if(hits.size()<10) {
+		 
+			
+			try {
 			// String hit1 = new JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
 				//hits = new ArrayList<Hit>();
 				hits.add(hit);
@@ -203,8 +207,16 @@ public class GeocodingServlet extends HttpServlet {
 		GoogleHit hit = new JSONDeserializer<GoogleHit>().deserialize(entity, GoogleHit.class);
 		System.out.println(hit.getResults());
 		
+		System.out.println(uri);
+		
+		List<Result> results = hit.getResults();
+		String address = default_address;
+		if(!results.isEmpty()) {
+			address = results.get(0).getFormatted_address();
+		}
+		
 		//TODO check at get 0 if empty return default.
-		return hit.getResults().get(0).getFormatted_address();
+		return address;
 	}
 
 	private String getResponseBody(URI uri) {
@@ -262,6 +274,48 @@ public class GeocodingServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("In Post");
+		
+		System.out.println(request.getParameter("id"));
+		session = request.getSession();
+		List<Hit> hits = (ArrayList<Hit>)(session.getAttribute("hitList"));
+		Hit deleteHit = new Hit();
+		deleteHit.setId(request.getParameter("id").toString());
+		
+		System.out.println(request.getParameter("id"));
+		//System.out.println(request.getParameter("id"));
+		
+		//hits.remove(deleteHit);
+		//hits.remove(0);
+//		for(Hit h : hits) {
+//			if(h.getId().equals(request.getParameter("id").toString())) {
+//				hits.remove(h);
+//			}
+//		}
+		
+		for(int i = 0; i < hits.size(); i++) {
+			if(hits.get(i).getId().equals(request.getParameter("id").toString())) {
+				hits.remove(i);
+			}
+		}
+		
+		
+		System.out.println("List Size " + hits.size());
+		session.setAttribute("hitList", hits);
+		PrintWriter out = response.getWriter();
+		try {
+			// String hit1 = new JSONSerializer().exclude("*.class").include("query").include("response").serialize(hit);
+				//hits = new ArrayList<Hit>();
+				//hits.add(hit);
+				System.out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
+				out.println(new JSONSerializer().exclude("*.class").serialize(hits)); //.replace("\\", "")
+		 //System.out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+		 //out.println("[{\"id\":\"d1b3eb46-3833-451f-b927-592de14cce18\",\"query\":{\"lat\":\"43.81\",\"lon\":\"-91.23\"},\"response\":{\"address\":\"1702-1720 King Street, La Crosse, WI 54601, USA\",\"sourceIp\":\"138.49.196.103\",\"temp\":\"60.80\",\"time\":1381794724959,\"weather\":\"Sky is Clear\"}}]");
+		 } catch (Exception e) {
+		 e.printStackTrace();
+		 } finally {
+		 out.close();
+		 }
+		
 	}
 
 	/**

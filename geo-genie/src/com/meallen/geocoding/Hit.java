@@ -23,4 +23,8 @@ public class Hit {
 	public void setResponse(Response response) {
 		this.response = response;
 	}
+	
+	public boolean equals(Object obj) {
+		return id == ((Hit)(obj)).getId();
+	}
 }
