@@ -10,7 +10,6 @@
 	<http pattern="/resources/css/**" security="none"/>
 	<http pattern="/resources/js/**" security="none"/>
 	<http pattern="/resources/img/**" security="none"/>
-	<http pattern="/rfRes/*" security="none"/>
 	
 	<global-method-security secured-annotations="enabled">
 	</global-method-security>
