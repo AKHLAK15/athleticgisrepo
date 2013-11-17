@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Dashboard</title>
+
+
+
+
+</h:head>
+<ui:composition template="/template/layout.xhtml">
+	<ui:define name="scripts">
+		<h:head>
+			<link href="resources/css/athleticgis.css" rel="stylesheet" />
+			<link href="resources/css/bootstrap.css" rel="stylesheet" />
+			<!-- Custom styles for this template -->
+			<link href="resources/css/signin.css" rel="stylesheet" />
+		</h:head>
+	</ui:define>
+
+	<ui:define name="content">
+
+
+
+
+		<h:form>
+			<h:panelGrid styleClass="panelGridCenter" width="100%" style="padding-bottom:50px;">
+				<h:panelGrid border="0" columns="2" width="100%"
+					style="width : 100%; height : 33px; background-color: #D3D3D3"
+					columnClasses="richPanelHeaderCol1,richPanelHeaderCol2">
+					<h:outputText value="Activities" />
+					<h:commandButton action="upload" value="Upload Activity"></h:commandButton>
+				</h:panelGrid>
+
+
+				<h:dataTable value="#{dashboardBean.activities}" var="activity"
+					rows="0" styleClass="order-table activitiesTable" 
+					headerClass="order-table-header"
+					rowClasses="order-table-odd-row,order-table-even-row">
+
+
+
+
+					<h:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+						<f:facet name="header">User Name</f:facet>
+						<h:outputText value="#{activity.userName}" />
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Name</f:facet>
+						<h:link outcome="activity" value="#{activity.name}">
+							<f:param name="activityId" value="#{activity.activityId}" />
+						</h:link>
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Date</f:facet>
+						<h:outputText value="#{activity.date}" />
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Delete</f:facet>
+						<h:commandLink value="Delete" action="#{activityModel.removeActivity}">
+							<f:param name="activityId" value="#{activity.activityId}" />
+						</h:commandLink>
+
+					</h:column>
+
+
+				</h:dataTable>
+			</h:panelGrid>
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
+
+
+</html>

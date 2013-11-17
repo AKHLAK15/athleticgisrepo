@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+<ui:composition template="/template/layout.xhtml">
+	<ui:define name="scripts">
+		<h:head>
+			<title>Activity</title>
+			<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+			<style type="text/css">
+#map-canvas {
+	height: 300px
+}
+</style>
+			<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApDXRNzq6eGqWKUbufj3MzhJ4P0RF0Ghw&amp;sensor=false">
+				
+			</script>
+			<h:outputScript>
+				function initialize() {
+				  var mapOptions = {
+				    zoom: 12,
+				    center: #{activityBean.center},
+				    mapTypeId: google.maps.MapTypeId.TERRAIN
+				  };
+				
+				  var map = new google.maps.Map(document.getElementById('map-canvas'),
+				      mapOptions);
+				
+				  var activityCoordinates = [#{activityBean.coordinates}];
+				  var activity = new google.maps.Polyline({
+				    path: activityCoordinates,
+				    geodesic: true,
+				    strokeColor: '#FF0000',
+				    strokeOpacity: 1.0,
+				    strokeWeight: 2
+				  });
+				  activity.setMap(map);
+				}
+				google.maps.event.addDomListener(window, 'load', initialize);
+			</h:outputScript>
+
+
+
+			
+			  <link href="resources/css/bootstrap.css" rel="stylesheet" />
+
+			<!-- Custom styles for this template -->
+			<link href="resources/css/signin.css" rel="stylesheet" />
+
+			<link href="resources/css/athleticgis.css" rel="stylesheet" />
+
+		</h:head>
+	</ui:define>
+	<ui:define name="content">
+		<h:form>
+
+			<h:panelGrid styleClass="panelGridCenter" width="100%"
+				style="padding-bottom:50px;">
+				<h:panelGrid border="0" columns="2" width="100%"
+					style="width : 100%; height : 33px; background-color: #D3D3D3"
+					columnClasses="richPanelHeaderCol1,richPanelHeaderCol2">
+					<h:outputText value="Activities" />
+					<h:commandButton value="Return to Dashboard"
+						action="dashboard?faces-redirect=true"></h:commandButton>
+				</h:panelGrid>
+
+
+
+				<h:panelGrid styleClass="panelGridCenter">
+					<h:panelGrid columns="3" styleClass="panelGridCenter" width="50%">
+						<h:inputText binding="#{activityBean.inputTextActivityName}" style="width : 400px"
+							size="40"></h:inputText>
+							
+						<h:commandButton value="Update" 
+							action="#{activityBean.updateActivity}">
+							<f:param name="activityId"
+								value="#{request.getParameter('activityId')}" />
+						</h:commandButton>
+						<h:commandButton value="Delete"
+							action="#{activityBean.removeActivity}">
+							<f:param name="activityId"
+								value="#{request.getParameter('activityId')}" />
+						</h:commandButton>
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<div id="map-canvas" />
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
