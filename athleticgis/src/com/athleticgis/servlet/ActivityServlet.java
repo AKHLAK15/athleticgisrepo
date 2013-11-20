@@ -31,7 +31,7 @@ public class ActivityServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String idStr = request.getParameter("activityId");
 		System.out.println(idStr);
-		out.println("{\"coordinates\": [{ \"lat\":43.810909 , \"lng\":-91.256091 }, { \"lat\":43.822571 , \"lng\":-91.243666 }, { \"lat\":43.812151 , \"lng\":-91.257099 }]}");
+		out.println("[{ \"lat\":43.810909 , \"lng\":-91.256091 }, { \"lat\":43.822571 , \"lng\":-91.243666 }, { \"lat\":43.812151 , \"lng\":-91.257099 }]");
 		out.close();
 	}
 
