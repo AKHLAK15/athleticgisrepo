@@ -22,6 +22,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.alternativevision.gpx.GPXParser;
+import org.alternativevision.gpx.beans.GPX;
+import org.alternativevision.gpx.beans.Track;
+import org.alternativevision.gpx.beans.TrackPoint;
+import org.alternativevision.gpx.beans.Waypoint;
+import org.xml.sax.SAXException;
 
 import com.athleticgis.model.Activity;
 import com.athleticgis.model.ActivityModel;
@@ -62,7 +70,7 @@ public class UploadBean implements Serializable {
 		this.activityName = activityName;
 	}
 
-	public String upload() {
+	public String upload() throws ParserConfigurationException, SAXException {
 		
 		
 		System.out.println("call upload...");      
@@ -77,13 +85,23 @@ public class UploadBean implements Serializable {
             
             InputStream in=file.getInputStream();
             //System.out.println(in.read(results)); 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null) {
-				System.out.println(sCurrentLine);
-			}
+//            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+//            String sCurrentLine;
+//            while ((sCurrentLine = br.readLine()) != null) {
+//				System.out.println(sCurrentLine);
+//			}
+            GPXParser p = new GPXParser();
+            GPX gpx = p.parseGPX(in);
+            
+            
+            for(Track t : gpx.getTracks()) {
+            	for(Waypoint  wp : t.getTrackPoints()) 
+            		System.out.println(wp.getLatitude() + "," + wp.getLongitude());
+            }
+            
+            
             in.close();
-            br.close();
+            //br.close();
         } catch (IOException ex) {
            ex.printStackTrace();
         }
