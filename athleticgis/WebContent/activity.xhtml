@@ -3,9 +3,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
-
-
 <ui:composition template="/template/layout.xhtml">
 	<ui:define name="scripts">
 		<h:head>
@@ -18,73 +15,53 @@
 			</style>
 			<script type="text/javascript"
 				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApDXRNzq6eGqWKUbufj3MzhJ4P0RF0Ghw&amp;sensor=false">
-				
 			</script>
-			<script	src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-			<script	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+			<script
+				src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+			<script
+				src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+			<script src="resources/js/athleticgis.js"></script>
 			<h:outputScript>
-                                function getJSON() {
-                                
-                                	$.ajax({
-									  dataType: "json",
-									  url: "http://localhost:8080/athleticgis/ActivityServlet?activityId=" + #{request.getParameter('activityId')},
-									  success: initialize
-									});	
-                                }
-                                
-                                function initialize(data) {
+				function getMapData() {
+			        $.ajax({
+			           dataType: "json",
+			           url: "http://localhost:8080/athleticgis/ActivityServlet?activityId=#{request.getParameter('activityId')}",
+			           success: buildMap
+			         });        
+				}
                                 
                                 
-                                //test
-                              	var activityCoordinates = new Array();
-                                
-                                var coordinates = eval(data);
-                                //console.log(coordinates);
-                                for(var i = 0; i &lt; coordinates.length; i+=1) {
-                                	var row = coordinates[i];
-                                	//console.log(row);   
-    								var longitude = row.lng;
-   									//console.log(row.lat);
-   									var latitude = row.lat;
-   									//console.log(row.lng);
-									activityCoordinates[i] = new google.maps.LatLng(latitude,longitude);
-									//console.log(activityCoordinates[i]);
-                                }
-                                //console.log(activityCoordinates);
-                                
-                                //test
-                                  var mapOptions = {
-                                    zoom: 12,
-                                    center: #{activityBean.center},
-                                    mapTypeId: google.maps.MapTypeId.TERRAIN
-                                  };
-                                
-                                  var map = new google.maps.Map(document.getElementById('map-canvas'),
-                                      mapOptions);
-                                
-                                  
-                                  var activity = new google.maps.Polyline({
-                                    path: activityCoordinates,
-                                    geodesic: true,
-                                    strokeColor: '#FF0000',
-                                    strokeOpacity: 1.0,
-                                    strokeWeight: 2
-                                  });
-                                  activity.setMap(map);
-                                }
-                                google.maps.event.addDomListener(window, 'load', getJSON);
-                        </h:outputScript>
-
-
-
-
+				function buildMap(data) {
+		      		var activityCoordinates = new Array();
+					var coordinates = eval(data);
+					
+					for(var i = 0; i &lt; coordinates.length; i+=1) {
+				    	var row = coordinates[i];   
+                        var longitude = row.lon;
+                        var latitude = row.lat;
+                        activityCoordinates[i] = new google.maps.LatLng(latitude,longitude);    
+					}
+				  	var mapOptions = {
+				    	zoom: 12,
+				    	center: #{activityBean.center},
+				    	mapTypeId: google.maps.MapTypeId.TERRAIN
+				  	};
+				  	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				  	var activity = new google.maps.Polyline({
+				    path: activityCoordinates,
+				    geodesic: true,
+				    strokeColor: '#FF0000',
+				    strokeOpacity: 1.0,
+				    strokeWeight: 2
+				});
+				  	activity.setMap(map);
+				}
+				
+                google.maps.event.addDomListener(window, 'load', getMapData);
+			</h:outputScript>
 			<link href="resources/css/bootstrap.css" rel="stylesheet" />
-
-			<!-- Custom styles for this template -->
 			<link href="resources/css/signin.css" rel="stylesheet" />
-
 			<link href="resources/css/athleticgis.css" rel="stylesheet" />
-
 		</h:head>
 	</ui:define>
 	<ui:define name="content">

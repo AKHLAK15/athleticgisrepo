@@ -1,13 +1,16 @@
 package com.athleticgis;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,7 +27,7 @@ import com.athleticgis.model.Activity;
 import com.athleticgis.model.ActivityModel;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class UploadBean implements Serializable {
 	private static final long serialVersionUID = -290191374294978569L;
 	private Part file;
@@ -62,7 +65,30 @@ public class UploadBean implements Serializable {
 	public String upload() {
 		
 		
-		return null;
+		System.out.println("call upload...");      
+		System.out.println("content-type: " + file.getContentType());
+		System.out.println("filename: " + file.getName());
+		System.out.println("size: " + file.getSize());
+        try {
+           // byte[] results=new byte[(int)file.getSize()];
+//            for(int i = 0; i < results.length; i++) {
+//            	System.out.print(results[i]);
+//            }
+            
+            InputStream in=file.getInputStream();
+            //System.out.println(in.read(results)); 
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) {
+				System.out.println(sCurrentLine);
+			}
+            in.close();
+            br.close();
+        } catch (IOException ex) {
+           ex.printStackTrace();
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Uploaded!"));
+        return null;
 	}
 	
 	public String save() {
