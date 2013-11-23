@@ -12,13 +12,13 @@ import com.athleticgis.model.util.EntityManagerUtil;
 
 public class UserDao implements Dao<User>, Serializable {
 	private static final long serialVersionUID = -5745737809950101174L;
-	EntityManager em = EntityManagerUtil.getEntityManagerFactory()
-			.createEntityManager();
+	
 	
 	// this is for development, remove in production
 	public void initializeDB() {
 		
-
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
@@ -102,8 +102,10 @@ public class UserDao implements Dao<User>, Serializable {
 	@Override
 	public User findById(Long id) {
 		// TODO Auto-generated method stub
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		//EntityTransaction transaction = em.getTransaction();
+		//transaction.begin();
 		User u = em.find(User.class, id);
 		em.close();
 		return u;
