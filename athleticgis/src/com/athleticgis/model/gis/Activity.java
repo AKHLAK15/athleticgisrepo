@@ -1,5 +1,6 @@
 package com.athleticgis.model.gis;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,7 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Activity {
+public class Activity implements Serializable {
+	private static final long serialVersionUID = -1601934048327683904L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)

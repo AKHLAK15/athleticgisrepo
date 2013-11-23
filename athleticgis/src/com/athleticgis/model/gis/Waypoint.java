@@ -1,5 +1,6 @@
 package com.athleticgis.model.gis;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,10 +15,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Waypoint {
+public class Waypoint implements Serializable {
+	private static final long serialVersionUID = 6667575305066831369L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(updatable = false, nullable = false)
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
