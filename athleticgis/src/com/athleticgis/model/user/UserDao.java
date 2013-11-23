@@ -6,9 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import com.athleticgis.model.Dao;
 import com.athleticgis.model.util.EntityManagerUtil;
 
-public class UserDao {
+public class UserDao implements Dao<User> {
 
 	// this is for development, remove in production
 	public void initializeDB() {
@@ -81,5 +82,23 @@ public class UserDao {
 		System.out.println("Generated ID is: " + object1.getId());
 
 		em.close();
+	}
+
+	@Override
+	public void persist(User entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(User entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public User findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
