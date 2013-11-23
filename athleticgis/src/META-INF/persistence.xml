@@ -8,6 +8,9 @@
             Persistence unit for athleticgis
         </description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>com.athleticgis.model.gis.Waypoint</class>
+        <class>com.athleticgis.model.gis.Activity</class>
+        <class>com.athleticgis.model.Users</class>
  
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

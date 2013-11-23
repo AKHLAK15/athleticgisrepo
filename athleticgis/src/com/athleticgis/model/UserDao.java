@@ -10,36 +10,48 @@ import com.athleticgis.model.util.EntityManagerUtil;
 
 /**
  * @author matthew
- *
+ * 
  */
-public class UserDao  {
-	private EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
-	
+public class UserDao implements Dao<Users> {
+	private EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+			.createEntityManager();
+
 	public void persist(Users u) {
 		EntityTransaction transaction = em.getTransaction();
-	      transaction.begin();
+		transaction.begin();
 
-	      Users object0 = new Users();
-	      //Users object1 = new Users();
-	      
-	      object0.setEnabled(1);
-	      object0.setUser_id(7L);
-	      object0.setUsername("matt");
-	      object0.setPassword("password");
+		Users object0 = new Users();
+		// Users object1 = new Users();
 
-	      // IDs start as null
-	     // assertEquals((Long) null, object0.getUser_id());
-	     // assertEquals((Long) null, object1.getUser_id());
+		object0.setEnabled(1);
+		object0.setUser_id(7L);
+		object0.setUsername("matt");
+		object0.setPassword("password");
 
-	      em.persist(object0);
-	      //em.persist(object1);
+		// IDs start as null
+		// assertEquals((Long) null, object0.getUser_id());
+		// assertEquals((Long) null, object1.getUser_id());
 
-	      transaction.commit();
+		em.persist(object0);
+		// em.persist(object1);
 
-	      System.out.println("Object 0");
-	      System.out.println("Generated ID is: " + object0.getUser_id());
-		
-		
+		transaction.commit();
+
+		System.out.println("Object 0");
+		System.out.println("Generated ID is: " + object0.getUser_id());
+
 		em.close();
+	}
+
+	@Override
+	public void remove(Users entity) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Users findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
