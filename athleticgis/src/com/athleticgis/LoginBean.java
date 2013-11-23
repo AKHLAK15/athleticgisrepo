@@ -12,6 +12,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import com.athleticgis.model.user.UserDao;
+
 @ManagedBean
 @RequestScoped
 public class LoginBean {
@@ -19,6 +21,8 @@ public class LoginBean {
 	
 
 	// This is the action method called when the user clicks the "login" button
+	UserDao userDao = new UserDao();
+	
 	public String doLogin() throws IOException, ServletException {
 		ExternalContext context = FacesContext.getCurrentInstance()
 				.getExternalContext();
@@ -30,6 +34,13 @@ public class LoginBean {
 		FacesContext.getCurrentInstance().responseComplete();
 		// It's OK to return null here because Faces is just going to exit.
 		return "null";
+	}
+	
+	//for development
+	public String setupDB() {
+		userDao.initializeDB();
+		
+		return null;
 	}
 
 }
