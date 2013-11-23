@@ -1,5 +1,6 @@
 package com.athleticgis.model.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +10,14 @@ import javax.persistence.EntityTransaction;
 import com.athleticgis.model.Dao;
 import com.athleticgis.model.util.EntityManagerUtil;
 
-public class UserDao implements Dao<User> {
-
+public class UserDao implements Dao<User>, Serializable {
+	private static final long serialVersionUID = -5745737809950101174L;
+	EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+			.createEntityManager();
+	
 	// this is for development, remove in production
 	public void initializeDB() {
-		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
-				.createEntityManager();
+		
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
@@ -76,10 +79,10 @@ public class UserDao implements Dao<User> {
 		//em.persist(user);
 
 		System.out.println("Object 0");
-		System.out.println("Generated ID is: " + object0.getId());
+		System.out.println("Generated ID is: " + object0.getUser_id());
 		
 		System.out.println("Object 1");
-		System.out.println("Generated ID is: " + object1.getId());
+		System.out.println("Generated ID is: " + object1.getUser_id());
 
 		em.close();
 	}
@@ -99,6 +102,10 @@ public class UserDao implements Dao<User> {
 	@Override
 	public User findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		User u = em.find(User.class, id);
+		em.close();
+		return u;
 	}
 }

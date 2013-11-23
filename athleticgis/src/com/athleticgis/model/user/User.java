@@ -19,7 +19,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
-	private Long id;
+	private Long user_id;
 
 	@OneToMany(mappedBy = "user")
 	private List<UserRole> userroles;
@@ -33,18 +33,20 @@ public class User implements Serializable {
 	@Column
 	private int enabled;
 
+	
+
 	/**
-	 * @return the id
+	 * @return the user_id
 	 */
-	public Long getId() {
-		return id;
+	public Long getUser_id() {
+		return user_id;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param user_id the user_id to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 
 	/**

@@ -1,43 +1,29 @@
 package com.athleticgis;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.alternativevision.gpx.GPXParser;
 import org.alternativevision.gpx.beans.GPX;
-import org.alternativevision.gpx.beans.Track;
-import org.alternativevision.gpx.beans.TrackPoint;
-import org.alternativevision.gpx.beans.Waypoint;
 import org.xml.sax.SAXException;
 
 import com.athleticgis.model.Activity;
 import com.athleticgis.model.ActivityModel;
-import com.athleticgis.model.UserDao;
-import com.athleticgis.model.Users;
-import com.athleticgis.model.util.EntityManagerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -50,7 +36,7 @@ public class UploadBean implements Serializable {
     private UserInfoBean userInfoBean;
 	@ManagedProperty(value = "#{activityModel}")
     private ActivityModel activityModel;
-	private UserDao userDao = new UserDao();
+	//private UserDao userDao = new UserDao();
 	
 	public ActivityModel getActivityModel() {
 		return activityModel;
@@ -82,7 +68,7 @@ public class UploadBean implements Serializable {
 
 	public String upload() throws ParserConfigurationException, SAXException {
 		//testHibernate();
-		userDao.persist(new Users());
+		//userDao.persist(new Users());
 		System.out.println("call upload...");      
 		System.out.println("content-type: " + file.getContentType());
 		System.out.println("filename: " + file.getName());

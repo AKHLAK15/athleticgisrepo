@@ -2,12 +2,17 @@ package com.athleticgis.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.athleticgis.model.AthleticgisSessionFacade;
+import com.athleticgis.model.user.User;
 
 /**
  * Servlet implementation class ActivityServlet
@@ -28,6 +33,19 @@ public class ActivityServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		HttpSession session = ((HttpServletRequest) request).getSession(false);
+//		AthleticgisSessionFacade athleticgisSessionFacade = (session != null) ? (AthleticgisSessionFacade) session.getAttribute("athleticgisSessionFacade") : null;
+//		System.out.println(athleticgisSessionFacade.testFromServlet());
+//		Enumeration se = session.getAttributeNames();
+//		while (se.hasMoreElements()){
+//	         System.out.println(se.nextElement().toString()); 
+//	      }
+		AthleticgisSessionFacade athleticgisSessionFacade = new AthleticgisSessionFacade();
+		User u = athleticgisSessionFacade.findUserById(1L);
+		System.out.println("Hello: " + u.getUsername());
+		
+		
+		
 		PrintWriter out = response.getWriter();
 		String idStr = request.getParameter("activityId");
 		//System.out.println(idStr);

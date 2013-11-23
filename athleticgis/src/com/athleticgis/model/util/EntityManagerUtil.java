@@ -1,11 +1,15 @@
 package com.athleticgis.model.util;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class EntityManagerUtil
+public class EntityManagerUtil implements Serializable
 {
-   public static EntityManagerFactory getEntityManagerFactory()
+	private static final long serialVersionUID = 8475609181382197029L;
+
+public static EntityManagerFactory getEntityManagerFactory()
    {
       EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.athleticgis.jpa");
       return emf;

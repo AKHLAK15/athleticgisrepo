@@ -11,6 +11,7 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import com.athleticgis.model.ActivityModel;
+import com.athleticgis.model.AthleticgisSessionFacade;
 
 @ManagedBean
 @RequestScoped
@@ -23,6 +24,11 @@ public class ActivityBean implements Serializable {
 	@ManagedProperty(value = "#{activityModel}")
     private ActivityModel activityModel;
 	
+	//@ManagedProperty(value = "#{athleticgisSessionFacade}")
+    private AthleticgisSessionFacade athleticgisSessionFacade = new AthleticgisSessionFacade();
+	
+	
+
 	private HtmlInputText inputTextActivityName;
 	
 //	@ManagedProperty(value = "#{dashboardBean.getActivities()}")
@@ -30,6 +36,21 @@ public class ActivityBean implements Serializable {
 	
 //	@ManagedProperty(value = "#{userInfoBean}")
 //    private UserInfoBean userInfoBean;
+	
+//	/**
+//	 * @return the athleticgisSessionFacade
+//	 */
+//	public AthleticgisSessionFacade getAthleticgisSessionFacade() {
+//		return athleticgisSessionFacade;
+//	}
+//
+//	/**
+//	 * @param athleticgisSessionFacade the athleticgisSessionFacade to set
+//	 */
+//	public void setAthleticgisSessionFacade(
+//			AthleticgisSessionFacade athleticgisSessionFacade) {
+//		this.athleticgisSessionFacade = athleticgisSessionFacade;
+//	}
 
 	public HtmlInputText getInputTextActivityName() {
 		return inputTextActivityName;
