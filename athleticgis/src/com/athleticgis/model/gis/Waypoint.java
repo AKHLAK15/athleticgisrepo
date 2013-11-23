@@ -4,24 +4,54 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class Waypoint {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="activity_id")
+	private Activity activity;
+	
+	@Column
 	private Double latitude;
+	@Column
 	private Double longitude;
+	@Column
 	private Double elevation;
+	@Column
 	private Date time;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	/**
+	 * @return the activity
+	 */
+	public Activity getActivity() {
+		return activity;
+	}
+	/**
+	 * @param activity the activity to set
+	 */
+	public void setActivity(Activity activity) {
+		this.activity = activity;
+	}
 	
 	public Double getLatitude() {
 		return latitude;
