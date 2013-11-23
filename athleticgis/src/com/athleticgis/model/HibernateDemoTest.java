@@ -38,8 +38,8 @@ public class HibernateDemoTest
       //Users object1 = new Users();
       
       object0.setEnabled(1);
-      object0.setUser_id(3L);
-      object0.setUsername("blargity");
+      object0.setUser_id(4L);
+      object0.setUsername("fsfdsblarfsdgity");
       object0.setPassword("password");
 
       // IDs start as null

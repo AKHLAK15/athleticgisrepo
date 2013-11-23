@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table
 public class Users implements Serializable {
@@ -27,7 +29,7 @@ public class Users implements Serializable {
 	private String password;
 
 	@Column(name = "ENABLED")
-	private Integer enabled;
+	private int enabled;
 
 	public Long getUser_id() {
 		return user_id;
@@ -53,11 +55,11 @@ public class Users implements Serializable {
 		this.password = password;
 	}
 
-	public Integer getEnabled() {
+	public int getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(Integer enabled) {
+	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
 }

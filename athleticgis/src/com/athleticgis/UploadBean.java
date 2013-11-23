@@ -20,6 +20,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,6 +35,9 @@ import org.xml.sax.SAXException;
 
 import com.athleticgis.model.Activity;
 import com.athleticgis.model.ActivityModel;
+import com.athleticgis.model.UserDao;
+import com.athleticgis.model.Users;
+import com.athleticgis.model.util.EntityManagerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -45,6 +50,7 @@ public class UploadBean implements Serializable {
     private UserInfoBean userInfoBean;
 	@ManagedProperty(value = "#{activityModel}")
     private ActivityModel activityModel;
+	private UserDao userDao = new UserDao();
 	
 	public ActivityModel getActivityModel() {
 		return activityModel;
@@ -69,10 +75,40 @@ public class UploadBean implements Serializable {
 	public void setActivityName(String activityName) {
 		this.activityName = activityName;
 	}
+	
+	public void testHibernate() {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+		
+		EntityTransaction transaction = em.getTransaction();
+	      transaction.begin();
+
+	      Users object0 = new Users();
+	      //Users object1 = new Users();
+	      
+	      object0.setEnabled(1);
+	      object0.setUser_id(6L);
+	      object0.setUsername("matt");
+	      object0.setPassword("password");
+
+	      // IDs start as null
+	     // assertEquals((Long) null, object0.getUser_id());
+	     // assertEquals((Long) null, object1.getUser_id());
+
+	      em.persist(object0);
+	      //em.persist(object1);
+
+	      transaction.commit();
+
+	      System.out.println("Object 0");
+	      System.out.println("Generated ID is: " + object0.getUser_id());
+		
+		
+		em.close();
+	}
 
 	public String upload() throws ParserConfigurationException, SAXException {
-		
-		
+		//testHibernate();
+		userDao.persist(new Users());
 		System.out.println("call upload...");      
 		System.out.println("content-type: " + file.getContentType());
 		System.out.println("filename: " + file.getName());
@@ -94,10 +130,10 @@ public class UploadBean implements Serializable {
             GPX gpx = p.parseGPX(in);
             
             
-            for(Track t : gpx.getTracks()) {
-            	for(Waypoint  wp : t.getTrackPoints()) 
-            		System.out.println(wp.getLatitude() + "," + wp.getLongitude());
-            }
+//            for(Track t : gpx.getTracks()) {
+//            	for(Waypoint  wp : t.getTrackPoints()) 
+//            		System.out.println(wp.getLatitude() + "," + wp.getLongitude());
+//            }
             
             
             in.close();
