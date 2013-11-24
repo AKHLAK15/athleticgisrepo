@@ -50,8 +50,11 @@ public class UserInfoBean implements Serializable {
 	
 	
 	public String getName() {
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return userDetails.getUsername();
+		if(name == null) {
+			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			name = userDetails.getUsername();
+		}
+		return name;
 	}
 //	public void setName(String name) {
 //		this.name = name;

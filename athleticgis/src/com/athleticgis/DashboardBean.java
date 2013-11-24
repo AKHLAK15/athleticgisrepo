@@ -14,6 +14,7 @@ import java.util.List;
 @SessionScoped
 public class DashboardBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+	List<Activity> activities;
 	
 	@ManagedProperty(value = "#{userInfoBean}")
     private UserInfoBean userInfoBean;
@@ -32,7 +33,10 @@ public class DashboardBean implements Serializable {
 		//AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
 		//hard coded user_id use UserInfo
 		//fix, show all for admin, show particular for non admin
-		return AthleticgisFacade.findActivitiesByUserId(1L);
+		if(activities == null) {
+			activities = AthleticgisFacade.findActivitiesByUserId(1L);
+		}
+		return activities;
 	}
 	
 	

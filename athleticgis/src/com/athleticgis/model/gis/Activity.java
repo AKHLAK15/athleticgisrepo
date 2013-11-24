@@ -37,7 +37,7 @@ public class Activity implements Serializable {
 	@Column
 	private Timestamp date;
 
-	@OneToMany(mappedBy="activity", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="activity", fetch=FetchType.LAZY)
 	private List<Waypoint> waypoints;
 	
 	/**
