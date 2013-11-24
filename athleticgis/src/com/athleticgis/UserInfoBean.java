@@ -7,6 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.model.user.User;
+
 import java.io.Serializable;
 import java.util.Collection;
  
@@ -20,19 +23,25 @@ public class UserInfoBean implements Serializable {
 	private Boolean isAdmin;
 	private Boolean isGeneral;
 	private Long user_id;
+	private User user;
 	
 	/**
 	 * @return the user_id
 	 */
 	public Long getUser_id() {
-		return user_id;
+		if(user_id == null) {
+			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			name = userDetails.getUsername();
+			user = AthleticgisFacade.findUserByUsername(name);
+		}
+		return user.getUser_id();
 	}
-	/**
-	 * @param user_id the user_id to set
-	 */
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
-	}
+//	/**
+//	 * @param user_id the user_id to set
+//	 */
+//	public void setUser_id(Long user_id) {
+//		this.user_id = user_id;
+//	}
 	
 //	public Boolean getAdmin() {
 //		//return isAdmin;
