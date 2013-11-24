@@ -92,5 +92,14 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		transaction.commit();
 		em.close();
 	}
-
+	
+	public static List<Activity> findAllActivities() {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		TypedQuery<Activity> query =
+		  em.createQuery("SELECT a FROM Activity a order by a.date", Activity.class);
+		List<Activity> activities = query.getResultList();
+		em.close();
+		return activities;
+	}
 }

@@ -84,12 +84,10 @@ public class UserInfoBean implements Serializable {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)userDetails.getAuthorities();
 		for(GrantedAuthority ga : authorities) {
-			if("ROLE_ADMIN".equals(ga.getAuthority())) {
-				System.out.println("I am an admin");
+			if("ROLE_ADMIN".equals(ga.getAuthority())) {		
 				return true;
 			}
 		}
-		System.out.println("I am not an admin");
 		return false;
 	}
 	/**
