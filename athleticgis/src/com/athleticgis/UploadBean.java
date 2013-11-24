@@ -59,12 +59,12 @@ public class UploadBean implements Serializable {
 //	}
 
 	public String upload() throws ParserConfigurationException, SAXException {
-		//testHibernate();
-		//userDao.persist(new Users());
-		System.out.println("call upload...");      
-		System.out.println("content-type: " + file.getContentType());
-		System.out.println("filename: " + file.getName());
-		System.out.println("size: " + file.getSize());
+		
+		//keep around these may be useful, especially file size
+//		System.out.println("call upload...");      
+//		System.out.println("content-type: " + file.getContentType());
+//		System.out.println("filename: " + file.getName());
+//		System.out.println("size: " + file.getSize());
         try {
            // byte[] results=new byte[(int)file.getSize()];
 //            for(int i = 0; i < results.length; i++) {

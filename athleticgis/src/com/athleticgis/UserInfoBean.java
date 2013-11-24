@@ -3,10 +3,12 @@ package com.athleticgis;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
  
 @ManagedBean
 @SessionScoped
@@ -15,7 +17,7 @@ public class UserInfoBean implements Serializable {
 	private String name;
 	private String password;
 	private Boolean rememberMe;
-	private Boolean admin;
+	private Boolean isAdmin;
 	private Boolean isGeneral;
 	private Long user_id;
 	
@@ -32,15 +34,15 @@ public class UserInfoBean implements Serializable {
 		this.user_id = user_id;
 	}
 	
-	public Boolean getAdmin() {
-		//return isAdmin;
-		
-		//hardcoded
-		return "admin".equals(name);
-	}
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
-	}
+//	public Boolean getAdmin() {
+//		//return isAdmin;
+//		
+//		//hardcoded
+//		return "admin".equals(name);
+//	}
+//	public void setAdmin(Boolean admin) {
+//		this.admin = admin;
+//	}
 	public Boolean getIsGeneral() {
 		return isGeneral;
 	}
@@ -74,5 +76,26 @@ public class UserInfoBean implements Serializable {
 	
 	public Boolean getLoggedIn() {
 		return name != null;
+	}
+	/**
+	 * @return the isAdmin
+	 */
+	public Boolean getIsAdmin() {
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)userDetails.getAuthorities();
+		for(GrantedAuthority ga : authorities) {
+			if("ROLE_ADMIN".equals(ga.getAuthority())) {
+				System.out.println("I am an admin");
+				return true;
+			}
+		}
+		System.out.println("I am not an admin");
+		return false;
+	}
+	/**
+	 * @param isAdmin the isAdmin to set
+	 */
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

@@ -34,7 +34,11 @@ public class DashboardBean implements Serializable {
 		//hard coded user_id use UserInfo
 		//fix, show all for admin, show particular for non admin
 		if(activities == null) {
-			activities = AthleticgisFacade.findActivitiesByUserId(1L);
+			if(!userInfoBean.getIsAdmin()) {
+				activities = AthleticgisFacade.findActivitiesByUserId(1L);
+			} else {
+				
+			}
 		}
 		return activities;
 	}
