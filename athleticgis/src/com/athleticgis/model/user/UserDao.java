@@ -2,7 +2,9 @@ package com.athleticgis.model.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -38,7 +40,7 @@ public class UserDao implements Dao<User>, Serializable {
 		
 		admin.setUser(object0);
 		user.setUser(object0);
-		List<UserRole> roles0 = new ArrayList<UserRole>();
+		Set<UserRole> roles0 = new HashSet<UserRole>();
 		roles0.add(admin);
 		roles0.add(user);
 		object0.setUserroles(roles0);
@@ -49,7 +51,7 @@ public class UserDao implements Dao<User>, Serializable {
 		
 		UserRole user1 = new UserRole();
 		user1.setUser(object1);
-		List<UserRole> roles1 = new ArrayList<UserRole>();
+		Set<UserRole> roles1 = new HashSet<UserRole>();
 		user1.setAuthority("ROLE_USER");
 		roles1.add(user1);
 		//roles0.add(user);

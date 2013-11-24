@@ -4,7 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
 
 <h:head>
 	<title>Dashboard</title>
@@ -29,55 +31,73 @@
 
 
 		<h:form>
-			<h:panelGrid styleClass="panelGridCenter" width="100%" style="padding-bottom:50px;">
+			<h:panelGrid styleClass="panelGridCenter" width="100%"
+				style="padding-bottom:50px;">
 				<h:panelGrid border="0" columns="2" width="100%"
 					style="width : 100%; height : 33px; background-color: #D3D3D3"
 					columnClasses="richPanelHeaderCol1,richPanelHeaderCol2">
 					<h:outputText value="Activities" />
-					<h:commandButton action="upload?faces-redirect=true" value="Upload Activity"></h:commandButton>
+					<h:commandButton action="upload?faces-redirect=true"
+						value="Upload Activity"></h:commandButton>
 				</h:panelGrid>
-					
 
-				<h:dataTable value="#{dashboardBean.activities}" var="activity"
-					rows="0" styleClass="order-table activitiesTable" 
+
+				<rich:dataTable id="activityTable" value="#{dashboardBean.activities}" var="activity"
+					rows="0" styleClass="order-table activitiesTable"
 					headerClass="order-table-header"
 					rowClasses="order-table-odd-row,order-table-even-row">
 
 
 
 
-					<h:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+					<rich:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
 						<f:facet name="header">User Name</f:facet>
 						<h:outputText value="#{activity.user.username}" />
 
-					</h:column>
+					</rich:column>
 
-					<h:column>
+					<rich:column>
 						<f:facet name="header">Name</f:facet>
 						<h:link outcome="activity" value="#{activity.name}">
 							<f:param name="activityId" value="#{activity.activity_id}" />
 						</h:link>
 
-					</h:column>
+					</rich:column>
 
-					<h:column>
+					<rich:column>
 						<f:facet name="header">Date</f:facet>
 						<h:outputText value="#{activity.date}" />
 
-					</h:column>
+					</rich:column>
 
-					<h:column>
+					<rich:column>
 						<f:facet name="header">Delete</f:facet>
-						<h:commandLink value="Delete" action="#{activityModel.removeActivity}">
+						<h:commandLink value="Delete"
+							action="#{activityModel.removeActivity}">
 							<f:param name="activityId" value="#{activity.activity_id}" />
 						</h:commandLink>
 
-					</h:column>
+					</rich:column>
 
 
-				</h:dataTable>
-				
-				
+				</rich:dataTable>
+				<rich:dataScroller for="activityTable" maxPages="5">
+
+					<f:facet name="first">
+
+						<h:outputText value="First" />
+
+					</f:facet>
+
+					<f:facet name="last">
+
+						<h:outputText value="Last" />
+
+					</f:facet>
+
+				</rich:dataScroller>
+
+
 			</h:panelGrid>
 
 		</h:form>
