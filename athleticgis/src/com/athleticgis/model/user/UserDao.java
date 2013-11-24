@@ -99,6 +99,17 @@ public class UserDao implements Dao<User>, Serializable {
 		transaction.commit();
 		em.close();
 	}
+	
+	public static User findUserByUsername(String username) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		TypedQuery<User> query =
+	      em.createQuery("SELECT u FROM User u where u.username='"+username+"'", User.class);
+		List<User> users = query.getResultList();
+		User u = users.get(0);
+		em.close();
+		return u;
+	}
 
 	@Override
 	public void remove(User entity) {

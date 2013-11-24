@@ -48,4 +48,8 @@ public class AthleticgisFacade implements Serializable {
 		ActivityDao activityDao = new ActivityDao();
 		return activityDao.findActivitiesByUserId(user_id);
 	}
+	
+	public static User findUserByUsername(String username) {
+		return UserDao.findUserByUsername(username);
+	}
 }
