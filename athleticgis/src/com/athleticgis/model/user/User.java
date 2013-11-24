@@ -2,6 +2,7 @@ package com.athleticgis.model.user;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,10 +26,10 @@ public class User implements Serializable {
 	private Long user_id;
 
 	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
-	private List<UserRole> userroles;
+	private Set<UserRole> userroles;
 	
 	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
-	private List<Activity> activities;
+	private Set<Activity> activities;
 
 	@Column
 	private String username;
@@ -42,14 +43,14 @@ public class User implements Serializable {
 	/**
 	 * @return the activities
 	 */
-	public List<Activity> getActivities() {
+	public Set<Activity> getActivities() {
 		return activities;
 	}
 
 	/**
 	 * @param activities the activities to set
 	 */
-	public void setActivities(List<Activity> activities) {
+	public void setActivities(Set<Activity> activities) {
 		this.activities = activities;
 	}
 
@@ -70,7 +71,7 @@ public class User implements Serializable {
 	/**
 	 * @return the userroles
 	 */
-	public List<UserRole> getUserroles() {
+	public Set<UserRole> getUserroles() {
 		return userroles;
 	}
 
@@ -78,7 +79,7 @@ public class User implements Serializable {
 	 * @param userroles
 	 *            the userroles to set
 	 */
-	public void setUserroles(List<UserRole> userroles) {
+	public void setUserroles(Set<UserRole> userroles) {
 		this.userroles = userroles;
 	}
 
