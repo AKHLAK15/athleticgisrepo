@@ -4,8 +4,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import com.athleticgis.model.Activity;
-import com.athleticgis.model.ActivityModel;
+import com.athleticgis.model.gis.Activity;
+import com.athleticgis.model.AthleticgisFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,20 +18,6 @@ public class DashboardBean implements Serializable {
 	@ManagedProperty(value = "#{userInfoBean}")
     private UserInfoBean userInfoBean;
 	
-	@ManagedProperty(value = "#{activityModel}")
-    private ActivityModel activityModel;
-	
-	public ActivityModel getActivityModel() {
-		return activityModel;
-	}
-
-	public void setActivityModel(ActivityModel activityModel) {
-		this.activityModel = activityModel;
-	}
-
-	public void setActivities(List<Activity> activities) {
-		activityModel.setActivities(activities);
-	}
 	
 	public UserInfoBean getUserInfoBean() {
 		return userInfoBean;
@@ -42,7 +28,10 @@ public class DashboardBean implements Serializable {
 	}
 
 	public List<Activity> getActivities() {
-		return activityModel.getActivities();
+		//return activityModel.getActivities();
+		AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
+		//hard coded user_id use UserInfo
+		return athleticgisFacade.findActivitiesByUserId(1L);
 	}
 	
 	

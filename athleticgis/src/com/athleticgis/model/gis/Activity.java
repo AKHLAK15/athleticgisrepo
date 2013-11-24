@@ -1,6 +1,7 @@
 package com.athleticgis.model.gis;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -25,6 +26,9 @@ public class Activity implements Serializable {
 	@Column
 	private String name;
 	
+	@Column
+	private Timestamp date;
+
 	@OneToMany(mappedBy="activity")//, fetch=FetchType.EAGER)
 	private List<Waypoint> waypoints;
 	
@@ -62,5 +66,19 @@ public class Activity implements Serializable {
 	 */
 	public void setWaypoints(List<Waypoint> waypoints) {
 		this.waypoints = waypoints;
+	}
+	
+	/**
+	 * @return the date
+	 */
+	public Timestamp getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(Timestamp date) {
+		this.date = date;
 	}
 }

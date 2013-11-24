@@ -32,6 +32,21 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		return waypoints;
 	}
 	
+	public List<Activity> findActivitiesByUserId(Long user_id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		
+//		TypedQuery<UserRole> query =
+//	      em.createQuery("SELECT c FROM Country c", UserRole.class);
+//List<UserRole> userRoles = query.getResultList();
+		
+		TypedQuery<Activity> query =
+		  em.createQuery("SELECT a FROM Activity a where a.user_id="+user_id, Activity.class); //should put a date created in activity + " order by a.time"
+		List<Activity> activities = query.getResultList();
+		em.close();
+		return activities;
+	}
+	
 	@Override
 	public void persist(Activity entity) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
