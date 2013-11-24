@@ -76,7 +76,7 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 				.createEntityManager();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		a.setWaypoints(waypoints);
+		a.setWaypoints(activityPoints);
 		
 		//set the timestamp of the activity to the timestamp of the first waypoint
 		if(activityPoints != null && !activityPoints.isEmpty()) {

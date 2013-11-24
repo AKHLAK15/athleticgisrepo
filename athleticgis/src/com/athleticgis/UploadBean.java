@@ -93,6 +93,7 @@ public class UploadBean implements Serializable {
             		activityPoint.setLatitude(wp.getLatitude());
             		activityPoint.setLongitude(wp.getLongitude());
             		activityPoint.setTime(new Timestamp(wp.getTime().getTime()));
+            		activityPoint.setElevation(wp.getElevation());
             		activityPoints.add(activityPoint);
             	}
             }
