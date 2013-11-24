@@ -91,6 +91,7 @@ public class UploadBean implements Serializable {
             		com.athleticgis.model.gis.Waypoint waypoint = new com.athleticgis.model.gis.Waypoint();
             		waypoint.setLatitude(wp.getLatitude());
             		waypoint.setLongitude(wp.getLongitude());
+            		waypoint.setTime(new Timestamp(wp.getTime().getTime()));
             		waypoints.add(waypoint);
             	}
             }

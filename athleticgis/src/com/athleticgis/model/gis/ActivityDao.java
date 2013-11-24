@@ -32,7 +32,7 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		return waypoints;
 	}
 	
-	public List<Activity> findActivitiesByUserId(Long user_id) {
+	public static List<Activity> findActivitiesByUserId(Long user_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 		

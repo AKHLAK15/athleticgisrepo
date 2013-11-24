@@ -29,10 +29,10 @@ public class DashboardBean implements Serializable {
 
 	public List<Activity> getActivities() {
 		//return activityModel.getActivities();
-		AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
+		//AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
 		//hard coded user_id use UserInfo
 		//fix, show all for admin, show particular for non admin
-		return athleticgisFacade.findActivitiesByUserId(1L);
+		return AthleticgisFacade.findActivitiesByUserId(1L);
 	}
 	
 	

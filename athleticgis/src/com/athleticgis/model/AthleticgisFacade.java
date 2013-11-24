@@ -44,9 +44,9 @@ public class AthleticgisFacade implements Serializable {
 		return activityDao.findWaypointsByActivityId(activityId);
 	}
 	
-	public List<Activity> findActivitiesByUserId(Long user_id) {
-		ActivityDao activityDao = new ActivityDao();
-		return activityDao.findActivitiesByUserId(user_id);
+	public static List<Activity> findActivitiesByUserId(Long user_id) {
+		//ActivityDao activityDao = new ActivityDao();
+		return ActivityDao.findActivitiesByUserId(user_id);
 	}
 	
 	public User findUserByUsername(String username) {
