@@ -46,30 +46,30 @@
 
 
 
-					<h:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+					<!--  <h:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
 						<f:facet name="header">User Name</f:facet>
 						<h:outputText value="#{activity.userName}" />
 
-					</h:column>
+					</h:column>-->
 
 					<h:column>
 						<f:facet name="header">Name</f:facet>
 						<h:link outcome="activity" value="#{activity.name}">
-							<f:param name="activityId" value="#{activity.activityId}" />
+							<f:param name="activityId" value="#{activity.activity_id}" />
 						</h:link>
 
 					</h:column>
 
-					<h:column>
+					<!--  <h:column>
 						<f:facet name="header">Date</f:facet>
 						<h:outputText value="#{activity.date}" />
 
-					</h:column>
+					</h:column>-->
 
 					<h:column>
 						<f:facet name="header">Delete</f:facet>
 						<h:commandLink value="Delete" action="#{activityModel.removeActivity}">
-							<f:param name="activityId" value="#{activity.activityId}" />
+							<f:param name="activityId" value="#{activity.activity_id}" />
 						</h:commandLink>
 
 					</h:column>

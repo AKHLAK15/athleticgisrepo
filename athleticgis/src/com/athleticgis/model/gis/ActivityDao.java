@@ -41,7 +41,7 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 //List<UserRole> userRoles = query.getResultList();
 		
 		TypedQuery<Activity> query =
-		  em.createQuery("SELECT a FROM Activity a where a.user_id="+user_id, Activity.class); //should put a date created in activity + " order by a.time"
+		  em.createQuery("SELECT a FROM Activity a where a.user_id="  + " order by a.time"+user_id, Activity.class);
 		List<Activity> activities = query.getResultList();
 		em.close();
 		return activities;
@@ -77,6 +77,12 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		a.setWaypoints(waypoints);
+		
+		//set the timestamp of the activity to the timestamp of the first waypoint
+		if(waypoints != null && !waypoints.isEmpty()) {
+			a.setDate(waypoints.get(0).getTime());
+		}
+		
 		em.persist(a);
 		for(Waypoint w : waypoints) {
 			w.setActivity(a);

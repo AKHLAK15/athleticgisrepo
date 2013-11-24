@@ -10,8 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.athleticgis.model.user.User;
 
 @Entity
 @Table
@@ -23,6 +27,10 @@ public class Activity implements Serializable {
 	@Column(updatable = false, nullable = false)
 	private Long activity_id;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="user_id")
+	private User user;
+
 	@Column
 	private String name;
 	
@@ -31,6 +39,20 @@ public class Activity implements Serializable {
 
 	@OneToMany(mappedBy="activity")//, fetch=FetchType.EAGER)
 	private List<Waypoint> waypoints;
+	
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	/**
 	 * @return the activity_id

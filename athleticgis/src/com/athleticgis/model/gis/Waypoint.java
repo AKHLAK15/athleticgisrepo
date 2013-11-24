@@ -1,6 +1,7 @@
 package com.athleticgis.model.gis;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -34,7 +35,7 @@ public class Waypoint implements Serializable {
 	@Column
 	private Double elevation;
 	@Column
-	private Date time;
+	private Timestamp time;
 	
 	public Long getId() {
 		return id;
@@ -74,10 +75,10 @@ public class Waypoint implements Serializable {
 	public void setElevation(Double elevation) {
 		this.elevation = elevation;
 	}
-	public Date getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 }

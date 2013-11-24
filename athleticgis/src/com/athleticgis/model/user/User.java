@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.athleticgis.model.gis.Activity;
+
 @Entity
 @Table(name="users")
 public class User implements Serializable {
@@ -24,6 +26,9 @@ public class User implements Serializable {
 
 	@OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
 	private List<UserRole> userroles;
+	
+	@OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
+	private List<Activity> activities;
 
 	@Column
 	private String username;
@@ -34,7 +39,19 @@ public class User implements Serializable {
 	@Column
 	private int enabled;
 
-	
+	/**
+	 * @return the activities
+	 */
+	public List<Activity> getActivities() {
+		return activities;
+	}
+
+	/**
+	 * @param activities the activities to set
+	 */
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}
 
 	/**
 	 * @return the user_id
