@@ -41,7 +41,7 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 //List<UserRole> userRoles = query.getResultList();
 		
 		TypedQuery<Activity> query =
-		  em.createQuery("SELECT a FROM Activity a where a.user_id="  + " order by a.time"+user_id, Activity.class);
+		  em.createQuery("SELECT a FROM Activity a where a.user.user_id="+ user_id  + " order by a.date", Activity.class);
 		List<Activity> activities = query.getResultList();
 		em.close();
 		return activities;

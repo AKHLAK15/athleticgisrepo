@@ -100,7 +100,7 @@ public class UserDao implements Dao<User>, Serializable {
 		em.close();
 	}
 	
-	public static User findUserByUsername(String username) {
+	public User findUserByUsername(String username) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 		TypedQuery<User> query =

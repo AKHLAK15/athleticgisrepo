@@ -27,7 +27,7 @@ public class Activity implements Serializable {
 	@Column(updatable = false, nullable = false)
 	private Long activity_id;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
 
@@ -37,7 +37,7 @@ public class Activity implements Serializable {
 	@Column
 	private Timestamp date;
 
-	@OneToMany(mappedBy="activity")//, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="activity", fetch=FetchType.LAZY)
 	private List<Waypoint> waypoints;
 	
 	/**

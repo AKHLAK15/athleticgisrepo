@@ -81,7 +81,8 @@ public class UploadBean implements Serializable {
             GPX gpx = p.parseGPX(in);
             com.athleticgis.model.gis.Activity a = new com.athleticgis.model.gis.Activity();
             a.setName(activityName);
-            a.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getName()));
+            AthleticgisFacade af = new AthleticgisFacade();
+            a.setUser(af.findUserByUsername(userInfoBean.getName()));
             
             List<com.athleticgis.model.gis.Waypoint> waypoints = new ArrayList<com.athleticgis.model.gis.Waypoint>();
             for(Track t : gpx.getTracks()) {
@@ -95,7 +96,7 @@ public class UploadBean implements Serializable {
             }
             a.setWaypoints(waypoints);
             
-            AthleticgisFacade af = new AthleticgisFacade();
+            
             af.persistActivityAndWaypoints(a, waypoints);
             
             in.close();
