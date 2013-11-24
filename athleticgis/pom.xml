@@ -7,10 +7,35 @@
 	<packaging>war</packaging>
 
 	<properties>
+		<org.richfaces.bom.version>4.3.4.Final</org.richfaces.bom.version>
 		<spring.version>3.1.4.RELEASE</spring.version>
 	</properties>
+	<dependencyManagement>
 
+		<dependencies>
+			<dependency>
+				<groupId>org.richfaces</groupId>
+				<artifactId>richfaces-bom</artifactId>
+				<version>${org.richfaces.bom.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.richfaces.ui</groupId>
+			<artifactId>richfaces-components-ui</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.richfaces.core</groupId>
+			<artifactId>richfaces-core-impl</artifactId>
+		</dependency>
+
+
 		<!-- Needed -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -46,42 +71,46 @@
 			<version>5.1.27</version>
 		</dependency>
 		<dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>4.2.7.SP1</version>
-        </dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.2.7.SP1</version>
+		</dependency>
 
-        <!-- Because this is a web app, we also have a dependency on the servlet api. -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-        </dependency>
+		<!-- Because this is a web app, we also have a dependency on the servlet 
+			api. -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
 
-        <!-- Hibernate uses slf4j for logging, for our purposes here use the simple backend -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.5</version>
-        </dependency>
+		<!-- Hibernate uses slf4j for logging, for our purposes here use the simple 
+			backend -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.5</version>
+		</dependency>
 
-        <!-- Hibernate gives you a choice of bytecode providers between cglib and javassist -->
-        <dependency>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.12.1.GA</version>
-        </dependency>
-        <dependency>
+		<!-- Hibernate gives you a choice of bytecode providers between cglib and 
+			javassist -->
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
 		<dependency>
-         <groupId>org.hibernate</groupId>
-         <artifactId>hibernate-entitymanager</artifactId>
-         <version>4.2.1.Final</version>
-      </dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.1.Final</version>
+		</dependency>
 	</dependencies>
+
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -104,6 +133,6 @@
 			</plugin>
 		</plugins>
 		<!-- we dont want the version to be part of the generated war file name -->
-        <finalName>${artifactId}</finalName>
+		<finalName>${artifactId}</finalName>
 	</build>
 </project>
