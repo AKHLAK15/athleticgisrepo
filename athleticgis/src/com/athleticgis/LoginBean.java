@@ -21,7 +21,7 @@ public class LoginBean {
 	
 
 	// This is the action method called when the user clicks the "login" button
-	UserDao userDao = new UserDao();
+	
 	
 	public String doLogin() throws IOException, ServletException {
 		ExternalContext context = FacesContext.getCurrentInstance()
@@ -38,6 +38,7 @@ public class LoginBean {
 	
 	//for development
 	public String setupDB() {
+		UserDao userDao = new UserDao();
 		userDao.initializeDB();
 		
 		return null;

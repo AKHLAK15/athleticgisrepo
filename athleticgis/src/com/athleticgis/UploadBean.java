@@ -25,8 +25,6 @@ import org.alternativevision.gpx.beans.Track;
 import org.alternativevision.gpx.beans.Waypoint;
 import org.xml.sax.SAXException;
 
-import com.athleticgis.model.Activity;
-import com.athleticgis.model.ActivityModel;
 import com.athleticgis.model.AthleticgisFacade;
 
 @ManagedBean
@@ -38,17 +36,6 @@ public class UploadBean implements Serializable {
 	private String activityName;
 	@ManagedProperty(value = "#{userInfoBean}")
     private UserInfoBean userInfoBean;
-	@ManagedProperty(value = "#{activityModel}")
-    private ActivityModel activityModel;
-	//private UserDao userDao = new UserDao();
-	
-	public ActivityModel getActivityModel() {
-		return activityModel;
-	}
-
-	public void setActivityModel(ActivityModel activityModel) {
-		this.activityModel = activityModel;
-	}
 
 	public UserInfoBean getUserInfoBean() {
 		return userInfoBean;
@@ -119,32 +106,32 @@ public class UploadBean implements Serializable {
         return null;
 	}
 	
-	public String save() {
-		
-		if(file != null && file.getSize() > 0 && activityName != null) {
-			InputStream in;
-		try {
-			in = file.getInputStream();
-			setFileContent(new Scanner(in)
-					.useDelimiter("\\A").next());
-			in.close();
-		} catch (IOException e) {
-			// Error handling
-		}
-		
-		
-			Activity a = new Activity();
-			a.setDate(new Timestamp(new Date().getTime()));
-			a.setName(activityName);
-			a.setUserName(userInfoBean.getName());
-			activityModel.addActivity(a);
-			activityName = null;
-			
-			return "dashboard?faces-redirect=true";
-		} else {
-			return null;
-		}
-	}
+//	public String save() {
+//		
+//		if(file != null && file.getSize() > 0 && activityName != null) {
+//			InputStream in;
+//		try {
+//			in = file.getInputStream();
+//			setFileContent(new Scanner(in)
+//					.useDelimiter("\\A").next());
+//			in.close();
+//		} catch (IOException e) {
+//			// Error handling
+//		}
+//		
+//		
+//			Activity a = new Activity();
+//			a.setDate(new Timestamp(new Date().getTime()));
+//			a.setName(activityName);
+//			a.setUserName(userInfoBean.getName());
+//			activityModel.addActivity(a);
+//			activityName = null;
+//			
+//			return "dashboard?faces-redirect=true";
+//		} else {
+//			return null;
+//		}
+//	}
 
 	public Part getFile() {
 		return file;
