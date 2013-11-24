@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import com.athleticgis.model.Dao;
 import com.athleticgis.model.user.User;
@@ -13,7 +14,24 @@ import com.athleticgis.model.util.EntityManagerUtil;
 
 public class ActivityDao implements Dao<Activity>, Serializable {
 	private static final long serialVersionUID = 5546876539130483879L;
+	
+	//SELECT DISTINCT mag FROM Magazine mag JOIN mag.articles art JOIN art.author auth WHERE auth.firstName = 'John'
 
+	public List<Waypoint> findWaypointsByActivityId(Long activityId) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		
+//		TypedQuery<UserRole> query =
+//	      em.createQuery("SELECT c FROM Country c", UserRole.class);
+//List<UserRole> userRoles = query.getResultList();
+		
+		TypedQuery<Waypoint> query =
+		  em.createQuery("SELECT wp FROM Waypoint wp where wp.activity.activity_id="+activityId+ " order by wp.time", Waypoint.class);
+		List<Waypoint> waypoints = query.getResultList();
+		em.close();
+		return waypoints;
+	}
+	
 	@Override
 	public void persist(Activity entity) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()

@@ -20,7 +20,7 @@ public class AthleticgisFacade implements Serializable {
 	}
 	
 	public void persistActivity(Activity a) {
-		ActivityDao activityDao = new ActivityDao()
+		ActivityDao activityDao = new ActivityDao();
 		activityDao.persist(a);
 	}
 	
@@ -37,5 +37,10 @@ public class AthleticgisFacade implements Serializable {
 	public void persistActivityAndWaypoints(Activity a, List<Waypoint> waypoints) {
 		ActivityDao activityDao = new ActivityDao();
 		activityDao.persistActivityAndWaypoints(a, waypoints);
+	}
+	
+	public List<Waypoint> findWaypointsByActivityId(Long activityId) {
+		ActivityDao activityDao = new ActivityDao();
+		return activityDao.findWaypointsByActivityId(activityId);
 	}
 }
