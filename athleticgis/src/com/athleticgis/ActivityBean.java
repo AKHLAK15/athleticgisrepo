@@ -11,7 +11,7 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import com.athleticgis.model.ActivityModel;
-import com.athleticgis.model.AthleticgisSessionFacade;
+import com.athleticgis.model.AthleticgisFacade;
 
 @ManagedBean
 @RequestScoped
@@ -25,7 +25,7 @@ public class ActivityBean implements Serializable {
     private ActivityModel activityModel;
 	
 	//@ManagedProperty(value = "#{athleticgisSessionFacade}")
-    private AthleticgisSessionFacade athleticgisSessionFacade = new AthleticgisSessionFacade();
+    private AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
 	
 	
 

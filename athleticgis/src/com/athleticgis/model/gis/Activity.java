@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,28 +20,28 @@ public class Activity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
-	private Long id;
+	private Long activity_id;
 	
 	@Column
 	private String name;
 	
-	@OneToMany(mappedBy="activity")
+	@OneToMany(mappedBy="activity")//, fetch=FetchType.EAGER)
 	private List<Waypoint> waypoints;
 	
 	/**
-	 * @return the id
+	 * @return the activity_id
 	 */
-	public Long getId() {
-		return id;
+	public Long getActivity_id() {
+		return activity_id;
 	}
-	
+
 	/**
-	 * @param id the id to set
+	 * @param activity_id the activity_id to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setActivity_id(Long activity_id) {
+		this.activity_id = activity_id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}

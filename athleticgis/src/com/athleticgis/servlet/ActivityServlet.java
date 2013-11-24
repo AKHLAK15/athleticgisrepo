@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.athleticgis.model.AthleticgisSessionFacade;
+import com.athleticgis.model.AthleticgisFacade;
 import com.athleticgis.model.user.User;
+import com.athleticgis.model.user.UserRole;
 
 /**
  * Servlet implementation class ActivityServlet
@@ -40,9 +41,12 @@ public class ActivityServlet extends HttpServlet {
 //		while (se.hasMoreElements()){
 //	         System.out.println(se.nextElement().toString()); 
 //	      }
-		AthleticgisSessionFacade athleticgisSessionFacade = new AthleticgisSessionFacade();
-		User u = athleticgisSessionFacade.findUserById(1L);
+		AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
+		User u = athleticgisFacade.findUserById(1L);
 		System.out.println("Hello: " + u.getUsername());
+		for(UserRole ur : u.getUserroles()) {
+			System.out.println(ur.getAuthority());
+		}
 		
 		
 		

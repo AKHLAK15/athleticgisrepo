@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import com.athleticgis.model.Dao;
 import com.athleticgis.model.util.EntityManagerUtil;
@@ -35,8 +36,6 @@ public class UserDao implements Dao<User>, Serializable {
 		object0.setUsername("admin");
 		object0.setPassword("password");
 		
-		//admin.setId(object0.getId());
-		//user.setId(object0.getId());
 		admin.setUser(object0);
 		user.setUser(object0);
 		List<UserRole> roles0 = new ArrayList<UserRole>();
@@ -49,7 +48,6 @@ public class UserDao implements Dao<User>, Serializable {
 		object1.setPassword("wildflowers");
 		
 		UserRole user1 = new UserRole();
-		//user1.setId(object0.getId());
 		user1.setUser(object1);
 		List<UserRole> roles1 = new ArrayList<UserRole>();
 		user1.setAuthority("ROLE_USER");
@@ -78,19 +76,28 @@ public class UserDao implements Dao<User>, Serializable {
 		//user.setId(object1.getId());
 		//em.persist(user);
 
-		System.out.println("Object 0");
-		System.out.println("Generated ID is: " + object0.getUser_id());
-		
-		System.out.println("Object 1");
-		System.out.println("Generated ID is: " + object1.getUser_id());
+//		System.out.println("Object 0");
+//		System.out.println("Generated ID is: " + object0.getUser_id());
+//		
+//		System.out.println("Object 1");
+//		System.out.println("Generated ID is: " + object1.getUser_id());
 
 		em.close();
 	}
 
-	@Override
-	public void persist(User entity) {
-		// TODO Auto-generated method stub
+	public void persistUserAndRoles(User user, List<UserRole> roles) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
 		
+		em.persist(user);
+		for(UserRole r : roles) {
+			em.persist(r);
+		}
+		
+		transaction.commit();
+		em.close();
 	}
 
 	@Override
@@ -106,8 +113,20 @@ public class UserDao implements Dao<User>, Serializable {
 				.createEntityManager();
 		//EntityTransaction transaction = em.getTransaction();
 		//transaction.begin();
+		//SELECT c.currency FROM Country AS c WHERE c.name LIKE 'I%'
+//		TypedQuery<UserRole> query =
+//			      em.createQuery("SELECT c FROM Country c", UserRole.class);
+//		List<UserRole> userRoles = query.getResultList();
+		
+		
 		User u = em.find(User.class, id);
 		em.close();
 		return u;
+	}
+
+	@Override
+	public void persist(User entity) {
+		// TODO Auto-generated method stub
+		
 	}
 }

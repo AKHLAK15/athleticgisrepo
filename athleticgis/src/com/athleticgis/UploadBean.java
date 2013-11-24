@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -20,10 +21,13 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.alternativevision.gpx.GPXParser;
 import org.alternativevision.gpx.beans.GPX;
+import org.alternativevision.gpx.beans.Track;
+import org.alternativevision.gpx.beans.Waypoint;
 import org.xml.sax.SAXException;
 
 import com.athleticgis.model.Activity;
 import com.athleticgis.model.ActivityModel;
+import com.athleticgis.model.AthleticgisFacade;
 
 @ManagedBean
 @RequestScoped
@@ -88,13 +92,23 @@ public class UploadBean implements Serializable {
 //			}
             GPXParser p = new GPXParser();
             GPX gpx = p.parseGPX(in);
+            com.athleticgis.model.gis.Activity a = new com.athleticgis.model.gis.Activity();
+            a.setName(activityName);
             
+            List<com.athleticgis.model.gis.Waypoint> waypoints = new ArrayList<com.athleticgis.model.gis.Waypoint>();
+            for(Track t : gpx.getTracks()) {
+            	for(Waypoint  wp : t.getTrackPoints()) {
+            		//System.out.println(wp.getLatitude() + "," + wp.getLongitude());
+            		com.athleticgis.model.gis.Waypoint waypoint = new com.athleticgis.model.gis.Waypoint();
+            		waypoint.setLatitude(wp.getLatitude());
+            		waypoint.setLongitude(wp.getLongitude());
+            		waypoints.add(waypoint);
+            	}
+            }
+            a.setWaypoints(waypoints);
             
-//            for(Track t : gpx.getTracks()) {
-//            	for(Waypoint  wp : t.getTrackPoints()) 
-//            		System.out.println(wp.getLatitude() + "," + wp.getLongitude());
-//            }
-            
+            AthleticgisFacade af = new AthleticgisFacade();
+            af.persistActivityAndWaypoints(a, waypoints);
             
             in.close();
             //br.close();

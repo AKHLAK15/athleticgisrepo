@@ -1,25 +1,26 @@
 package com.athleticgis.model;
 
 import java.io.Serializable;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.util.List;
 
 import com.athleticgis.model.gis.ActivityDao;
 import com.athleticgis.model.gis.Activity;
+import com.athleticgis.model.gis.Waypoint;
 import com.athleticgis.model.user.User;
 import com.athleticgis.model.user.UserDao;
 
-public class AthleticgisSessionFacade implements Serializable {
+public class AthleticgisFacade implements Serializable {
 	private static final long serialVersionUID = -6486526059229360289L;
-	private UserDao userDao = new UserDao();
-	private ActivityDao activityDao = new ActivityDao();
+	//private UserDao userDao = new UserDao();
+	//private ActivityDao activityDao = new ActivityDao();
 	
 	public void persistUser(User u) {
+		UserDao userDao = new UserDao();
 		userDao.persist(u);
 	}
 	
 	public void persistActivity(Activity a) {
+		ActivityDao activityDao = new ActivityDao()
 		activityDao.persist(a);
 	}
 	
@@ -27,7 +28,14 @@ public class AthleticgisSessionFacade implements Serializable {
 		return "Hello Matthew!";
 	}
 	
+	//remove
 	public User findUserById(Long id) {
+		UserDao userDao = new UserDao();
 		return userDao.findById(id);
+	}
+	
+	public void persistActivityAndWaypoints(Activity a, List<Waypoint> waypoints) {
+		ActivityDao activityDao = new ActivityDao();
+		activityDao.persistActivityAndWaypoints(a, waypoints);
 	}
 }

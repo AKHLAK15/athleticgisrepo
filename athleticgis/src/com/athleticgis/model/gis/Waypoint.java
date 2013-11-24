@@ -23,7 +23,7 @@ public class Waypoint implements Serializable {
 	@Column(updatable = false, nullable = false)
 	private Long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne//(fetch=FetchType.EAGER)
 	@JoinColumn(name="activity_id")
 	private Activity activity;
 	
