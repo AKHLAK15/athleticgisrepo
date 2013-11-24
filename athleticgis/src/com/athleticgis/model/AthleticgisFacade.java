@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.athleticgis.model.gis.ActivityDao;
 import com.athleticgis.model.gis.Activity;
-import com.athleticgis.model.gis.Waypoint;
+import com.athleticgis.model.gis.ActivityPoint;
 import com.athleticgis.model.user.User;
 import com.athleticgis.model.user.UserDao;
 
@@ -34,23 +34,19 @@ public class AthleticgisFacade implements Serializable {
 		return userDao.findById(id);
 	}
 	
-	public void persistActivityAndWaypoints(Activity a, List<Waypoint> waypoints) {
-		ActivityDao activityDao = new ActivityDao();
-		activityDao.persistActivityAndWaypoints(a, waypoints);
+	public static void persistActivityAndActivityPoints(Activity a, List<ActivityPoint> activityPoints) {
+		ActivityDao.persistActivityAndActivityPoints(a, activityPoints);
 	}
 	
-	public List<Waypoint> findWaypointsByActivityId(Long activityId) {
-		ActivityDao activityDao = new ActivityDao();
-		return activityDao.findWaypointsByActivityId(activityId);
+	public static List<ActivityPoint> findActivityPointsByActivityId(Long activityId) {
+		return ActivityDao.findActivityPointsByActivityId(activityId);
 	}
 	
 	public static List<Activity> findActivitiesByUserId(Long user_id) {
-		//ActivityDao activityDao = new ActivityDao();
 		return ActivityDao.findActivitiesByUserId(user_id);
 	}
 	
-	public User findUserByUsername(String username) {
-		UserDao userDao = new UserDao();
-		return userDao.findUserByUsername(username);
+	public static User findUserByUsername(String username) {
+		return UserDao.findUserByUsername(username);
 	}
 }

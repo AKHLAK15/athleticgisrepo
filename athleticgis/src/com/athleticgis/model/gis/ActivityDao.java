@@ -17,7 +17,7 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 	
 	//SELECT DISTINCT mag FROM Magazine mag JOIN mag.articles art JOIN art.author auth WHERE auth.firstName = 'John'
 
-	public List<Waypoint> findWaypointsByActivityId(Long activityId) {
+	public static List<ActivityPoint> findActivityPointsByActivityId(Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 		
@@ -25,11 +25,11 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 //	      em.createQuery("SELECT c FROM Country c", UserRole.class);
 //List<UserRole> userRoles = query.getResultList();
 		
-		TypedQuery<Waypoint> query =
-		  em.createQuery("SELECT wp FROM Waypoint wp where wp.activity.activity_id="+activityId+ " order by wp.time", Waypoint.class);
-		List<Waypoint> waypoints = query.getResultList();
+		TypedQuery<ActivityPoint> query =
+		  em.createQuery("SELECT ap FROM ActivityPoint ap where ap.activity.activity_id="+activityId+ " order by ap.time", ActivityPoint.class);
+		List<ActivityPoint> activityPoints = query.getResultList();
 		em.close();
-		return waypoints;
+		return activityPoints;
 	}
 	
 	public static List<Activity> findActivitiesByUserId(Long user_id) {
@@ -71,7 +71,7 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		return null;
 	}
 	
-	public void persistActivityAndWaypoints(Activity a, List<Waypoint> waypoints) {
+	public static void persistActivityAndActivityPoints(Activity a, List<ActivityPoint> activityPoints) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 		EntityTransaction transaction = em.getTransaction();
@@ -79,14 +79,14 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		a.setWaypoints(waypoints);
 		
 		//set the timestamp of the activity to the timestamp of the first waypoint
-		if(waypoints != null && !waypoints.isEmpty()) {
-			a.setDate(waypoints.get(0).getTime());
+		if(activityPoints != null && !activityPoints.isEmpty()) {
+			a.setDate(activityPoints.get(0).getTime());
 		}
 		
 		em.persist(a);
-		for(Waypoint w : waypoints) {
-			w.setActivity(a);
-			em.persist(w);
+		for(ActivityPoint ap : activityPoints) {
+			ap.setActivity(a);
+			em.persist(ap);
 		}
 		
 		transaction.commit();

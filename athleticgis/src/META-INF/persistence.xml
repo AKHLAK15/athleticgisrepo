@@ -9,7 +9,7 @@
         </description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.athleticgis.model.user.UserRole</class>
-        <class>com.athleticgis.model.gis.Waypoint</class>
+        <class>com.athleticgis.model.gis.ActivityPoint</class>
         <class>com.athleticgis.model.gis.Activity</class>
         <class>com.athleticgis.model.user.User</class>
         

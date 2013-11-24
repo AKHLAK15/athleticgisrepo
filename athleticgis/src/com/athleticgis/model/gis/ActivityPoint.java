@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Waypoint implements Serializable {
+public class ActivityPoint implements Serializable {
 	private static final long serialVersionUID = 6667575305066831369L;
 
 	@Id

@@ -38,7 +38,7 @@ public class Activity implements Serializable {
 	private Timestamp date;
 
 	@OneToMany(mappedBy="activity", fetch=FetchType.LAZY)
-	private List<Waypoint> waypoints;
+	private List<ActivityPoint> waypoints;
 	
 	/**
 	 * @return the user
@@ -79,14 +79,14 @@ public class Activity implements Serializable {
 	/**
 	 * @return the waypoints
 	 */
-	public List<Waypoint> getWaypoints() {
+	public List<ActivityPoint> getWaypoints() {
 		return waypoints;
 	}
 	
 	/**
 	 * @param waypoints the waypoints to set
 	 */
-	public void setWaypoints(List<Waypoint> waypoints) {
+	public void setWaypoints(List<ActivityPoint> waypoints) {
 		this.waypoints = waypoints;
 	}
 	

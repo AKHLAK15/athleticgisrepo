@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.athleticgis.model.AthleticgisFacade;
-import com.athleticgis.model.gis.Waypoint;
+import com.athleticgis.model.gis.ActivityPoint;
 
 /**
  * Servlet implementation class ActivityServlet
@@ -35,7 +35,7 @@ public class ActivityServlet extends HttpServlet {
 		String idStr = request.getParameter("activityId");
 		
 		AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
-		List<Waypoint> waypoints = athleticgisFacade.findWaypointsByActivityId(Long.parseLong(idStr));
+		List<ActivityPoint> waypoints = AthleticgisFacade.findActivityPointsByActivityId(Long.parseLong(idStr));
 		
 		int size = waypoints.size();
 		int ndx = 0;

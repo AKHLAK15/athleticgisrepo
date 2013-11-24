@@ -26,6 +26,7 @@ import org.alternativevision.gpx.beans.Waypoint;
 import org.xml.sax.SAXException;
 
 import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.model.gis.ActivityPoint;
 
 @ManagedBean
 @RequestScoped
@@ -81,24 +82,24 @@ public class UploadBean implements Serializable {
             GPX gpx = p.parseGPX(in);
             com.athleticgis.model.gis.Activity a = new com.athleticgis.model.gis.Activity();
             a.setName(activityName);
-            AthleticgisFacade af = new AthleticgisFacade();
-            a.setUser(af.findUserByUsername(userInfoBean.getName()));
+            //AthleticgisFacade af = new AthleticgisFacade();
+            a.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getName()));
             
-            List<com.athleticgis.model.gis.Waypoint> waypoints = new ArrayList<com.athleticgis.model.gis.Waypoint>();
+            List<ActivityPoint> activityPoints = new ArrayList<ActivityPoint>();
             for(Track t : gpx.getTracks()) {
             	for(Waypoint  wp : t.getTrackPoints()) {
             		//System.out.println(wp.getLatitude() + "," + wp.getLongitude());
-            		com.athleticgis.model.gis.Waypoint waypoint = new com.athleticgis.model.gis.Waypoint();
-            		waypoint.setLatitude(wp.getLatitude());
-            		waypoint.setLongitude(wp.getLongitude());
-            		waypoint.setTime(new Timestamp(wp.getTime().getTime()));
-            		waypoints.add(waypoint);
+            		com.athleticgis.model.gis.ActivityPoint activityPoint = new ActivityPoint();
+            		activityPoint.setLatitude(wp.getLatitude());
+            		activityPoint.setLongitude(wp.getLongitude());
+            		activityPoint.setTime(new Timestamp(wp.getTime().getTime()));
+            		activityPoints.add(activityPoint);
             	}
             }
-            a.setWaypoints(waypoints);
+            a.setWaypoints(activityPoints);
             
             
-            af.persistActivityAndWaypoints(a, waypoints);
+            AthleticgisFacade.persistActivityAndActivityPoints(a, activityPoints);
             
             in.close();
             //br.close();
