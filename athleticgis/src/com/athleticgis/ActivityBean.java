@@ -11,6 +11,7 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.model.gis.Activity;
 
 @ManagedBean
 @RequestScoped
@@ -20,12 +21,48 @@ public class ActivityBean implements Serializable {
 	@ManagedProperty(value = "#{request.getParameter('activityId')}")
     private String activityId;
 	
+	@ManagedProperty(value = "#{userInfoBean}")
+    private UserInfoBean userInfoBean;
+	
+	@ManagedProperty(value = "#{dashboardBean}")
+    private DashboardBean dashboardBean;
+	
 	//@ManagedProperty(value = "#{athleticgisSessionFacade}")
     //private AthleticgisFacade athleticgisFacade = new AthleticgisFacade();
 	
 	
 
 	private HtmlInputText inputTextActivityName;
+	
+	/**
+	 * @return the userInfoBean
+	 */
+	public UserInfoBean getUserInfoBean() {
+		return userInfoBean;
+	}
+
+	/**
+	 * @param userInfoBean the userInfoBean to set
+	 */
+	public void setUserInfoBean(UserInfoBean userInfoBean) {
+		this.userInfoBean = userInfoBean;
+	}
+
+	/**
+	 * @return the dashboardBean
+	 */
+	public DashboardBean getDashboardBean() {
+		return dashboardBean;
+	}
+
+	/**
+	 * @param dashboardBean the dashboardBean to set
+	 */
+	public void setDashboardBean(DashboardBean dashboardBean) {
+		this.dashboardBean = dashboardBean;
+	}
+
+
 	
 //	@ManagedProperty(value = "#{dashboardBean.getActivities()}")
 //    private String activityId;
@@ -105,21 +142,21 @@ public class ActivityBean implements Serializable {
 		return null;
 	}
 	
-	//TODO
 	public String removeActivity() {
-		
 		Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String aId = params.get("activityId");
 		Long id = Long.parseLong(aId);
 		
-//		int ndx = -1;
-//		for(int i = 0; i < activityModel.getActivities().size(); i++) {
-//			if(id.equals(activityModel.getActivities().get(i).getActivityId())) {
-//				ndx = i;
-//			}
-//		}
-		//activityModel.getActivities().remove(ndx);
+		AthleticgisFacade.removeActivity(id);
 		
+		int ndx = 0;
+		for(Activity a : dashboardBean.getActivities()) {
+			if(a.getActivity_id().equals(id)) {
+				break;
+			}
+			ndx++;
+		}
+		dashboardBean.getActivities().remove(ndx);
 		
 		return "dashboard?faces-redirect=true";
 	}

@@ -19,9 +19,12 @@ public class AthleticgisFacade implements Serializable {
 		userDao.persist(u);
 	}
 	
-	public void persistActivity(Activity a) {
-		ActivityDao activityDao = new ActivityDao();
-		activityDao.persist(a);
+	public static void persistActivity(Activity a) {
+		ActivityDao.persist(a);
+	}
+	
+	public static void removeActivity(Long activityId) {
+		ActivityDao.remove(activityId);
 	}
 	
 	public String testFromServlet() {

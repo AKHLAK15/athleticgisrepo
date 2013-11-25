@@ -25,10 +25,10 @@ public class User implements Serializable {
 	@Column(updatable = false, nullable = false)
 	private Long user_id;
 
-	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, orphanRemoval=true)
 	private Set<UserRole> userroles;
 	
-	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, orphanRemoval=true)
 	private Set<Activity> activities;
 
 	@Column

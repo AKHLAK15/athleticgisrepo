@@ -12,7 +12,7 @@ import com.athleticgis.model.user.User;
 import com.athleticgis.model.user.UserRole;
 import com.athleticgis.model.util.EntityManagerUtil;
 
-public class ActivityDao implements Dao<Activity>, Serializable {
+public class ActivityDao implements Serializable {
 	private static final long serialVersionUID = 5546876539130483879L;
 	
 	//SELECT DISTINCT mag FROM Magazine mag JOIN mag.articles art JOIN art.author auth WHERE auth.firstName = 'John'
@@ -20,11 +20,6 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 	public static List<ActivityPoint> findActivityPointsByActivityId(Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
-		
-//		TypedQuery<UserRole> query =
-//	      em.createQuery("SELECT c FROM Country c", UserRole.class);
-//List<UserRole> userRoles = query.getResultList();
-		
 		TypedQuery<ActivityPoint> query =
 		  em.createQuery("SELECT ap FROM ActivityPoint ap where ap.activity.activity_id="+activityId+ " order by ap.time", ActivityPoint.class);
 		List<ActivityPoint> activityPoints = query.getResultList();
@@ -35,11 +30,6 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 	public static List<Activity> findActivitiesByUserId(Long user_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
-		
-//		TypedQuery<UserRole> query =
-//	      em.createQuery("SELECT c FROM Country c", UserRole.class);
-//List<UserRole> userRoles = query.getResultList();
-		
 		TypedQuery<Activity> query =
 		  em.createQuery("SELECT a FROM Activity a where a.user.user_id="+ user_id  + " order by a.date", Activity.class);
 		List<Activity> activities = query.getResultList();
@@ -47,8 +37,7 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		return activities;
 	}
 	
-	@Override
-	public void persist(Activity entity) {
+	public static void persist(Activity entity) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 
@@ -59,14 +48,17 @@ public class ActivityDao implements Dao<Activity>, Serializable {
 		em.close();
 	}
 
-	@Override
-	public void remove(Activity entity) {
-		// TODO Auto-generated method stub
-
+	public static void remove(Long activityId) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		Activity a = em.find(Activity.class, activityId);
+		em.getTransaction().begin();
+		em.remove(a);
+		em.getTransaction().commit();
+		em.close();
 	}
 
-	@Override
-	public Activity findById(Long id) {
+	public static Activity findById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
