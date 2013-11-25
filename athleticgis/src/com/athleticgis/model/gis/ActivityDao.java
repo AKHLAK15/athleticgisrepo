@@ -59,8 +59,11 @@ public class ActivityDao implements Serializable {
 	}
 
 	public static Activity findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		Activity a = em.find(Activity.class, id);
+		em.close();
+		return a;
 	}
 	
 	public static void persistActivityAndActivityPoints(Activity a, List<ActivityPoint> activityPoints) {

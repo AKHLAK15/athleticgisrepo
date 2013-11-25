@@ -93,6 +93,7 @@ public class ActivityBean implements Serializable {
 	public void setInputTextActivityName(HtmlInputText inputTextActivityName) {
 		
 		if(activityId != null) {
+			inputTextActivityName.setValue(AthleticgisFacade.findActivityById(Long.parseLong(activityId)).getName());
 			//inputTextActivityName.setValue(activityModel.findActivity(Long.parseLong(activityId)).getName());
 		}
 		this.inputTextActivityName = inputTextActivityName;
