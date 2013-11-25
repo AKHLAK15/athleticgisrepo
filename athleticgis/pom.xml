@@ -10,31 +10,13 @@
 		<org.richfaces.bom.version>4.3.4.Final</org.richfaces.bom.version>
 		<spring.version>3.1.4.RELEASE</spring.version>
 	</properties>
-	<dependencyManagement>
 
-		<dependencies>
-			<dependency>
-				<groupId>org.richfaces</groupId>
-				<artifactId>richfaces-bom</artifactId>
-				<version>${org.richfaces.bom.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
-
-
-		</dependencies>
-	</dependencyManagement>
 	<dependencies>
-
 		<dependency>
-			<groupId>org.richfaces.ui</groupId>
-			<artifactId>richfaces-components-ui</artifactId>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>4.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.richfaces.core</groupId>
-			<artifactId>richfaces-core-impl</artifactId>
-		</dependency>
-
 
 		<!-- Needed -->
 		<dependency>

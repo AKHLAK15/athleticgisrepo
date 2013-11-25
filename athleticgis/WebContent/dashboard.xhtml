@@ -5,8 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Dashboard</title>
@@ -42,58 +41,44 @@
 				</h:panelGrid>
 
 
-				<rich:dataTable id="activityTable" value="#{dashboardBean.activities}" var="activity"
-					rows="0" styleClass="activitiesTable">
+				<p:dataTable id="activityTable" value="#{dashboardBean.activities}" var="activity"
+					rows="10" styleClass="activitiesTable" paginator="true">
 
 
 
 
-					<rich:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+					<p:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
 						<f:facet name="header">User Name</f:facet>
 						<h:outputText value="#{activity.user.username}" />
 
-					</rich:column>
+					</p:column>
 
-					<rich:column>
+					<p:column>
 						<f:facet name="header">Name</f:facet>
 						<h:link outcome="activity" value="#{activity.name}">
 							<f:param name="activityId" value="#{activity.activity_id}" />
 						</h:link>
 
-					</rich:column>
+					</p:column>
 
-					<rich:column>
+					<p:column>
 						<f:facet name="header">Date</f:facet>
 						<h:outputText value="#{activity.date}" />
 
-					</rich:column>
+					</p:column>
 
-					<rich:column>
+					<p:column>
 						<f:facet name="header">Delete</f:facet>
 						<h:commandLink value="Delete"
 							action="#{activityBean.removeActivity}">
 							<f:param name="activityId" value="#{activity.activity_id}" />
 						</h:commandLink>
 
-					</rich:column>
+					</p:column>
 
 
-				</rich:dataTable>
-				<rich:dataScroller for="activityTable" maxPages="5">
-
-					<f:facet name="first">
-
-						<h:outputText value="First" />
-
-					</f:facet>
-
-					<f:facet name="last">
-
-						<h:outputText value="Last" />
-
-					</f:facet>
-
-				</rich:dataScroller>
+				</p:dataTable>
+				
 
 
 			</h:panelGrid>

@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Activity Upload</title>
@@ -39,19 +40,18 @@
 
 				<h:panelGrid styleClass="uploadForm panelGridCenter">
 					<!-- Put Input Text for Title of Activity -->
-					<h:panelGrid columns="2" style="text-align : left;">
+					
+
+						<h:outputLabel value="Select up to 10 valid .GPX files To Upload: "></h:outputLabel>
 						
-						<h:outputLabel value="1) Enter Activity Name: "></h:outputLabel>
-						<h:inputText value="#{uploadBean.activityName}" size="40" required="true" requiredMessage="Name of Activity is Required." style="width : 400px;"></h:inputText>
-						<h:outputLabel value="2) Select valid .GPX file To Upload: "></h:outputLabel>
-						<h:inputFile id="file" value="#{uploadBean.file}" validator="#{uploadBean.validateFile}" />
-						<h:outputLabel value="3) Click to save activity: "></h:outputLabel>
-						<h:commandButton value="Save"
-							action="#{uploadBean.upload}">
-						</h:commandButton>
-					</h:panelGrid>
-					<!--  <h:inputTextarea rows="20" cols="150"
-						value="#{uploadBean.fileContent}" readonly="true" /> -->
+						<p:fileUpload
+							fileUploadListener="#{fileUploadController.handleFileUpload}"
+							mode="advanced" dragDropSupport="false" update="messages"
+							sizeLimit="10000000" fileLimit="10"
+							allowTypes="/(\.|\/)(gpx?x)$/" />
+
+						<p:growl id="messages" showDetail="true" />
+			
 				</h:panelGrid>
 			</h:panelGrid>
 

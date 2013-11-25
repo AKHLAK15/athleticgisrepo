@@ -21,6 +21,9 @@
 		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" />
 		<intercept-url pattern="/rfres/**" access="ROLE_ANONYMOUS" /> <!-- Rich Faces -->
+		<intercept-url pattern="/javax.faces.resource/**" access="ROLE_ANONYMOUS" /> <!-- JSF -->
+		
+		
 		<intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN" />
 
 		<form-login login-processing-url="/j_spring_security_check"
