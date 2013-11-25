@@ -23,7 +23,6 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;  
 import org.xml.sax.SAXException;
 
-import com.athleticgis.UserInfoBean;
 import com.athleticgis.model.AthleticgisFacade;
 import com.athleticgis.model.gis.ActivityPoint;
 

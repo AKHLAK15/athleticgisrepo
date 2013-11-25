@@ -1,4 +1,4 @@
-package com.athleticgis;
+package com.athleticgis.view;
 
 import java.io.IOException;
 

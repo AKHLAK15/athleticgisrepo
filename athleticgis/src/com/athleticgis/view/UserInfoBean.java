@@ -1,4 +1,4 @@
-package com.athleticgis;
+package com.athleticgis.view;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
