@@ -94,4 +94,15 @@ public class ActivityDao implements Serializable {
 		em.close();
 		return activities;
 	}
+	
+	public static void mergeActivity(String activityName, Long activityId) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		Activity a = em.find(Activity.class, activityId);
+		a.setName(activityName);
+		em.getTransaction().begin();
+		em.merge(a);
+		em.getTransaction().commit();
+		em.close();
+	}
 }

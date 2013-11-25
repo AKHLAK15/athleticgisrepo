@@ -137,9 +137,9 @@ public class ActivityBean implements Serializable {
 		Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String aId = params.get("activityId");
 		Long id = Long.parseLong(aId);
-		
 		//activityModel.findActivity(id).setName(inputTextActivityName.getValue().toString());
-		return null;
+		AthleticgisFacade.mergeActivity(inputTextActivityName.getValue().toString(), id);
+		return "dashboard?faces-redirect=true";
 	}
 	
 	public String removeActivity() {

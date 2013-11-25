@@ -56,4 +56,8 @@ public class AthleticgisFacade implements Serializable {
 	public static List<Activity> findAllActivities() {
 		return ActivityDao.findAllActivities();
 	}
+	
+	public static void mergeActivity(String activityName, Long activityId) {
+		ActivityDao.mergeActivity(activityName, activityId);
+	}
 }
