@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -48,11 +49,8 @@
 		<h:form id="loginForm" prependId="false" styleClass="form-signin">
 
 			<h2 class="form-signin-heading">Please sign in</h2>
-			<h:outputLabel value="Username" for="j_username"></h:outputLabel>
-			<h:inputText id="j_username" required="true" styleClass="form-control" />
-			<h:outputLabel value="Password" for="j_password"></h:outputLabel>
-			<h:inputSecret id="j_password" required="true"
-				styleClass="form-control" />
+			<p:inputText  id="j_username" required="true" styleClass="form-control" placeholder="Username" requiredMessage="Username Required"></p:inputText>
+			<p:password  id="j_password" required="true" styleClass="form-control" feedback="true" placeholder="Password" requiredMessage="Password Required"/>
 
 			<h:outputLabel for="_spring_security_remember_me"
 				styleClass="checkbox">
@@ -62,7 +60,7 @@
 				
 				action="#{loginBean.doLogin}"></h:commandButton>
 				
-			<h:commandButton value="SetupDB" action="#{loginBean.setupDB}" immediate="true"></h:commandButton>
+			
 
 		</h:form>
 	</div>
