@@ -42,7 +42,7 @@ public class ActivityDataModel extends LazyDataModel<Activity> {
 	@Override
 	public List<Activity> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
-		List<Activity> data = new ArrayList<Activity>();
+		//	List<Activity> data = new ArrayList<Activity>();
 
 //		// filter
 //		for (Activity activity : datasource) {
@@ -78,10 +78,12 @@ public class ActivityDataModel extends LazyDataModel<Activity> {
 //			Collections.sort(data, new LazySorter(sortField, sortOrder));
 //		}
 		
+		System.out.println("Loading....");
+		
 		activities = AthleticgisFacade.findActivitiesByUserIdPaginated(user_id, first, pageSize);
 
 		// set the total number of activities
-		Integer dataSize = AthleticgisFacade.findActivityCountByUserId(1L).intValue(); //hard coded user id
+		Integer dataSize = AthleticgisFacade.findActivityCountByUserId(user_id).intValue(); 
 		this.setRowCount(dataSize);
 		
 		this.setPageSize(pageSize);

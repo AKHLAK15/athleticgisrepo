@@ -4,6 +4,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.LazyDataModel;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class DashboardBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	//List<Activity> activities;
@@ -42,6 +43,7 @@ public class DashboardBean implements Serializable {
 			lazyModel = new ActivityDataModel(userInfoBean.getUser_id());
 		}
 		return lazyModel;
+		//return new ActivityDataModel(userInfoBean.getUser_id());
 	}
 
 //	public List<Activity> getActivities() {
