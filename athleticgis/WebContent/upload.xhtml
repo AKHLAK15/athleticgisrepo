@@ -3,61 +3,51 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
 <h:head>
-	<title>Activity Upload</title>
+	<link href="resources/css/athleticgis.css" rel="stylesheet" />
 </h:head>
-
-<ui:composition template="/template/layout.xhtml">
-	<ui:define name="scripts">
-		<h:head>
-			<link href="resources/css/athleticgis.css" rel="stylesheet" />
-
-			<link href="resources/css/bootstrap.css" rel="stylesheet" />
-
-
-
-			<!-- Custom styles for this template -->
-			<link href="resources/css/signin.css" rel="stylesheet" />
-		</h:head>
-	</ui:define>
-	<ui:define name="content">
-		<h:form enctype="multipart/form-data">
-		
+<h:body>
+	
+		<p:layout fullPage="true">
 			
+			<p:layoutUnit position="north" size="60" resizable="false"
+				closable="false" collapsible="false">
+				<ui:insert name="header">
+					<ui:include src="/template/header.xhtml" />
+				</ui:insert>
+				
+			</p:layoutUnit>
 
-			<h:panelGrid styleClass="panelGridCenter" width="100%"
-				style="padding-bottom:50px;">
+			<p:layoutUnit position="south" size="50" resizable="false"
+				closable="false" collapsible="false">
+				<ui:insert name="footer">
+					<ui:include src="/template/footer.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
 
-				<h:panelGrid border="0" columns="2" width="100%"
-					style="width : 100%; height : 33px; background-color: #D3D3D3"
-					columnClasses="richPanelHeaderCol1,richPanelHeaderCol2">
-					<h:outputText value="Upload" />
-					<h:commandButton value="Return to Dashboard"
-						action="dashboard?faces-redirect=true" immediate="true"></h:commandButton>
-				</h:panelGrid>
+			<p:layoutUnit position="center">
+				<h:form enctype="multipart/form-data">
+				<p:tabMenu activeIndex="1">
+					<p:menuitem value="Dashboard" url="/faces/dashboard.xhtml" />
+					<p:menuitem value="Upload" url="/faces/upload.xhtml" />
+				</p:tabMenu>
+				
+					<h:outputLabel value="Select up to 10 valid .GPX files To Upload: "></h:outputLabel>
 
-				<h:panelGrid styleClass="uploadForm panelGridCenter">
-					<!-- Put Input Text for Title of Activity -->
-					
+					<p:fileUpload id="fileUploader"
+						fileUploadListener="#{fileUploadController.handleFileUpload}"
+						mode="advanced" dragDropSupport="false" update="messages"
+						sizeLimit="10000000" fileLimit="10" allowTypes="/(\.|\/)(gpx?x)$/" />
 
-						<h:outputLabel value="Select up to 10 valid .GPX files To Upload: "></h:outputLabel>
-						
-						<p:fileUpload
-							fileUploadListener="#{fileUploadController.handleFileUpload}"
-							mode="advanced" dragDropSupport="false" update="messages"
-							sizeLimit="10000000" fileLimit="10"
-							allowTypes="/(\.|\/)(gpx?x)$/" />
+					<p:growl id="messages" showDetail="true" />
 
-						<p:growl id="messages" showDetail="true" />
+			</h:form>	
+			</p:layoutUnit>
 			
-				</h:panelGrid>
-			</h:panelGrid>
-
-		</h:form>
-	</ui:define>
-</ui:composition>
+		</p:layout>
+	
+</h:body>
 </html>

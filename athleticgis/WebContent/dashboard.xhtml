@@ -3,91 +3,81 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
 <h:head>
-	<title>Dashboard</title>
-
-
-
-
+	<link href="resources/css/athleticgis.css" rel="stylesheet" />
 </h:head>
-<ui:composition template="/template/layout.xhtml">
-	<ui:define name="scripts">
-		<h:head>
-			<link href="resources/css/athleticgis.css" rel="stylesheet" />
-			<link href="resources/css/bootstrap.css" rel="stylesheet" />
-			<!-- Custom styles for this template -->
-			<link href="resources/css/signin.css" rel="stylesheet" />
-		</h:head>
-	</ui:define>
-
-	<ui:define name="content">
-
-
-
-
-		<h:form>
-			<h:panelGrid styleClass="panelGridCenter" width="100%"
-				style="padding-bottom:50px;">
-				<h:panelGrid border="0" columns="2" width="100%"
-					style="width : 100%; height : 33px; background-color: #D3D3D3"
-					columnClasses="richPanelHeaderCol1,richPanelHeaderCol2">
-					<h:outputText value="Activities" />
-					<h:commandButton action="upload?faces-redirect=true"
-						value="Upload Activity"></h:commandButton>
-				</h:panelGrid>
-
-
-				<p:dataTable id="activityTable" value="#{dashboardBean.activities}" var="activity"
-					rows="10" styleClass="activitiesTable" paginator="true">
-
-
-
-
-					<p:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
-						<f:facet name="header">User Name</f:facet>
-						<h:outputText value="#{activity.user.username}" />
-
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">Name</f:facet>
-						<h:link outcome="activity" value="#{activity.name}">
-							<f:param name="activityId" value="#{activity.activity_id}" />
-						</h:link>
-
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">Date</f:facet>
-						<h:outputText value="#{activity.date}" />
-
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">Delete</f:facet>
-						<h:commandLink value="Delete"
-							action="#{activityBean.removeActivity}">
-							<f:param name="activityId" value="#{activity.activity_id}" />
-						</h:commandLink>
-
-					</p:column>
-
-
-				</p:dataTable>
+<h:body>
+	
+		<p:layout fullPage="true">
+			
+			<p:layoutUnit position="north" size="60" resizable="false"
+				closable="false" collapsible="false">
+					<ui:insert name="header">
+						<ui:include src="/template/header.xhtml" />
+					</ui:insert>
 				
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" size="50" resizable="false"
+				closable="false" collapsible="false">
+				<ui:insert name="footer">
+					<ui:include src="/template/footer.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+					<h:form>
+					<p:tabMenu activeIndex="0">
+						<p:menuitem value="Dashboard" url="/faces/dashboard.xhtml" />
+						<p:menuitem value="Upload" url="/faces/upload.xhtml" />
+					</p:tabMenu>
+				
+					<p:dataTable id="activityTable" value="#{dashboardBean.activities}"
+						var="activity" rows="10"
+						paginator="true">
 
 
-			</h:panelGrid>
-
-		</h:form>
 
 
-	</ui:define>
-</ui:composition>
+						<p:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+							<f:facet name="header">User Name</f:facet>
+							<h:outputText value="#{activity.user.username}" />
+
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Name</f:facet>
+							<h:link outcome="activity" value="#{activity.name}">
+								<f:param name="activityId" value="#{activity.activity_id}" />
+							</h:link>
+
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Date</f:facet>
+							<h:outputText value="#{activity.date}" />
+
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Delete</f:facet>
+							<h:commandLink value="Delete"
+								action="#{activityBean.removeActivity}">
+								<f:param name="activityId" value="#{activity.activity_id}" />
+							</h:commandLink>
+
+						</p:column>
 
 
+					</p:dataTable>
+
+				</h:form>
+			</p:layoutUnit>
+			
+		</p:layout>
+	
+</h:body>
 </html>

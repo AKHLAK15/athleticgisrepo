@@ -1,74 +1,62 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
-	<title>Login</title>
+	
 	<link href="resources/css/athleticgis.css" rel="stylesheet" />
-
-	<!-- Bootstrap core CSS -->
-	<link href="resources/css/bootstrap.css" rel="stylesheet" />
-
-	<!-- Custom styles for this template -->
-	<link href="resources/css/signin.css" rel="stylesheet" />
-
-
 </h:head>
+<h:body>
+	<f:view>
+		<p:layout fullPage="true">
 
-	<ui:composition template="/template/layout.xhtml">
-	
-	<ui:define name="scripts">
-		<h:head>
-			<link href="resources/css/athleticgis.css" rel="stylesheet" />
+			<p:layoutUnit position="north" size="60" resizable="false"
+				closable="false" collapsible="false">
+				<h:panelGrid columns="2" width="100%"
+					columnClasses="headerCol1,headerCol2">
+					<h:outputLabel value="Athletic GIS" styleClass="logoFont"></h:outputLabel>
 
-			<!-- Bootstrap core CSS -->
-			<link href="resources/css/bootstrap.css" rel="stylesheet" />
-		
-			<!-- Custom styles for this template -->
-			<link href="resources/css/signin.css" rel="stylesheet" />
-		</h:head>
-	</ui:define>
-	
-	<ui:define name="header">
-		<h:panelGrid columns="2" width="100%" columnClasses="headerCol1,headerCol2">
-			<h:outputLabel value="Athletic GIS" styleClass="logoFont"></h:outputLabel> 
-			
- 		</h:panelGrid>
-	</ui:define>
-	
-	<ui:define name="content">
+				</h:panelGrid>
 
-	<div class="container">
-		<h:form id="loginForm" prependId="false" styleClass="form-signin">
+			</p:layoutUnit>
 
-			<h2 class="form-signin-heading">Please sign in</h2>
-			<p:inputText  id="j_username" required="true" styleClass="form-control" placeholder="Username" requiredMessage="Username Required"></p:inputText>
-			<p:password  id="j_password" required="true" styleClass="form-control" feedback="true" placeholder="Password" requiredMessage="Password Required"/>
+			<p:layoutUnit position="south" size="50" resizable="false"
+				closable="false" collapsible="false">
+				<ui:insert name="footer">
+					<ui:include src="/template/footer.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
 
-			<h:outputLabel for="_spring_security_remember_me"
-				styleClass="checkbox">
-				<h:selectBooleanCheckbox id="_spring_security_remember_me"/> Remember Me
+			<p:layoutUnit position="center">
+				<h:form id="loginForm" prependId="false">
+					<p:panelGrid columns="1" styleClass="loginPanelGridCenter">
+						<f:facet name="header">  
+        					<h2>Please sign in</h2>
+    					</f:facet>  
+						
+						<p:inputText id="j_username" required="true"
+							styleClass="form-control" placeholder="Username"
+							requiredMessage="Username Required"></p:inputText>
+						<p:password id="j_password" required="true"
+							styleClass="form-control" feedback="true" placeholder="Password"
+							requiredMessage="Password Required" />
+
+						<h:outputLabel for="_spring_security_remember_me"
+							styleClass="checkbox">
+							<h:selectBooleanCheckbox id="_spring_security_remember_me" /> Remember Me
 							</h:outputLabel>
-			<h:commandButton value="Sign In" id="login"  style="width : 210px;"
-				
-				action="#{loginBean.doLogin}"></h:commandButton>
-				
-			
+						<h:commandButton value="Sign In" id="login" style="width : 210px;"
+							action="#{loginBean.doLogin}"></h:commandButton>
+					</p:panelGrid>
 
-		</h:form>
-	</div>
-	<!-- /container -->
+				</h:form>
+			</p:layoutUnit>
 
-	
-
-
-</ui:define>
-</ui:composition>
+		</p:layout>
+	</f:view>
+</h:body>
 </html>
