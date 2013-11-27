@@ -150,14 +150,14 @@ public class ActivityBean implements Serializable {
 		
 		AthleticgisFacade.removeActivity(id);
 		
-		int ndx = 0;
-		for(Activity a : dashboardBean.getActivities()) {
-			if(a.getActivity_id().equals(id)) {
-				break;
-			}
-			ndx++;
-		}
-		dashboardBean.getActivities().remove(ndx);
+//		int ndx = 0;
+//		for(Activity a : dashboardBean.getActivities()) {
+//			if(a.getActivity_id().equals(id)) {
+//				break;
+//			}
+//			ndx++;
+//		}
+//		dashboardBean.getActivities().remove(ndx);
 		
 		return "dashboard?faces-redirect=true";
 	}
