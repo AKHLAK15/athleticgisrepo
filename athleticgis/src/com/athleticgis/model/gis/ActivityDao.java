@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.athleticgis.model.Dao;
@@ -107,5 +108,28 @@ public class ActivityDao implements Serializable {
 		em.merge(a);
 		em.getTransaction().commit();
 		em.close();
+	}
+	
+	public static Long findActivityCountByUserId(Long user_id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		Query query =
+		  em.createQuery("SELECT count(a) FROM Activity a where a.user.user_id="+ user_id);
+		Long count = (Long) query.getSingleResult();
+		em.close();
+		return count;
+	}
+	
+	public static List<Activity> findActivitiesByUserIdPaginated(Long user_id, int start, int max) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		TypedQuery<Activity> query =
+		  em.createQuery("SELECT a FROM Activity a where a.user.user_id="+ user_id  + " order by a.date", Activity.class);
+		query.setFirstResult(start);
+		query.setMaxResults(max);
+		
+		List<Activity> activities = query.getResultList();
+		em.close();
+		return activities;
 	}
 }
