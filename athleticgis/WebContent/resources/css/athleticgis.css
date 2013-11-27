@@ -1,23 +1,23 @@
 .logoFont {
 	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size:1.875em;
-	color:#000000;
+	color:#FFFFFF;
 }
 
 .userFont {
 	font-family:"Lucida Console", Monaco, monospace;
 	font-size:1em;
-	color:#000000;	
+	color:#FFFFFF;	
 }
 
 .footerFont {
 	font-family:"Lucida Console", Monaco, monospace;
 	font-size:1em;
-	color:#000000;	
+	color:#FFFFFF;	
 }
 
 .header {
-	height:67px;
+	height:35px;
 	width:100%;
 	/*background-color:#b0e0e6;*/
 	background-color: #303030; 
