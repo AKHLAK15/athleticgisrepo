@@ -36,7 +36,7 @@
 						<p:menuitem value="Upload" url="/faces/upload.xhtml" />
 					</p:tabMenu>
 				
-					<p:dataTable id="activityTable" value="#{dashboardBean.activities}"
+					<p:dataTable id="activityTable" value="#{dashboardBean.lazyModel}"
 						var="activity" rows="10"
 						paginator="true">
 

@@ -64,4 +64,12 @@ public class AthleticgisFacade implements Serializable {
 	public static Activity findActivityById(Long id) {
 		return ActivityDao.findById(id);
 	}
+	
+	public static Long findActivityCountByUserId(Long user_id) {
+		return ActivityDao.findActivityCountByUserId(user_id);
+	}
+	
+	public static List<Activity> findActivitiesByUserIdPaginated(Long user_id, int start, int max) {
+		return ActivityDao.findActivitiesByUserIdPaginated(user_id, start, max);
+	}
 }

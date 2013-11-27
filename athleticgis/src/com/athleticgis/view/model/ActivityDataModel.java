@@ -9,16 +9,18 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.athleticgis.model.AthleticgisFacade;
 import com.athleticgis.model.gis.Activity;
 
 public class ActivityDataModel extends LazyDataModel<Activity> {
 	private static final long serialVersionUID = 5024184940806000630L;
 
 	private List<Activity> activities;
+	private Long user_id;
 
-//	public ActivityDataModel(List<Activity> datasource) {
-//		this.datasource = datasource;
-//	}
+	public ActivityDataModel(Long user_id) {
+		this.user_id = user_id;
+	}
 
 	@Override
 	public Activity getRowData(String activityId) {
@@ -75,21 +77,16 @@ public class ActivityDataModel extends LazyDataModel<Activity> {
 //		if (sortField != null) {
 //			Collections.sort(data, new LazySorter(sortField, sortOrder));
 //		}
+		
+		activities = AthleticgisFacade.findActivitiesByUserIdPaginated(user_id, first, pageSize);
 
-		// rowCount
-		int dataSize = data.size();
+		// set the total number of activities
+		Integer dataSize = AthleticgisFacade.findActivityCountByUserId(1L).intValue(); //hard coded user id
 		this.setRowCount(dataSize);
+		
+		this.setPageSize(pageSize);
 
-		// paginate
-		if (dataSize > pageSize) {
-			try {
-				return data.subList(first, first + pageSize);
-			} catch (IndexOutOfBoundsException e) {
-				return data.subList(first, first + (dataSize % pageSize));
-			}
-		} else {
-			return data;
-		}
+		return activities;
 	}
 
 }
