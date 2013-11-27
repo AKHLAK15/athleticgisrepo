@@ -21,6 +21,9 @@ public class DashboardBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	//List<Activity> activities;
 	LazyDataModel<Activity> lazyModel;
+	Activity selectedActivity;
+	
+
 	
 
 	@ManagedProperty(value = "#{userInfoBean}")
@@ -33,6 +36,20 @@ public class DashboardBean implements Serializable {
 
 	public void setUserInfoBean(UserInfoBean userInfoBean) {
 		this.userInfoBean = userInfoBean;
+	}
+	
+	/**
+	 * @return the selectedActivity
+	 */
+	public Activity getSelectedActivity() {
+		return selectedActivity;
+	}
+
+	/**
+	 * @param selectedActivity the selectedActivity to set
+	 */
+	public void setSelectedActivity(Activity selectedActivity) {
+		this.selectedActivity = selectedActivity;
 	}
 	
 	/**
