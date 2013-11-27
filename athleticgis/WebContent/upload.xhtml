@@ -41,7 +41,7 @@
 					<p:fileUpload id="fileUploader"
 						fileUploadListener="#{fileUploadController.handleFileUpload}"
 						mode="advanced" dragDropSupport="false" update="messages" multiple="true"
-						sizeLimit="10000000" fileLimit="10" allowTypes="/(\.|\/)(gpx?x)$/" />
+						sizeLimit="10000000" fileLimit="10" allowTypes="/(\.|\/)(gpx|fit)$/" />
 
 					<p:growl id="messages" showDetail="true" />
 
