@@ -7,14 +7,14 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	
+
 	<link href="resources/css/athleticgis.css" rel="stylesheet" />
 </h:head>
 <h:body>
 	<f:view>
 		<p:layout fullPage="true">
 
-			<p:layoutUnit position="north" size="60" resizable="false"
+			<p:layoutUnit position="north" size="70" resizable="false"
 				closable="false" collapsible="false">
 				<h:panelGrid columns="2" width="100%"
 					columnClasses="headerCol1,headerCol2">
@@ -34,21 +34,22 @@
 			<p:layoutUnit position="center">
 				<h:form id="loginForm" prependId="false">
 					<p:panelGrid columns="1" styleClass="loginPanelGridCenter">
-						<f:facet name="header">  
-        					<h2>Please sign in</h2>
-    					</f:facet>  
-						
+						<f:facet name="header">
+							<h2>Please sign in</h2>
+						</f:facet>
+
 						<p:inputText id="j_username" required="true"
 							styleClass="form-control" placeholder="Username"
 							requiredMessage="Username Required"></p:inputText>
 						<p:password id="j_password" required="true"
-							styleClass="form-control" feedback="true" placeholder="Password"
+							styleClass="form-control" feedback="false" placeholder="Password"
 							requiredMessage="Password Required" />
 
-						<h:outputLabel for="_spring_security_remember_me"
-							styleClass="checkbox">
-							<h:selectBooleanCheckbox id="_spring_security_remember_me" /> Remember Me
-							</h:outputLabel>
+						<h:panelGrid columns="2" style="margin-bottom:10px;"
+							cellpadding="5">	
+							<h:outputText value="Remember Me: " />
+							<p:selectBooleanCheckbox  id="_spring_security_remember_me"/>
+						</h:panelGrid>
 						<h:commandButton value="Sign In" id="login" style="width : 210px;"
 							action="#{loginBean.doLogin}"></h:commandButton>
 					</p:panelGrid>
