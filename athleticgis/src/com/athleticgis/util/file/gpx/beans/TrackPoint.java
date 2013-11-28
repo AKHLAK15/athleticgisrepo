@@ -1,5 +1,5 @@
 /*
- * RoutePoint.java
+ * TrackPoint.java
  * 
  * Copyright (c) 2012, AlternativeVision. All rights reserved.
  *
@@ -19,13 +19,12 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx.beans;
-
+package com.athleticgis.util.file.gpx.beans;
 /**
- * Defines additional route point information that {@link Waypoint} doesn't define.
+ * Defines additional track point information that {@link Waypoint} doesn't define.
  * <br>
  * It is currently not used. 
  */
-public class RoutePoint extends Waypoint{
+public class TrackPoint extends Waypoint{
 
 }

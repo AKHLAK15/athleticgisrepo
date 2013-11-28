@@ -7,7 +7,7 @@ import javax.persistence.EntityTransaction;
 
 import org.junit.*;
 
-import com.athleticgis.model.util.EntityManagerUtil;
+import com.athleticgis.util.model.EntityManagerUtil;
 
 /**
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>

@@ -19,23 +19,24 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx.extensions;
+package com.athleticgis.util.file.gpx.extensions;
 
-import org.alternativevision.gpx.beans.GPX;
-import org.alternativevision.gpx.beans.Route;
-import org.alternativevision.gpx.beans.Track;
-import org.alternativevision.gpx.beans.Waypoint;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import com.athleticgis.util.file.gpx.beans.GPX;
+import com.athleticgis.util.file.gpx.beans.Route;
+import com.athleticgis.util.file.gpx.beans.Track;
+import com.athleticgis.util.file.gpx.beans.Waypoint;
 
 /**
  * This interface defines extension parsers methods. 
  * <br>
  * <p>All custom extension parser must implement this interface.</p>
- * <p>Any custom parser must be added to {@link org.alternativevision.gpx.GPXParser} as an extension parser 
+ * <p>Any custom parser must be added to {@link com.athleticgis.util.file.gpx.GPXParser} as an extension parser 
  * before parsing a gpx file, or writing a {@link GPX} to a file. This is done by
- * calling addExtensionParser() method of {@link org.alternativevision.gpx.GPXParser}
- * <p>{@link org.alternativevision.gpx.GPXParser} parseGPX method calls several methods from the registered 
+ * calling addExtensionParser() method of {@link com.athleticgis.util.file.gpx.GPXParser}
+ * <p>{@link com.athleticgis.util.file.gpx.GPXParser} parseGPX method calls several methods from the registered 
  * extension parsers added at different steps of processing:</p>
  * <ul>
  * <li>parseGPXExtension() for parsing &lt;extensions&gt;  of a &lt;gpx&gt; node</li>
@@ -45,7 +46,7 @@ import org.w3c.dom.Node;
  * </ul>
  * <br>
  * 
- * <p>{@link org.alternativevision.gpx.GPXParser} writeGPX method also calls several methods from the registered 
+ * <p>{@link com.athleticgis.util.file.gpx.GPXParser} writeGPX method also calls several methods from the registered 
  * extensions parsers at different steps of writing data:</p>
  * <ul>
  * <li>writeGPXExtensionData() when writing  the &lt;extensions&gt;  from the {@link GPX}</li>

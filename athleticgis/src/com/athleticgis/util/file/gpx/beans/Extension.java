@@ -19,7 +19,7 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx.beans;
+package com.athleticgis.util.file.gpx.beans;
 
 import java.util.HashMap;
 

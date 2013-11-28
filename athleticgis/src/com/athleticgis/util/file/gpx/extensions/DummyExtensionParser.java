@@ -19,14 +19,15 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx.extensions;
+package com.athleticgis.util.file.gpx.extensions;
 
-import org.alternativevision.gpx.beans.GPX;
-import org.alternativevision.gpx.beans.Route;
-import org.alternativevision.gpx.beans.Track;
-import org.alternativevision.gpx.beans.Waypoint;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import com.athleticgis.util.file.gpx.beans.GPX;
+import com.athleticgis.util.file.gpx.beans.Route;
+import com.athleticgis.util.file.gpx.beans.Track;
+import com.athleticgis.util.file.gpx.beans.Waypoint;
 
 public class DummyExtensionParser implements IExtensionParser {
 

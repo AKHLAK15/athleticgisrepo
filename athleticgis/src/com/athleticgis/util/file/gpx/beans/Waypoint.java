@@ -19,13 +19,13 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx.beans;
+package com.athleticgis.util.file.gpx.beans;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
-import org.alternativevision.gpx.types.FixType;
+import com.athleticgis.util.file.gpx.types.FixType;
 
 /**
  * This class holds waypoint information from a &lt;wpt&gt; node. 

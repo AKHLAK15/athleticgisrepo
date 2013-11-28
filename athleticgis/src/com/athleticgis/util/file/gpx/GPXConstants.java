@@ -19,7 +19,7 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx;
+package com.athleticgis.util.file.gpx;
 
 public interface GPXConstants {
 	/*GPX nodes and attributes*/

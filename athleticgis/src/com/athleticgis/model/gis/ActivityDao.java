@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import com.athleticgis.model.Dao;
 import com.athleticgis.model.user.User;
 import com.athleticgis.model.user.UserRole;
-import com.athleticgis.model.util.EntityManagerUtil;
+import com.athleticgis.util.model.EntityManagerUtil;
 
 public class ActivityDao implements Serializable {
 	private static final long serialVersionUID = 5546876539130483879L;

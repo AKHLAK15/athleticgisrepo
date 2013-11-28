@@ -19,14 +19,14 @@ import javax.faces.validator.ValidatorException;
 import javax.servlet.http.Part;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.alternativevision.gpx.GPXParser;
-import org.alternativevision.gpx.beans.GPX;
-import org.alternativevision.gpx.beans.Track;
-import org.alternativevision.gpx.beans.Waypoint;
 import org.xml.sax.SAXException;
 
 import com.athleticgis.model.AthleticgisFacade;
 import com.athleticgis.model.gis.ActivityPoint;
+import com.athleticgis.util.file.gpx.GPXParser;
+import com.athleticgis.util.file.gpx.beans.GPX;
+import com.athleticgis.util.file.gpx.beans.Track;
+import com.athleticgis.util.file.gpx.beans.Waypoint;
 
 @ManagedBean
 @RequestScoped

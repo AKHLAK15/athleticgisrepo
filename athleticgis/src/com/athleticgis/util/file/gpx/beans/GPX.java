@@ -19,8 +19,9 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx.beans;
+package com.athleticgis.util.file.gpx.beans;
 
+//original package was org.alternativevision.gpx; meallen 11/28/2013
 import java.util.HashSet;
 /**
  * This class holds gpx information from a &lt;gpx&gt; node. 

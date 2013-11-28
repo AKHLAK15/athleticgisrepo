@@ -1,4 +1,4 @@
-package com.athleticgis.model.util;
+package com.athleticgis.util.model;
 
 //import java.io.Serializable;
 

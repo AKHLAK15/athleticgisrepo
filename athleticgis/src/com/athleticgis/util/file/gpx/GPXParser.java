@@ -19,7 +19,7 @@
  * MA 02110-1301  USA
  */
 
-package org.alternativevision.gpx;
+package com.athleticgis.util.file.gpx;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,18 +39,19 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.alternativevision.gpx.beans.GPX;
-import org.alternativevision.gpx.beans.Route;
-import org.alternativevision.gpx.beans.Track;
-import org.alternativevision.gpx.beans.Waypoint;
-import org.alternativevision.gpx.extensions.IExtensionParser;
-import org.alternativevision.gpx.types.FixType;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.athleticgis.util.file.gpx.beans.GPX;
+import com.athleticgis.util.file.gpx.beans.Route;
+import com.athleticgis.util.file.gpx.beans.Track;
+import com.athleticgis.util.file.gpx.beans.Waypoint;
+import com.athleticgis.util.file.gpx.extensions.IExtensionParser;
+import com.athleticgis.util.file.gpx.types.FixType;
 
 /**
  * <p>This class defines methods for parsing and writing gpx files.</p>
