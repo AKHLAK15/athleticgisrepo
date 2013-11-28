@@ -95,8 +95,8 @@ public class FileUploadController {
         }
 		} else if("fit".equals(extension)) {
 			try {
-				FitDecoder d = new FitDecoder();
-				d.decode(file.getInputstream());
+				//FitDecoder d = new FitDecoder();
+				FitDecoder.decode(file.getInputstream());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

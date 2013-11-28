@@ -8,7 +8,7 @@ import com.garmin.fit.MesgBroadcaster;
 import com.garmin.fit.RecordMesgListener;
 
 public class FitDecoder {
-	public void decode(InputStream in) {
+	public static void decode(InputStream in) {
 		Decode decode = new Decode();
 		MesgBroadcaster mesgBroadcaster = new MesgBroadcaster(decode);
 		FitListener listener = new FitListener();
