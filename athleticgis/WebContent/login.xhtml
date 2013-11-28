@@ -19,7 +19,8 @@
 				closable="false" collapsible="false" >
 				<h:panelGrid columns="2" width="100%"
 					columnClasses="headerCol1,headerCol2" styleClass="header">
-					<h:outputLabel value="Athletic GIS" styleClass="logoFont"></h:outputLabel>
+					<h:graphicImage library="images" name="logo11282013.png" style="padding:0 0 0 10px"/>
+					<!--  <h:outputLabel value="Athletic GIS" styleClass="logoFont"></h:outputLabel>-->
 
 				</h:panelGrid>
 
@@ -36,7 +37,8 @@
 				<h:form id="loginForm" prependId="false">
 					<p:panelGrid columns="1" styleClass="loginPanelGridCenter">
 						<f:facet name="header">
-							<h2>Please sign in</h2>
+							<h:outputText value="Please sign in" styleClass="loginPanelHeaderFont"></h:outputText>
+							<!--  <h2>Please sign in</h2>-->
 						</f:facet>
 
 						<p:inputText id="j_username" required="true"

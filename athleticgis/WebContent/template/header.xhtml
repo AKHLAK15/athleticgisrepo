@@ -8,10 +8,10 @@
     <body>
 	    <ui:composition>
 	    <h:panelGrid columns="2" width="100%" columnClasses="headerCol1,headerCol2" styleClass="header">
-			<h:outputLabel value="Athletic GIS" styleClass="logoFont"></h:outputLabel> 
-			<h:outputLink value="/athleticgis/logout" ><h:outputLabel value="Logout #{userInfoBean.name}" styleClass="userFont"></h:outputLabel></h:outputLink>
-			<!--  <h:commandLink value="Logout #{userInfoBean.name}" styleClass="userFont" rendered="#{userInfoBean.loggedIn}" action="/logout"></h:commandLink>-->
-			<!--  <h:outputLabel value="Welcome #{userInfoBean.name}" styleClass="userFont"></h:outputLabel>-->
+		
+			<h:graphicImage library="images" name="logo11282013.png" style="padding:0 0 0 10px"/> 
+			<h:outputLink value="/athleticgis/logout" ><h:outputText style="padding:0 20px 0 0" value="Logout #{userInfoBean.name}" styleClass="userFont"></h:outputText></h:outputLink>
+			
  		</h:panelGrid>
 	    </ui:composition>
     </body>

@@ -12,15 +12,21 @@
 
 .footerFont {
 	font-family:"Lucida Console", Monaco, monospace;
-	font-size:1em;
+	font-size:.7em;
 	color:#FFFFFF;	
+}
+
+.loginPanelHeaderFont {
+	font-family:"Lucida Console", Monaco, monospace;
+	font-size:1em;
+	color:#000000;
 }
 
 .header {
 	height:35px;
 	width:100%;
 	/*background-color:#b0e0e6;*/
-	background-color: #303030; 
+	background-color: #000000; 
 	
 	/*border-top-left-radius:2em;
 	border-top-right-radius:2em;*/
@@ -37,7 +43,7 @@
 .footer {
 	height:23px;
 	width:100%;
-	background-color:#303030;
+	background-color:#000000;
 	/*border-bottom-right-radius:2em;
 	border-bottom-left-radius:2em;*/
 }
