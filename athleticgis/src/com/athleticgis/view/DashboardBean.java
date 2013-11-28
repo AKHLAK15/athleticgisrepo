@@ -8,7 +8,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.LazyDataModel;
 
-import com.athleticgis.model.gis.Activity;
+import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.model.AthleticgisFacade;
 import com.athleticgis.view.model.ActivityDataModel;
 

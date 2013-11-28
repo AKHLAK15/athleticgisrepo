@@ -1,4 +1,4 @@
-package com.athleticgis.model.gis;
+package com.athleticgis.model.activity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,9 +8,11 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.athleticgis.domain.activity.Activity;
+import com.athleticgis.domain.activity.ActivityPoint;
+import com.athleticgis.domain.user.User;
+import com.athleticgis.domain.user.UserRole;
 import com.athleticgis.model.Dao;
-import com.athleticgis.model.user.User;
-import com.athleticgis.model.user.UserRole;
 import com.athleticgis.util.model.EntityManagerUtil;
 
 public class ActivityDao implements Serializable {

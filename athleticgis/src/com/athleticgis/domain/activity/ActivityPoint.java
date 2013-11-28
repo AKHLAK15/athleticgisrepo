@@ -1,4 +1,4 @@
-package com.athleticgis.model.gis;
+package com.athleticgis.domain.activity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

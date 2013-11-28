@@ -16,14 +16,16 @@ import javax.faces.event.ActionEvent;
 
 
 
+
+
 import org.primefaces.event.map.OverlaySelectEvent;  
 import org.primefaces.model.map.DefaultMapModel;  
 import org.primefaces.model.map.LatLng;  
 import org.primefaces.model.map.MapModel;  
 import org.primefaces.model.map.Polyline;
 
+import com.athleticgis.domain.activity.ActivityPoint;
 import com.athleticgis.model.AthleticgisFacade;
-import com.athleticgis.model.gis.ActivityPoint;
 
 @ManagedBean
 @RequestScoped

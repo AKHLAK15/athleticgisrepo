@@ -19,8 +19,8 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;  
 import org.xml.sax.SAXException;
 
+import com.athleticgis.domain.activity.ActivityPoint;
 import com.athleticgis.model.AthleticgisFacade;
-import com.athleticgis.model.gis.ActivityPoint;
 import com.athleticgis.util.file.gpx.GPXParser;
 import com.athleticgis.util.file.gpx.beans.GPX;
 import com.athleticgis.util.file.gpx.beans.Track;
@@ -60,7 +60,7 @@ public void upload(UploadedFile file) throws ParserConfigurationException, SAXEx
             
             GPXParser p = new GPXParser();
             GPX gpx = p.parseGPX(in);
-            com.athleticgis.model.gis.Activity a = new com.athleticgis.model.gis.Activity();
+            com.athleticgis.domain.activity.Activity a = new com.athleticgis.domain.activity.Activity();
             a.setName(file.getFileName());
             //AthleticgisFacade af = new AthleticgisFacade();
             a.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getName()));
@@ -69,7 +69,7 @@ public void upload(UploadedFile file) throws ParserConfigurationException, SAXEx
             for(Track t : gpx.getTracks()) {
             	for(Waypoint  wp : t.getTrackPoints()) {
             		//System.out.println(wp.getLatitude() + "," + wp.getLongitude());
-            		com.athleticgis.model.gis.ActivityPoint activityPoint = new ActivityPoint();
+            		com.athleticgis.domain.activity.ActivityPoint activityPoint = new ActivityPoint();
             		activityPoint.setLatitude(wp.getLatitude());
             		activityPoint.setLongitude(wp.getLongitude());
             		activityPoint.setTime(new Timestamp(wp.getTime().getTime()));

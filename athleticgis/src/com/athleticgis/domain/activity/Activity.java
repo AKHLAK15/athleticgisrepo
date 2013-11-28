@@ -1,4 +1,4 @@
-package com.athleticgis.model.gis;
+package com.athleticgis.domain.activity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.athleticgis.model.user.User;
+import com.athleticgis.domain.user.User;
 
 @Entity
 @Table

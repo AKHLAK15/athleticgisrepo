@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import com.athleticgis.domain.user.User;
+import com.athleticgis.domain.user.UserRole;
 import com.athleticgis.model.Dao;
 import com.athleticgis.util.model.EntityManagerUtil;
 

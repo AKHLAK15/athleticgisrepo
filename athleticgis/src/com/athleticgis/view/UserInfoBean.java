@@ -7,8 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.athleticgis.domain.user.User;
 import com.athleticgis.model.AthleticgisFacade;
-import com.athleticgis.model.user.User;
 
 import java.io.Serializable;
 import java.util.Collection;

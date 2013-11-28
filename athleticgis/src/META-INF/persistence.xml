@@ -8,10 +8,10 @@
             Persistence unit for athleticgis
         </description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>com.athleticgis.model.user.UserRole</class>
-        <class>com.athleticgis.model.gis.ActivityPoint</class>
-        <class>com.athleticgis.model.gis.Activity</class>
-        <class>com.athleticgis.model.user.User</class>
+        <class>com.athleticgis.domain.user.UserRole</class>
+        <class>com.athleticgis.domain.activity.ActivityPoint</class>
+        <class>com.athleticgis.domain.activity.Activity</class>
+        <class>com.athleticgis.domain.user.User</class>
         
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

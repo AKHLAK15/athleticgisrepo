@@ -10,8 +10,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
+import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.model.AthleticgisFacade;
-import com.athleticgis.model.gis.Activity;
 
 @ManagedBean
 @RequestScoped

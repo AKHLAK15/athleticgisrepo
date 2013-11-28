@@ -3,10 +3,10 @@ package com.athleticgis.model;
 import java.io.Serializable;
 import java.util.List;
 
-import com.athleticgis.model.gis.ActivityDao;
-import com.athleticgis.model.gis.Activity;
-import com.athleticgis.model.gis.ActivityPoint;
-import com.athleticgis.model.user.User;
+import com.athleticgis.domain.activity.Activity;
+import com.athleticgis.domain.activity.ActivityPoint;
+import com.athleticgis.domain.user.User;
+import com.athleticgis.model.activity.ActivityDao;
 import com.athleticgis.model.user.UserDao;
 
 public class AthleticgisFacade implements Serializable {

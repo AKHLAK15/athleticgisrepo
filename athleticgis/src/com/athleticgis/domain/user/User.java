@@ -1,4 +1,4 @@
-package com.athleticgis.model.user;
+package com.athleticgis.domain.user;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.athleticgis.model.gis.Activity;
+import com.athleticgis.domain.activity.Activity;
 
 @Entity
 @Table(name="users")

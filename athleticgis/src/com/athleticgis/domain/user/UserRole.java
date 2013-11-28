@@ -1,4 +1,4 @@
-package com.athleticgis.model.user;
+package com.athleticgis.domain.user;
 
 import java.io.Serializable;
 

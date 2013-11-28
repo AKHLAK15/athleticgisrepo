@@ -9,8 +9,8 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.model.AthleticgisFacade;
-import com.athleticgis.model.gis.Activity;
 
 public class ActivityDataModel extends LazyDataModel<Activity> {
 	private static final long serialVersionUID = 5024184940806000630L;
