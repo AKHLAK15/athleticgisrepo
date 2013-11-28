@@ -7,19 +7,19 @@ public class FitListener implements RecordMesgListener {
 	@Override
 	public void onMesg(RecordMesg mesg) {
 		if(mesg.getPositionLat() != null) {
-			System.out.println(mesg.getPositionLat());
+			System.out.println("lat: " + mesg.getPositionLat());
 		}
 		
 		if(mesg.getPositionLong() != null) {
-			System.out.println(mesg.getPositionLong());
+			System.out.println("lng: " + mesg.getPositionLong());
 		}
 		
 		if(mesg.getAltitude() != null) {
-			System.out.println(mesg.getAltitude());
+			System.out.println("alt: " + mesg.getAltitude());
 		}
 		
 		if(mesg.getTimestamp() != null) {
-			System.out.println(mesg.getTimestamp());
+			System.out.println("time: " + mesg.getTimestamp());
 		}
 	}
 }
