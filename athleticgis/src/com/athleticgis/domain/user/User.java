@@ -10,7 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.athleticgis.domain.activity.Activity;
@@ -27,6 +29,10 @@ public class User implements Serializable {
 
 	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, orphanRemoval=true)
 	private Set<UserRole> userroles;
+	
+	@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="userdetail_id")
+	private UserDetail userDetail;
 	
 	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, orphanRemoval=true)
 	private Set<Activity> activities;
