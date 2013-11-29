@@ -63,8 +63,8 @@
 
 				<p:growl id="growl" life="3000" />
 
-				<p:gmap center="#{mapBean.center}" zoom="13" type="HYBRID"
-					style="width:100%;height:400px" model="#{mapBean.polylineModel}">
+				<p:gmap  fitBounds="true" type="HYBRID"
+					style="width:100%;height:400px" model="#{mapBean.polylineModel}" >
 					<p:ajax event="overlaySelect"
 						listener="#{mapBean.onPolylineSelect}" update="growl" />
 				</p:gmap>

@@ -2,6 +2,9 @@ package com.athleticgis.util.gis;
 
 import java.util.List;
 
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.LatLngBounds;
+
 import com.athleticgis.domain.activity.*;
 
 ;
@@ -51,31 +54,34 @@ public class GISCalculator {
 	private double deg2rad(double deg) {
 		return (deg * Math.PI / 180.0);
 	}
-	
-	public void centerMap() {
-//		int minLat = Integer.MAX_VALUE;
-//		int maxLat = Integer.MIN_VALUE;
-//		int minLon = Integer.MAX_VALUE;
-//		int maxLon = Integer.MIN_VALUE;
 
-//		for (GeoPoint item : items) 
-//		{ 
-//
-//		      int lat = item.getLatitudeE6();
-//		      int lon = item.getLongitudeE6();
-//
-//		      maxLat = Math.max(lat, maxLat);
-//		      minLat = Math.min(lat, minLat);
-//		      maxLon = Math.max(lon, maxLon);
-//		      minLon = Math.min(lon, minLon);
-//		 }
+	public LatLngBounds getLatLngBounds(List<ActivityPoint> aps) {
+		
 
-//		mapController.zoomToSpan(Math.abs(maxLat - minLat), Math.abs(maxLon - minLon));
-//		mapController.animateTo(new GeoPoint( (maxLat + minLat)/2, 
-//		(maxLon + minLon)/2 )); 
-//		
-//		
-//		double fitFactor = 1.5;
-//		mapController.zoomToSpan((int) (Math.abs(maxLat - minLat) * fitFactor), (int)(Math.abs(maxLon - minLon) * fitFactor));
+		Double minLat = 90.0;
+		Double maxLat = -90.0;
+		Double minLon = 180.0;
+		Double maxLon = -180.0;
+		
+
+		for (ActivityPoint a : aps) {
+
+			Double lat = a.getLatitude();
+			Double lon = a.getLongitude();
+
+			maxLat = Math.max(lat, maxLat);
+			minLat = Math.min(lat, minLat);
+			maxLon = Math.max(lon, maxLon);
+			minLon = Math.min(lon, minLon);
+		}
+		
+		System.out.println("sw: " + minLat + "," + minLon + "ne" + maxLat + "," + maxLon);
+		
+		LatLng sw = new LatLng(minLat, minLon);
+		LatLng ne = new LatLng(maxLat, maxLon);
+		
+		
+		LatLngBounds latLngBounds = new LatLngBounds(ne, sw);
+		return latLngBounds;
 	}
 }
