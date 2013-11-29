@@ -30,9 +30,9 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, orphanRemoval=true)
 	private Set<UserRole> userroles;
 
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="userdetail_id")
-	private UserDetail userDetail;
+//	@OneToOne(fetch=FetchType.EAGER)
+//	@JoinColumn(name="userdetail_id")
+//	private UserDetail userDetail;
 	
 	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, orphanRemoval=true)
 	private Set<Activity> activities;
@@ -45,6 +45,23 @@ public class User implements Serializable {
 
 	@Column
 	private int enabled;
+	
+	@Column 
+	private String theme;
+
+	/**
+	 * @return the theme
+	 */
+	public String getTheme() {
+		return theme;
+	}
+
+	/**
+	 * @param theme the theme to set
+	 */
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
 
 	/**
 	 * @return the activities
@@ -134,17 +151,17 @@ public class User implements Serializable {
 		this.enabled = enabled;
 	}
 	
-	/**
-	 * @return the userDetail
-	 */
-	public UserDetail getUserDetail() {
-		return userDetail;
-	}
-
-	/**
-	 * @param userDetail the userDetail to set
-	 */
-	public void setUserDetail(UserDetail userDetail) {
-		this.userDetail = userDetail;
-	}
+//	/**
+//	 * @return the userDetail
+//	 */
+//	public UserDetail getUserDetail() {
+//		return userDetail;
+//	}
+//
+//	/**
+//	 * @param userDetail the userDetail to set
+//	 */
+//	public void setUserDetail(UserDetail userDetail) {
+//		this.userDetail = userDetail;
+//	}
 }

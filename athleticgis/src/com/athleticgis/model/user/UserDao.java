@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 
 import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.domain.user.User;
-import com.athleticgis.domain.user.UserDetail;
+//import com.athleticgis.domain.user.UserDetail;
 import com.athleticgis.domain.user.UserRole;
 import com.athleticgis.model.Dao;
 import com.athleticgis.util.model.EntityManagerUtil;
@@ -147,17 +147,34 @@ public class UserDao implements Dao<User>, Serializable {
 		
 	}
 	
-	public static void updateTheme(String theme, Long user_id) {
+//	public static void updateTheme(String theme, Long user_id) {
+//		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+//				.createEntityManager();
+//		User u = em.find(User.class, user_id);
+//		em.getTransaction().begin();
+//		if(u.getUserDetail() == null) {
+//			UserDetail ud = new UserDetail();
+//			ud.setTheme(theme);
+//			ud.setUser(u);
+//			em.persist(ud);
+//			u.setUserDetail(ud);
+//			em.merge(u);
+//		} else {
+//			UserDetail ud = em.find(UserDetail.class, u.getUserDetail().getUserdetail_id());
+//			ud.setTheme(theme);
+//			em.merge(ud);
+//			u.setUserDetail(ud);
+//			em.merge(u);
+//		}
+//		em.getTransaction().commit();
+//		em.close();
+//	}
+	
+	public static void updateUserTheme(Long user_id, String theme) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 		User u = em.find(User.class, user_id);
-		if(u.getUserDetail() == null) {
-			UserDetail ud = new UserDetail();
-			ud.setTheme(theme);
-			ud.setUser(u);
-		} else {
-			u.getUserDetail().setTheme(theme);
-		}
+		u.setTheme(theme);
 		em.getTransaction().begin();
 		em.merge(u);
 		em.getTransaction().commit();

@@ -24,7 +24,32 @@ public class UserInfoBean implements Serializable {
 	private Boolean isGeneral;
 	private Long user_id;
 	private User user;
+	private String theme;
 	
+	/**
+	 * @return the theme
+	 */
+	public String getTheme() {
+		if(user == null) {
+			this.theme = "bootstrap";
+		} else if (user.getTheme() == null) {
+			AthleticgisFacade.updateUserTheme(user.getUser_id(), "bootstrap");
+		} else {
+			this.theme = user.getTheme();
+		}
+		return theme;
+	}
+
+	/**
+	 * @param theme the theme to set
+	 */
+	public void setTheme(String theme) {
+		if(!user.getTheme().equals(theme)) {
+			AthleticgisFacade.updateUserTheme(user.getUser_id(), theme);
+			user.setTheme(theme);
+		}
+	}
+
 	/**
 	 * @return the user_id
 	 */

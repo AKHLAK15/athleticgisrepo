@@ -15,21 +15,23 @@ import javax.faces.bean.SessionScoped;
 public class ThemeSwitcherBean {
 	private Map<String, String> themes;
     private String theme;
-    @ManagedProperty(value = "#{guestPreferences}")
-    private GuestPreferences guestPreferences;
+    @ManagedProperty(value = "#{userInfoBean}")
+    private UserInfoBean userInfoBean;
     
-    /**
-	 * @return the guestPreferences
+   
+
+	/**
+	 * @return the userInfoBean
 	 */
-	public GuestPreferences getGuestPreferences() {
-		return guestPreferences;
+	public UserInfoBean getUserInfoBean() {
+		return userInfoBean;
 	}
 
 	/**
-	 * @param guestPreferences the guestPreferences to set
+	 * @param userInfoBean the userInfoBean to set
 	 */
-	public void setGuestPreferences(GuestPreferences guestPreferences) {
-		this.guestPreferences = guestPreferences;
+	public void setUserInfoBean(UserInfoBean userInfoBean) {
+		this.userInfoBean = userInfoBean;
 	}
 
 	public Map<String, String> getThemes() {
@@ -47,7 +49,7 @@ public class ThemeSwitcherBean {
     @PostConstruct
     public void init() {
     	
-        setTheme(guestPreferences.getTheme()); // theme from the database;
+        setTheme(userInfoBean.getTheme()); // theme from the database;
 
         themes = new TreeMap<String, String>();
         themes.put("Aristo", "aristo");
@@ -84,7 +86,8 @@ public class ThemeSwitcherBean {
         themes.put("Vader", "vader");
     }
 
-    public void saveTheme() {           
-    	guestPreferences.setTheme(theme); // theme to database
+    public void saveTheme() {  
+    	System.out.println(theme);
+    	userInfoBean.setTheme(theme); // theme to database
     }
 }

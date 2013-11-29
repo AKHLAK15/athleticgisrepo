@@ -38,7 +38,7 @@
 				</p:tabMenu>
 
 				<h:outputText value="Stateful Switcher:" />
-				<p:themeSwitcher value="#{guestPreferences.theme}"
+				<p:themeSwitcher value="#{themeSwitcherBean.theme}"
 					style="width:165px" effect="fade" id="statefulSwitcher">
 					<f:selectItem itemLabel="Choose Theme" itemValue="" />
 					<f:selectItems value="#{themeSwitcherBean.themes}" />
