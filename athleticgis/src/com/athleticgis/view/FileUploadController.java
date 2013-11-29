@@ -51,51 +51,31 @@ public class FileUploadController {
 			throws ParserConfigurationException, SAXException {
 		FacesMessage msg = new FacesMessage("Succesful", event.getFile()
 				.getFileName() + " is uploaded.");
+		
+		try {
+			upload(event.getFile());
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			msg = new FacesMessage("Whoops!", event.getFile().getFileName() + " was not uploaded. GPX file was not valid.");
+		} catch (ParserConfigurationException e) {
+			msg = new FacesMessage("Whoops!", event.getFile().getFileName() + " was not uploaded. Unable to parse GPX.");
+		} catch (IOException e) {
+			msg = new FacesMessage("Whoops!", event.getFile().getFileName() + " was not uploaded. Error reading input.");
+		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		upload(event.getFile());
 	}
 
-	public void upload(UploadedFile file) throws ParserConfigurationException, SAXException {
+	public void upload(UploadedFile file) throws ParserConfigurationException, SAXException, IOException {
 		System.out.println("Uploading file " + file.getFileName());
-		String extension = FileUtil.fileExtension(file.getFileName().toLowerCase()); 
-		if("gpx".equals(extension)) {
-		
-        try {
-            
-            InputStream in=file.getInputstream();
-            
-            GPXParser p = new GPXParser();
-            GPX gpx = p.parseGPX(in);
-            com.athleticgis.domain.activity.Activity a = new com.athleticgis.domain.activity.Activity();
-            a.setName(file.getFileName());
-            //AthleticgisFacade af = new AthleticgisFacade();
-            a.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getName()));
-            
-            List<ActivityPoint> activityPoints = new ArrayList<ActivityPoint>();
-            for(Track t : gpx.getTracks()) {
-            	for(Waypoint  wp : t.getTrackPoints()) {
-            		//System.out.println(wp.getLatitude() + "," + wp.getLongitude());
-            		com.athleticgis.domain.activity.ActivityPoint activityPoint = new ActivityPoint();
-            		activityPoint.setLatitude(wp.getLatitude());
-            		activityPoint.setLongitude(wp.getLongitude());
-            		activityPoint.setTime(new Timestamp(wp.getTime().getTime()));
-            		activityPoint.setElevation(wp.getElevation());
-            		activityPoints.add(activityPoint);
-            	}
-            }
-            a.setWaypoints(activityPoints);
-            
-            
-            AthleticgisFacade.persistActivityAndActivityPoints(a, activityPoints);
-            
-            in.close();
-            //br.close();
-        } catch (IOException ex) {
-           ex.printStackTrace();
-        }
-		} else if("fit".equals(extension)) {
+		String extension = FileUtil.fileExtension(file.getFileName()
+				.toLowerCase());
+		if ("gpx".equals(extension)) {
+			FileUtil.uploadAcitvityPointsFromGPX(file, userInfoBean.getUsername());
+
+		} else if ("fit".equals(extension)) {
 			try {
-				//FitDecoder d = new FitDecoder();
+				// FitDecoder d = new FitDecoder();
 				FitDecoder.decode(file.getInputstream());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

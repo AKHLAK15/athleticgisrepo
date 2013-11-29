@@ -1,13 +1,61 @@
 package com.athleticgis.util.file;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.primefaces.model.UploadedFile;
+import org.xml.sax.SAXException;
+
+import com.athleticgis.domain.activity.Activity;
+import com.athleticgis.domain.activity.ActivityPoint;
+import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.util.file.gpx.GPXParser;
+import com.athleticgis.util.file.gpx.beans.GPX;
+import com.athleticgis.util.file.gpx.beans.Track;
+import com.athleticgis.util.file.gpx.beans.Waypoint;
+
 public class FileUtil {
 	public static String fileExtension(String fileName) {
 		String extension = null;
 
 		int i = fileName.lastIndexOf('.');
 		if (i > 0) {
-		    extension = fileName.substring(i+1);
+			extension = fileName.substring(i + 1);
 		}
 		return extension;
 	}
+
+	public static void uploadAcitvityPointsFromGPX(UploadedFile file, String username) throws ParserConfigurationException, SAXException, IOException {
+		InputStream in = file.getInputstream();
+		GPXParser p = new GPXParser();
+		GPX gpx = p.parseGPX(in);
+		Activity a = new Activity();
+		a.setName(file.getFileName());
+		a.setUser(AthleticgisFacade.findUserByUsername(username));
+
+		List<ActivityPoint> activityPoints = new ArrayList<ActivityPoint>();
+		for (Track t : gpx.getTracks()) {
+			for (Waypoint wp : t.getTrackPoints()) {
+				// System.out.println(wp.getLatitude() + "," +
+				// wp.getLongitude());
+				com.athleticgis.domain.activity.ActivityPoint activityPoint = new ActivityPoint();
+				activityPoint.setLatitude(wp.getLatitude());
+				activityPoint.setLongitude(wp.getLongitude());
+				activityPoint.setTime(new Timestamp(wp.getTime().getTime()));
+				activityPoint.setElevation(wp.getElevation());
+				activityPoints.add(activityPoint);
+			}
+		}
+		a.setWaypoints(activityPoints);
+
+		AthleticgisFacade.persistActivityAndActivityPoints(a, activityPoints);
+
+		in.close();
+	}
+
 }
