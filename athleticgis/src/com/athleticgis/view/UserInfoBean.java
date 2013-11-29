@@ -56,10 +56,10 @@ public class UserInfoBean implements Serializable {
 		if(!isAuthenticated()) {
 			this.theme = "bootstrap";
 		} else if(getUser().getTheme() == null) {
-			AthleticgisFacade.updateUserTheme(user.getUser_id(), "bootstrap");
+			AthleticgisFacade.updateUserTheme(getUser().getUser_id(), "bootstrap");
 			this.theme = "bootstrap";
 		} else {
-			this.theme = user.getTheme();
+			this.theme = getUser().getTheme();
 		}
 		
 		
