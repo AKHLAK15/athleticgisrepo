@@ -3,6 +3,8 @@ package com.athleticgis.view;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,18 +43,33 @@ public class UserInfoBean implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public boolean isAuthenticated() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+	}
 
 	/**
 	 * @return the theme
 	 */
 	public String getTheme() {
-		if (user == null) {
+		if(!isAuthenticated()) {
 			this.theme = "bootstrap";
-		} else if (user.getTheme() == null) {
+		} else if(getUser().getTheme() == null) {
 			AthleticgisFacade.updateUserTheme(user.getUser_id(), "bootstrap");
+			this.theme = "bootstrap";
 		} else {
 			this.theme = user.getTheme();
 		}
+		
+		
+//		if (user == null) {
+//			this.theme = "bootstrap";
+//		} else if (user.getTheme() == null) {
+//			AthleticgisFacade.updateUserTheme(user.getUser_id(), "bootstrap");
+//		} else {
+//			this.theme = user.getTheme();
+//		}
 		return theme;
 	}
 
