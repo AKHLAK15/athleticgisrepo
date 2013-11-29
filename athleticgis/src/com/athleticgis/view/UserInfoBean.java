@@ -36,6 +36,15 @@ public class UserInfoBean implements Serializable {
 		}
 		return user.getUser_id();
 	}
+	
+	public User getUser() {
+		if(user_id == null) {
+			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			name = userDetails.getUsername();
+			user = AthleticgisFacade.findUserByUsername(name);
+		}
+		return user;
+	}
 //	/**
 //	 * @param user_id the user_id to set
 //	 */

@@ -72,4 +72,8 @@ public class AthleticgisFacade implements Serializable {
 	public static List<Activity> findActivitiesByUserIdPaginated(Long user_id, int start, int max) {
 		return ActivityDao.findActivitiesByUserIdPaginated(user_id, start, max);
 	}
+	
+	public static void updateTheme(String theme, Long user_id) {
+		UserDao.updateTheme(theme, user_id);
+	}
 }

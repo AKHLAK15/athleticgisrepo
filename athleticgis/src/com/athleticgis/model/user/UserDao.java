@@ -10,7 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.domain.user.User;
+import com.athleticgis.domain.user.UserDetail;
 import com.athleticgis.domain.user.UserRole;
 import com.athleticgis.model.Dao;
 import com.athleticgis.util.model.EntityManagerUtil;
@@ -143,5 +145,22 @@ public class UserDao implements Dao<User>, Serializable {
 	public void persist(User entity) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static void updateTheme(String theme, Long user_id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		User u = em.find(User.class, user_id);
+		if(u.getUserDetail() == null) {
+			UserDetail ud = new UserDetail();
+			ud.setTheme(theme);
+			ud.setUser(u);
+		} else {
+			u.getUserDetail().setTheme(theme);
+		}
+		em.getTransaction().begin();
+		em.merge(u);
+		em.getTransaction().commit();
+		em.close();
 	}
 }

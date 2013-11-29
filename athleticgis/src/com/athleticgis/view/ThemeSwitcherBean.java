@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;  
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean
@@ -14,13 +15,24 @@ import javax.faces.bean.SessionScoped;
 public class ThemeSwitcherBean {
 	private Map<String, String> themes;
     private String theme;
-    private GuestPreferences gp;
+    @ManagedProperty(value = "#{guestPreferences}")
+    private GuestPreferences guestPreferences;
     
-    private void setGp(GuestPreferences gp) {
-        this.gp = gp;
-    }
+    /**
+	 * @return the guestPreferences
+	 */
+	public GuestPreferences getGuestPreferences() {
+		return guestPreferences;
+	}
 
-    public Map<String, String> getThemes() {
+	/**
+	 * @param guestPreferences the guestPreferences to set
+	 */
+	public void setGuestPreferences(GuestPreferences guestPreferences) {
+		this.guestPreferences = guestPreferences;
+	}
+
+	public Map<String, String> getThemes() {
         return themes;
     }
 
@@ -34,8 +46,8 @@ public class ThemeSwitcherBean {
 
     @PostConstruct
     public void init() {
-        setGp(new GuestPreferences()); // persistent class
-        setTheme(gp.getTheme()); // theme from the database;
+    	
+        setTheme(guestPreferences.getTheme()); // theme from the database;
 
         themes = new TreeMap<String, String>();
         themes.put("Aristo", "aristo");
@@ -73,6 +85,6 @@ public class ThemeSwitcherBean {
     }
 
     public void saveTheme() {           
-        gp.setTheme(theme); // theme to database
+    	guestPreferences.setTheme(theme); // theme to database
     }
 }
