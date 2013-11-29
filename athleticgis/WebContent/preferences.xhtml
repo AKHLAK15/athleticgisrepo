@@ -36,14 +36,15 @@
 					<p:menuitem value="Upload" url="/faces/upload.xhtml" />
 					<p:menuitem value="Preferences" url="/faces/preferences.xhtml" />
 				</p:tabMenu>
-
-				<h:outputText value="Stateful Switcher:" />
-				<p:themeSwitcher value="#{themeSwitcherBean.theme}"
-					style="width:165px" effect="fade" id="statefulSwitcher">
-					<f:selectItem itemLabel="Choose Theme" itemValue="" />
-					<f:selectItems value="#{themeSwitcherBean.themes}" />
-					<p:ajax listener="#{themeSwitcherBean.saveTheme}" />
-				</p:themeSwitcher>
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="Stateful Switcher:" />
+					<p:themeSwitcher value="#{themeSwitcherBean.theme}"
+						style="width:165px" effect="fade" id="statefulSwitcher">
+						<f:selectItem itemLabel="Choose Theme" itemValue="" />
+						<f:selectItems value="#{themeSwitcherBean.themes}" />
+						<p:ajax listener="#{themeSwitcherBean.saveTheme}" />
+					</p:themeSwitcher>
+				</h:panelGrid>
 			</h:form>
 		</p:layoutUnit>
 
