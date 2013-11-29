@@ -22,13 +22,8 @@ public class DashboardBean implements Serializable {
 	//List<Activity> activities;
 	LazyDataModel<Activity> lazyModel;
 	Activity selectedActivity;
-	
-
-	
-
 	@ManagedProperty(value = "#{userInfoBean}")
     private UserInfoBean userInfoBean;
-	
 	
 	public UserInfoBean getUserInfoBean() {
 		return userInfoBean;

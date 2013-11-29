@@ -35,6 +35,7 @@
 
 			<p:layoutUnit position="center">
 				<h:form id="loginForm" prependId="false">
+					<p:growl id="growl" showDetail="true" sticky="true" /> 
 					<p:panelGrid columns="1" styleClass="loginPanelGridCenter">
 						<f:facet name="header">
 							<h:outputText value="Please sign in" styleClass="loginPanelHeaderFont"></h:outputText>
@@ -43,15 +44,15 @@
 
 						<p:inputText id="j_username" required="true"
 							styleClass="form-control" placeholder="Username"
-							requiredMessage="Username Required"></p:inputText>
-						<p:password id="j_password" required="true"
+							requiredMessage="Username Required" value="#{loginBean.username}"></p:inputText>
+						<p:password id="j_password" required="true" 
 							styleClass="form-control" feedback="false" placeholder="Password"
-							requiredMessage="Password Required" />
+							requiredMessage="Password Required" value="#{loginBean.password}"/>
 
 						<h:panelGrid columns="2" style="margin-bottom:10px;"
 							cellpadding="5">	
 							<h:outputText value="Remember Me: " />
-							<p:selectBooleanCheckbox  id="_spring_security_remember_me"/>
+							<p:selectBooleanCheckbox  id="_spring_security_remember_me" value="#{loginBean.rememberMe}"/>
 						</h:panelGrid>
 						<h:commandButton value="Sign In" id="login" style="width : 210px;"
 							action="#{loginBean.doLogin}"></h:commandButton>

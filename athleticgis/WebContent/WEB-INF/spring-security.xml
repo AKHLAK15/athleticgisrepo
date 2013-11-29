@@ -14,7 +14,9 @@
 	<global-method-security secured-annotations="enabled">
 	</global-method-security>
 	
-	
+	<beans:bean id="rememberMePostProcessor"
+		class="com.athleticgis.util.jsfsecurity.RememberMePostProcessor">
+	</beans:bean>
 
 	<http auto-config="true">
 
