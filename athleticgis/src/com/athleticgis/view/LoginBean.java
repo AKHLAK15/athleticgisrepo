@@ -3,6 +3,7 @@ package com.athleticgis.view;
 import java.io.IOException;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -30,6 +31,8 @@ public class LoginBean {
 	private String password = "";
 	private boolean rememberMe = false;
 	private boolean loggedIn = false;
+	@ManagedProperty(value = "#{userInfoBean}")
+    private UserInfoBean userInfoBean;
 
 	// This is the action method called when the user clicks the "login" button
 
@@ -65,6 +68,10 @@ public class LoginBean {
 	}
 
 	public void setUsername(final String username) {
+		if(userInfoBean.getUsername() == null) {
+			userInfoBean.setUsername(username);
+		}
+	
 		this.username = username;
 	}
 
@@ -111,4 +118,17 @@ public class LoginBean {
 		return null;
 	}
 
+	/**
+	 * @return the userInfoBean
+	 */
+	public UserInfoBean getUserInfoBean() {
+		return userInfoBean;
+	}
+
+	/**
+	 * @param userInfoBean the userInfoBean to set
+	 */
+	public void setUserInfoBean(UserInfoBean userInfoBean) {
+		this.userInfoBean = userInfoBean;
+	}
 }

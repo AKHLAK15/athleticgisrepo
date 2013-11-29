@@ -112,7 +112,10 @@ public class UserDao implements Dao<User>, Serializable {
 		TypedQuery<User> query =
 	      em.createQuery("SELECT u FROM User u where u.username='"+username+"'", User.class);
 		List<User> users = query.getResultList();
-		User u = users.get(0);
+		User u = null;
+		if(users != null && !users.isEmpty()) {
+			u = users.get(0);
+		}
 		em.close();
 		return u;
 	}
