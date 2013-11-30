@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.domain.activity.ActivityPoint;
 import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.util.file.fit.FitDecoder;
 import com.athleticgis.util.file.gpx.GPXParser;
 import com.athleticgis.util.file.gpx.beans.GPX;
 import com.athleticgis.util.file.gpx.beans.Track;
@@ -43,7 +44,7 @@ public class FileUtil {
 			for (Waypoint wp : t.getTrackPoints()) {
 				// System.out.println(wp.getLatitude() + "," +
 				// wp.getLongitude());
-				com.athleticgis.domain.activity.ActivityPoint activityPoint = new ActivityPoint();
+				ActivityPoint activityPoint = new ActivityPoint();
 				activityPoint.setLatitude(wp.getLatitude());
 				activityPoint.setLongitude(wp.getLongitude());
 				activityPoint.setTime(new Timestamp(wp.getTime().getTime()));
@@ -56,6 +57,18 @@ public class FileUtil {
 		AthleticgisFacade.persistActivityAndActivityPoints(a, activityPoints);
 
 		in.close();
+	}
+	
+	public static void uploadFitFile(UploadedFile file, String username) throws IOException {
+		List<ActivityPoint> activityPoints = FitDecoder.decode(file.getInputstream());
+		Activity a = new Activity();
+		a.setName(file.getFileName());
+		a.setUser(AthleticgisFacade.findUserByUsername(username));
+		a.setWaypoints(activityPoints);
+		for(ActivityPoint ap : activityPoints) {
+			System.out.println("Lat: " + ap.getLatitude() + "," + "Long: " + ap.getLongitude() + "," + "Elevation: " + ap.getElevation() + "," + "Time: " + ap.getTime());
+		}
+		//AthleticgisFacade.persistActivityAndActivityPoints(a, activityPoints);
 	}
 
 }

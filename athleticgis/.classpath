@@ -29,7 +29,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/matthew/Documents/MSE/WebDevFall2013/FinalProject/FitSDKRelease_9.02/java/fit.jar">
+	<classpathentry kind="lib" path="C:/Users/matthew/Documents/workspace-sts-3.3.0.RELEASE/athleticgisrepo/libraries/fit.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

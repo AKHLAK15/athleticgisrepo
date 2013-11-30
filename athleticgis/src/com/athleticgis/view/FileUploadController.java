@@ -74,13 +74,14 @@ public class FileUploadController {
 			FileUtil.uploadAcitvityPointsFromGPX(file, userInfoBean.getUsername());
 
 		} else if ("fit".equals(extension)) {
-			try {
-				// FitDecoder d = new FitDecoder();
-				FitDecoder.decode(file.getInputstream());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			FileUtil.uploadFitFile(file, userInfoBean.getUsername());
+//			try {
+//				// FitDecoder d = new FitDecoder();
+//				FitDecoder.decode(file.getInputstream());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 	}
 }

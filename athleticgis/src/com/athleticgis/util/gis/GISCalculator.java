@@ -7,9 +7,15 @@ import org.primefaces.model.map.LatLngBounds;
 
 import com.athleticgis.domain.activity.*;
 
-;
-
 public class GISCalculator {
+	
+	public Double covertFromWGS84ToDegrees(Double semicircles) {
+		return semicircles * ( 180 / 2^31 );
+	}
+	
+	public Double convertFromDegreesToWGS84(Double degrees) {
+		return degrees * ( 2^31 / 180 );
+	}
 
 	// activityPoints should be ordered from earliest point to latest
 	public double computePathDistance(List<ActivityPoint> aps) {
