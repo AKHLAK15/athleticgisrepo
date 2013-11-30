@@ -11,75 +11,75 @@
 	<link href="resources/css/bootstrap.css" rel="stylesheet" />
 </h:head>
 <h:body>
-	
-		<p:layout fullPage="true">
-			
-			<p:layoutUnit position="north" size="50" resizable="false"
-				closable="false" collapsible="false">
-					<ui:insert name="header">
-						<ui:include src="/template/header.xhtml" />
-					</ui:insert>
-				
-			</p:layoutUnit>
 
-			<p:layoutUnit position="south" size="50" resizable="false"
-				closable="false" collapsible="false">
-				<ui:insert name="footer">
-					<ui:include src="/template/footer.xhtml" />
-				</ui:insert>
-			</p:layoutUnit>
+	<p:layout fullPage="true">
 
-			<p:layoutUnit position="center">
-					<h:form>
-					<p:tabMenu activeIndex="0">
-						<p:menuitem value="Dashboard" url="/faces/dashboard.xhtml" />
-						<p:menuitem value="Upload" url="/faces/upload.xhtml" />
-						<p:menuitem value="Preferences" url="/faces/preferences.xhtml" />
-					</p:tabMenu>
-				
-					<p:dataTable id="activityTable" value="#{dashboardBean.lazyModel}"
-						var="activity" rows="10"
-						paginator="true" lazy="true">
+		<p:layoutUnit position="north" size="50" resizable="false"
+			closable="false" collapsible="false">
+			<ui:insert name="header">
+				<ui:include src="/template/header.xhtml" />
+			</ui:insert>
 
+		</p:layoutUnit>
 
+		<p:layoutUnit position="south" size="50" resizable="false"
+			closable="false" collapsible="false">
+			<ui:insert name="footer">
+				<ui:include src="/template/footer.xhtml" />
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<h:form>
+				<p:tabMenu activeIndex="0">
+					<p:menuitem value="Dashboard" url="/faces/dashboard.xhtml" />
+					<p:menuitem value="Upload" url="/faces/upload.xhtml" />
+					<p:menuitem value="Create Path" url="/faces/createpath.xhtml" />
+					<p:menuitem value="Preferences" url="/faces/preferences.xhtml" />
+				</p:tabMenu>
+
+				<p:dataTable id="activityTable" value="#{dashboardBean.lazyModel}"
+					var="activity" rows="10" paginator="true" lazy="true">
 
 
-						<p:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
-							<f:facet name="header">User Name</f:facet>
-							<h:outputText value="#{activity.user.username}" />
-
-						</p:column>
-
-						<p:column>
-							<f:facet name="header">Name</f:facet>
-							<h:link outcome="activity" value="#{activity.name}">
-								<f:param name="activityId" value="#{activity.activity_id}" />
-							</h:link>
-
-						</p:column>
-
-						<p:column>
-							<f:facet name="header">Date</f:facet>
-							<h:outputText value="#{activity.date}" />
-
-						</p:column>
-
-						<p:column>
-							<f:facet name="header">Delete</f:facet>
-							<h:commandLink value="Delete"
-								action="#{activityBean.removeActivity}">
-								<f:param name="activityId" value="#{activity.activity_id}" />
-							</h:commandLink>
-
-						</p:column>
 
 
-					</p:dataTable>
+					<p:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+						<f:facet name="header">User Name</f:facet>
+						<h:outputText value="#{activity.user.username}" />
 
-				</h:form>
-			</p:layoutUnit>
-			
-		</p:layout>
-	
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Name</f:facet>
+						<h:link outcome="activity" value="#{activity.name}">
+							<f:param name="activityId" value="#{activity.activity_id}" />
+						</h:link>
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Date</f:facet>
+						<h:outputText value="#{activity.date}" />
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Delete</f:facet>
+						<h:commandLink value="Delete"
+							action="#{activityBean.removeActivity}">
+							<f:param name="activityId" value="#{activity.activity_id}" />
+						</h:commandLink>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+			</h:form>
+		</p:layoutUnit>
+
+	</p:layout>
+
 </h:body>
 </html>

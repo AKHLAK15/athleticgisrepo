@@ -28,7 +28,7 @@ import com.athleticgis.util.gis.GISCalculator;
 public class MapBean implements Serializable {
 	private static final long serialVersionUID = 6904408126194392139L;
 
-	private MapModel polylineModel = new DefaultMapModel();;
+	private MapModel polylineModel = new DefaultMapModel();
 	@ManagedProperty(value = "#{request.getParameter('activityId')}")
 	private String activityId;
 
@@ -66,8 +66,8 @@ public class MapBean implements Serializable {
 			polyline.getPaths().add(
 					new LatLng(ap.getLatitude(), ap.getLongitude()));
 		}
-		//GISCalculator g = new GISCalculator();
-		//System.out.println("Distance is " + g.computePathDistance(activityPoints));
+		GISCalculator g = new GISCalculator();
+		System.out.println("Distance is " + g.computePathDistance(activityPoints));
 		
 		polylineModel.addOverlay(polyline);
 		return polylineModel;

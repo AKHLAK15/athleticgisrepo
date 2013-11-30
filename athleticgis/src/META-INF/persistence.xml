@@ -12,6 +12,7 @@
         <class>com.athleticgis.domain.activity.ActivityPoint</class>
         <class>com.athleticgis.domain.activity.Activity</class>
         <class>com.athleticgis.domain.user.User</class>
+        <class>com.athleticgis.domain.user.UserPreferences</class>
         
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
