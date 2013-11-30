@@ -23,34 +23,50 @@ public class FitListener implements RecordMesgListener {
 	public void onMesg(RecordMesg mesg) {
 		
 		
-		GISCalculator calc = new GISCalculator();
-		
-		ActivityPoint activityPoint = new ActivityPoint();
+		//GISCalculator calc = new GISCalculator();
 		
 		
 		
 		
 		
 		
-		if(mesg.getPositionLat() != null) {
+		
+		//System.out.println("128" + mesg.getTime128());
+		//System.out.println(mesg.getTimeFromCourse());
+//		System.out.println(mesg.getTimestamp());
+//		System.out.println(mesg.getTimestamp().getTimestamp());
+//		System.out.println(new Timestamp(mesg.getTimestamp().getDate().getTime()));
+		
+		if(mesg.getPositionLat() != null && mesg.getPositionLong() != null && mesg.getAltitude() != null && mesg.getTimestamp() != null) {
+			ActivityPoint activityPoint = new ActivityPoint();
 			//System.out.println("lat: " + mesg.getPositionLat());
-			activityPoint.setLatitude(calc.convertFromDegreesToWGS84(mesg.getPositionLat()*1.0));
-		}
-		
-		if(mesg.getPositionLong() != null) {
-			//System.out.println("lng: " + mesg.getPositionLong());
-			activityPoint.setLongitude(calc.convertFromDegreesToWGS84(mesg.getPositionLong()*1.0));
-		}
-		
-		if(mesg.getAltitude() != null) {
-			//System.out.println("alt: " + mesg.getAltitude());
+			activityPoint.setLatitude(GISCalculator.covertFromWGS84ToDegrees(mesg.getPositionLat()));
+			activityPoint.setLongitude(GISCalculator.covertFromWGS84ToDegrees(mesg.getPositionLong()));
 			activityPoint.setElevation(mesg.getAltitude()*1.0);
+			activityPoint.setTime(new Timestamp(mesg.getTimestamp().getDate().getTime()));
+			activityPoints.add(activityPoint);
 		}
 		
-		if(mesg.getTimestamp() != null) {
-			//System.out.println("time: " + mesg.getTimestamp());
-			activityPoint.setTime(new Timestamp(mesg.getTimestamp().getTimestamp()));
-		}
-		activityPoints.add(activityPoint);
+		
+//		if(mesg.getPositionLat() != null) {
+//			//System.out.println("lat: " + mesg.getPositionLat());
+//			activityPoint.setLatitude(GISCalculator.covertFromWGS84ToDegrees(mesg.getPositionLat()));
+//		}
+//		
+//		if(mesg.getPositionLong() != null) {
+//			//System.out.println("lng: " + mesg.getPositionLong());
+//			activityPoint.setLongitude(GISCalculator.covertFromWGS84ToDegrees(mesg.getPositionLong()));
+//		}
+//		
+//		if(mesg.getAltitude() != null) {
+//			//System.out.println("alt: " + mesg.getAltitude());
+//			activityPoint.setElevation(mesg.getAltitude()*1.0);
+//		}
+//		
+//		if(mesg.getTimestamp() != null) {
+//			//System.out.println("time: " + mesg.getTimestamp());
+//			activityPoint.setTime(new Timestamp(mesg.getTimestamp().getDate().getTime()));
+//		}
+		
 	}
 }

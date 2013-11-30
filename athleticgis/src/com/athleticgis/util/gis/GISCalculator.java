@@ -9,12 +9,17 @@ import com.athleticgis.domain.activity.*;
 
 public class GISCalculator {
 	
-	public Double covertFromWGS84ToDegrees(Double semicircles) {
-		return semicircles * ( 180 / 2^31 );
+	public static Double covertFromWGS84ToDegrees(Integer semicircles) {
+		//2^31 = 2147483648
+		return ((1.0*semicircles)/2147483648.0) * 180.0;  //Math.pow(2.0, 31)) * 180.0;
+		//return 0.0;
+		//System.out.println("This is semi" + semicircles);
+		//eturn 1.0*semicircles;
 	}
 	
-	public Double convertFromDegreesToWGS84(Double degrees) {
-		return degrees * ( 2^31 / 180 );
+	public static Double convertFromDegreesToWGS84(Double degrees) {
+		//maybe convert to integer?
+		return 1.0*degrees * ( 2147483648.0 / 180.0 );
 	}
 
 	// activityPoints should be ordered from earliest point to latest

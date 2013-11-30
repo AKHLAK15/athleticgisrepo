@@ -68,7 +68,7 @@ public class FileUtil {
 		for(ActivityPoint ap : activityPoints) {
 			System.out.println("Lat: " + ap.getLatitude() + "," + "Long: " + ap.getLongitude() + "," + "Elevation: " + ap.getElevation() + "," + "Time: " + ap.getTime());
 		}
-		//AthleticgisFacade.persistActivityAndActivityPoints(a, activityPoints);
+		AthleticgisFacade.persistActivityAndActivityPoints(a, activityPoints);
 	}
 
 }
