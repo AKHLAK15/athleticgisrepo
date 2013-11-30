@@ -14,6 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Matthew Allen
+ * @version 20131129
+ * Entity class for ActivityPoint.
+ * This class will hold data related to an instant in time for an activity.
+ */
 @Entity
 @Table
 public class ActivityPoint implements Serializable {
@@ -37,9 +43,16 @@ public class ActivityPoint implements Serializable {
 	@Column
 	private Timestamp time;
 	
+	/**
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
+	
+	/**
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -57,27 +70,58 @@ public class ActivityPoint implements Serializable {
 		this.activity = activity;
 	}
 	
+	/**
+	 * @return
+	 */
 	public Double getLatitude() {
 		return latitude;
 	}
+	
+	/**
+	 * @param latitude
+	 */
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
+	
+	/**
+	 * @return
+	 */
 	public Double getLongitude() {
 		return longitude;
 	}
+	
+	/**
+	 * @param longitude
+	 */
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+	
+	/**
+	 * @return
+	 */
 	public Double getElevation() {
 		return elevation;
 	}
+	
+	/**
+	 * @param elevation
+	 */
 	public void setElevation(Double elevation) {
 		this.elevation = elevation;
 	}
+	
+	/**
+	 * @return
+	 */
 	public Timestamp getTime() {
 		return time;
 	}
+	
+	/**
+	 * @param time
+	 */
 	public void setTime(Timestamp time) {
 		this.time = time;
 	}

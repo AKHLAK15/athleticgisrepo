@@ -17,6 +17,12 @@ import javax.persistence.Table;
 
 import com.athleticgis.domain.user.User;
 
+/**
+ * @author Matthew Allen
+ * @version 20131129
+ * Entity class for Activity.
+ * This hold data related to a summary of an activity.
+ */
 @Entity
 @Table
 public class Activity implements Serializable {
@@ -26,20 +32,20 @@ public class Activity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private Long activity_id;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="user_id")
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	@Column
 	private String name;
-	
+
 	@Column
 	private Timestamp date;
 
-	@OneToMany(mappedBy="activity", fetch=FetchType.LAZY, orphanRemoval=true)
+	@OneToMany(mappedBy = "activity", fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<ActivityPoint> waypoints;
-	
+
 	/**
 	 * @return the user
 	 */
@@ -48,12 +54,13 @@ public class Activity implements Serializable {
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param user
+	 *            the user to set
 	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	/**
 	 * @return the activity_id
 	 */
@@ -62,34 +69,42 @@ public class Activity implements Serializable {
 	}
 
 	/**
-	 * @param activity_id the activity_id to set
+	 * @param activity_id
+	 *            the activity_id to set
 	 */
 	public void setActivity_id(Long activity_id) {
 		this.activity_id = activity_id;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
-	
+
+	/**
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * @return the waypoints
 	 */
 	public List<ActivityPoint> getWaypoints() {
 		return waypoints;
 	}
-	
+
 	/**
-	 * @param waypoints the waypoints to set
+	 * @param waypoints
+	 *            the waypoints to set
 	 */
 	public void setWaypoints(List<ActivityPoint> waypoints) {
 		this.waypoints = waypoints;
 	}
-	
+
 	/**
 	 * @return the date
 	 */
@@ -98,7 +113,8 @@ public class Activity implements Serializable {
 	}
 
 	/**
-	 * @param date the date to set
+	 * @param date
+	 *            the date to set
 	 */
 	public void setDate(Timestamp date) {
 		this.date = date;
