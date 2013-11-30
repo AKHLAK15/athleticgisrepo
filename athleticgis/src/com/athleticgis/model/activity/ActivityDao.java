@@ -126,7 +126,7 @@ public class ActivityDao implements Serializable {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 		TypedQuery<Activity> query =
-		  em.createQuery("SELECT a FROM Activity a where a.user.user_id="+ user_id  + " order by a.date", Activity.class);
+		  em.createQuery("SELECT a FROM Activity a where a.user.user_id="+ user_id  + " order by a.date desc", Activity.class);
 		query.setFirstResult(start);
 		query.setMaxResults(max);
 		

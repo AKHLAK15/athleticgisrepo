@@ -21,6 +21,7 @@ import org.primefaces.model.map.Polyline;
 
 import com.athleticgis.domain.activity.ActivityPoint;
 import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.util.gis.GISCalculator;
 
 @ManagedBean
 @RequestScoped
@@ -65,6 +66,9 @@ public class MapBean implements Serializable {
 			polyline.getPaths().add(
 					new LatLng(ap.getLatitude(), ap.getLongitude()));
 		}
+		//GISCalculator g = new GISCalculator();
+		//System.out.println("Distance is " + g.computePathDistance(activityPoints));
+		
 		polylineModel.addOverlay(polyline);
 		return polylineModel;
 	}
