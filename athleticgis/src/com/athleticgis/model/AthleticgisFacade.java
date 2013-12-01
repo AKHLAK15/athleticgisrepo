@@ -153,4 +153,24 @@ public class AthleticgisFacade implements Serializable {
 	public static List<MyMapMarker> findMyMapMarkersByMymap_id(Long mymap_id) {
 		return ActivityDao.findMyMapMarkersByMymap_id(mymap_id);
 	}
+	
+	/**
+	 * Counts all activities for admin user.
+	 * 
+	 * @return
+	 */
+	public static Long findActivityCount() {
+		return ActivityDao.findActivityCount();
+	}
+	
+	/**
+	 * find all activity records for admin user.
+	 * 
+	 * @param start
+	 * @param max
+	 * @return
+	 */
+	public static List<Activity> findActivitiesPaginated(int start, int max) {
+		return ActivityDao.findActivitiesPaginated(start, max);
+	}
 }

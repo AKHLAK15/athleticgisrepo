@@ -52,7 +52,7 @@ public class DashboardBean implements Serializable {
 	 */
 	public LazyDataModel<Activity> getLazyModel() {
 		if (lazyModel == null) {
-			lazyModel = new ActivityDataModel(userInfoBean.getUser_id());
+			lazyModel = new ActivityDataModel(userInfoBean.getUser_id(), userInfoBean.getIsAdmin());
 		}
 		return lazyModel;
 		//return new ActivityDataModel(userInfoBean.getUser_id());

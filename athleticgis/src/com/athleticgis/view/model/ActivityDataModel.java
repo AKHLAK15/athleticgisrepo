@@ -17,9 +17,11 @@ public class ActivityDataModel extends LazyDataModel<Activity> {
 
 	private List<Activity> activities;
 	private Long user_id;
+	private boolean isAdmin;
 
-	public ActivityDataModel(Long user_id) {
+	public ActivityDataModel(Long user_id, boolean isAdmin) {
 		this.user_id = user_id;
+		this.isAdmin = isAdmin;
 	}
 
 	@Override
@@ -80,10 +82,18 @@ public class ActivityDataModel extends LazyDataModel<Activity> {
 		
 		System.out.println("Loading....");
 		
-		activities = AthleticgisFacade.findActivitiesByUserIdPaginated(user_id, first, pageSize);
+		Integer dataSize;
+		if(!isAdmin) {
+			activities = AthleticgisFacade.findActivitiesByUserIdPaginated(user_id, first, pageSize);
 
-		// set the total number of activities
-		Integer dataSize = AthleticgisFacade.findActivityCountByUserId(user_id).intValue(); 
+			// set the total number of activities
+			dataSize = AthleticgisFacade.findActivityCountByUserId(user_id).intValue(); 
+		} else {
+			activities = AthleticgisFacade.findActivitiesPaginated(first, pageSize);
+			// set the total number of activities
+			dataSize = AthleticgisFacade.findActivityCount().intValue(); 
+		}
+		
 		this.setRowCount(dataSize);
 		
 		this.setPageSize(pageSize);

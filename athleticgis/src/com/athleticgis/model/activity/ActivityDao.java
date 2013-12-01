@@ -274,4 +274,39 @@ public class ActivityDao implements Serializable {
 		em.close();
 		return myMapMarkers;
 	}
+	
+	/**
+	 * Counts all activities for admin user.
+	 * 
+	 * @return
+	 */
+	public static Long findActivityCount() {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		Query query =
+		  em.createQuery("SELECT count(a) FROM Activity a");
+		Long count = (Long) query.getSingleResult();
+		em.close();
+		return count;
+	}
+	
+	/**
+	 * find all activity records for admin user.
+	 * 
+	 * @param start
+	 * @param max
+	 * @return
+	 */
+	public static List<Activity> findActivitiesPaginated(int start, int max) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		TypedQuery<Activity> query =
+		  em.createQuery("SELECT a FROM Activity a order by a.date desc", Activity.class);
+		query.setFirstResult(start);
+		query.setMaxResults(max);
+		
+		List<Activity> activities = query.getResultList();
+		em.close();
+		return activities;
+	}
 }
