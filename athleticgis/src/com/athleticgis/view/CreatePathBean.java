@@ -152,6 +152,7 @@ public class CreatePathBean implements Serializable {
     	MyMap myMap = new MyMap();
     	myMap.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getUsername()));
     	myMap.setName(myMapName);
+    	AthleticgisFacade.persistMapAndMyMapMarkers(myMap, myMapMarkers);
     	return "createpath";
     }
     
