@@ -91,6 +91,10 @@ public class ActivityDao implements Serializable {
 		em.close();
 	}
 	
+	//TODO
+	//use findActivitiesByUserIdPaginated as an example
+	//need to update this for pagination
+	//this is the method that should be being called for an admin
 	public static List<Activity> findAllActivities() {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
