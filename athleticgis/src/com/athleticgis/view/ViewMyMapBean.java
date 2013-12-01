@@ -42,8 +42,7 @@ public class ViewMyMapBean implements Serializable {
 		polyline.setStrokeWeight(2);
 		polyline.setStrokeColor("#FF0000");
 		polyline.setStrokeOpacity(1.0);
-		List<MyMapMarker> myMapMarkers = AthleticgisFacade
-				.findMyMapMarkersByMymap_id(Long.parseLong(activityId));
+		List<MyMapMarker> myMapMarkers = AthleticgisFacade.findMyMapMarkersByMymap_id(Long.parseLong(mymap_id));
 		for (MyMapMarker m : myMapMarkers) {
 			polyline.getPaths().add(
 					new LatLng(m.getLatitude(), m.getLongitude()));
