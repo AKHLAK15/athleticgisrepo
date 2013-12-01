@@ -153,11 +153,11 @@ public class CreatePathBean implements Serializable {
     	myMap.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getUsername()));
     	myMap.setName(myMapName);
     	AthleticgisFacade.persistMapAndMyMapMarkers(myMap, myMapMarkers);
-    	return "createpath";
+    	return "mymaps?faces-redirect=true";
     }
     
     public String restartPath() {
     	myMapMarkers = new ArrayList<MyMapMarker>();
-    	return "createpath";
+    	return "createpath?faces-redirect=true";
     }
 }
