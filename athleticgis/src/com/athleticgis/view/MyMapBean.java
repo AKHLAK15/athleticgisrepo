@@ -87,7 +87,7 @@ public class MyMapBean implements Serializable {
 //	public void setActivityName(List<Activity> activities) {
 //		this.activities = activities;
 //	}
-	public String removeActivity() {
+	public String removeMyMap() {
 		Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String mId = params.get("mymap_id");
 		Long id = Long.parseLong(mId);

@@ -100,7 +100,9 @@ public class ViewMyMapBean implements Serializable {
 		Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String mId = params.get("mymap_id");
 		Long id = Long.parseLong(mId);
-		AthleticgisFacade.mergeMyMap(inputTextMyMapName.getValue().toString(), id);
+		if(inputTextMyMapName.getValue().toString() != null && inputTextMyMapName.getValue().toString().length() > 0) {
+			AthleticgisFacade.mergeMyMap(inputTextMyMapName.getValue().toString(), id);
+		}
 		return "mymaps?faces-redirect=true";
 	}
 }
