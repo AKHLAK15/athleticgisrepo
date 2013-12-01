@@ -123,4 +123,24 @@ public class AthleticgisFacade implements Serializable {
 	public static void removeMyMap(Long mymap_id) {
 		ActivityDao.removeMyMap(mymap_id);
 	}
+	
+	/**
+	 * get MyMap entity for given id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static MyMap findMyMapById(Long id) {
+		return ActivityDao.findMyMapById(id);
+	}
+	
+	/**
+	 * update myMap name.
+	 * 
+	 * @param myMapName
+	 * @param mymap_id
+	 */
+	public static void mergeMyMap(String myMapName, Long mymap_id) {
+		ActivityDao.mergeMyMap(myMapName, mymap_id);
+	}
 }

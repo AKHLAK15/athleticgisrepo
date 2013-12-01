@@ -227,4 +227,35 @@ public class ActivityDao implements Serializable {
 		em.getTransaction().commit();
 		em.close();
 	}
+	
+	/**
+	 * get MyMap entity for given id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static MyMap findMyMapById(Long id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		MyMap mm = em.find(MyMap.class, id);
+		em.close();
+		return mm;
+	}
+	
+	/**
+	 * update myMap name.
+	 * 
+	 * @param myMapName
+	 * @param mymap_id
+	 */
+	public static void mergeMyMap(String myMapName, Long mymap_id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		MyMap mm = em.find(MyMap.class, mymap_id);
+		mm.setName(myMapName);
+		em.getTransaction().begin();
+		em.merge(mm);
+		em.getTransaction().commit();
+		em.close();
+	}
 }
