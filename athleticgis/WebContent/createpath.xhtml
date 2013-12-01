@@ -69,13 +69,14 @@
 			<p:dialog widgetVar="dlg" showEffect="fade">
 				<h:form prependId="false">
 					<h:panelGrid columns="2">
-
-
+            			<p:inputText id="title" value="#{createPathBean.title}" placeholder="Title"/> 
 						<f:facet name="footer">
-							<p:commandButton value="Add"
-								actionListener="#{createPathBean.addMarker}"
-								oncomplete="markerAddComplete()" />
-							<p:commandButton value="Cancel" onclick="return cancel()" />
+							<h:panelGrid styleClass="panelGridCenter" columns="2">
+								<p:commandButton value="Add"
+									actionListener="#{createPathBean.addMarker}"
+									oncomplete="markerAddComplete()" />
+								<p:commandButton value="Cancel" onclick="return cancel()" />
+							</h:panelGrid>
 						</f:facet>
 					</h:panelGrid>
 
