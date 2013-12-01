@@ -45,18 +45,18 @@
 				</p:tabMenu>
 				<h:panelGrid styleClass="panelGridCenter">
 					<h:panelGrid columns="3" styleClass="panelGridCenter" width="50%">
-						<h:inputText binding="#{activityBean.inputTextActivityName}"
+						<h:inputText binding="#{viewMyMapBean.inputTextMyMapName}"
 							style="width : 400px" size="40"></h:inputText>
 
 						<h:commandButton value="Update"
-							action="#{activityBean.updateActivity}">
-							<f:param name="activityId"
-								value="#{request.getParameter('activityId')}" />
+							action="#{viewMyMapBean.updateMyMap}">
+							<f:param name="mymap_id"
+								value="#{request.getParameter('mymap_id')}" />
 						</h:commandButton>
 						<h:commandButton value="Delete"
-							action="#{activityBean.removeActivity}">
-							<f:param name="activityId"
-								value="#{request.getParameter('activityId')}" />
+							action="#{myMapBean.removeMyMap}">
+							<f:param name="mymap_id"
+								value="#{request.getParameter('mymap_id')}" />
 						</h:commandButton>
 					</h:panelGrid>
 
@@ -66,9 +66,8 @@
 				<p:growl id="growl" life="3000" />
 
 				<p:gmap  fitBounds="true" type="HYBRID"
-					style="width:100%;height:400px" model="#{mapBean.polylineModel}" >
-					<p:ajax event="overlaySelect"
-						listener="#{mapBean.onPolylineSelect}" update="growl" />
+					style="width:100%;height:400px" model="#{viewMyMapBean.polylineModel}" >
+					
 				</p:gmap>
 
 				</h:form>

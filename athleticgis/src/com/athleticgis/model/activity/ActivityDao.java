@@ -258,4 +258,20 @@ public class ActivityDao implements Serializable {
 		em.getTransaction().commit();
 		em.close();
 	}
+	
+	/**
+	 * finds MapMarkers for a given map id
+	 * 
+	 * @param mymap_id
+	 * @return
+	 */
+	public static List<MyMapMarker> findMyMapMarkersByMymap_id(Long mymap_id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		TypedQuery<MyMapMarker> query =
+		  em.createQuery("SELECT m FROM MyMapMarker m where m.myMap.mymap_id="+mymap_id+ " order by m.time", MyMapMarker.class);
+		List<MyMapMarker> myMapMarkers = query.getResultList();
+		em.close();
+		return myMapMarkers;
+	}
 }

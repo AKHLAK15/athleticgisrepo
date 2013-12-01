@@ -1,6 +1,7 @@
 package com.athleticgis.view;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
@@ -10,8 +11,16 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Polyline;
+
 import com.athleticgis.domain.activity.Activity;
+import com.athleticgis.domain.activity.ActivityPoint;
+import com.athleticgis.domain.activity.MyMapMarker;
 import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.util.gis.GISCalculator;
 
 @ManagedBean
 @RequestScoped
@@ -23,7 +32,29 @@ public class ViewMyMapBean implements Serializable {
 	@ManagedProperty(value = "#{userInfoBean}")
     private UserInfoBean userInfoBean;
 	private HtmlInputText inputTextMyMapName;
+	private MapModel polylineModel = new DefaultMapModel();
 	
+	/**
+	 * @return the polylineModel
+	 */
+	public MapModel getPolylineModel() {
+		Polyline polyline = new Polyline();
+		polyline.setStrokeWeight(2);
+		polyline.setStrokeColor("#FF0000");
+		polyline.setStrokeOpacity(1.0);
+		List<MyMapMarker> myMapMarkers = AthleticgisFacade
+				.findMyMapMarkersByMymap_id(Long.parseLong(activityId));
+		for (MyMapMarker m : myMapMarkers) {
+			polyline.getPaths().add(
+					new LatLng(m.getLatitude(), m.getLongitude()));
+		}
+		GISCalculator g = new GISCalculator();
+		//System.out.println("Distance is " + g.computePathDistance(activityPoints));
+		
+		polylineModel.addOverlay(polyline);
+		return polylineModel;
+	}
+
 	/**
 	 * @return the userInfoBean
 	 */
@@ -58,7 +89,7 @@ public class ViewMyMapBean implements Serializable {
 		this.mymap_id = mymap_id;
 	}
 	
-	public String updateActivity() {
+	public String updateMyMap() {
 		Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String mId = params.get("mymap_id");
 		Long id = Long.parseLong(mId);

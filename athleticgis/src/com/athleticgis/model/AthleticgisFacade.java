@@ -143,4 +143,14 @@ public class AthleticgisFacade implements Serializable {
 	public static void mergeMyMap(String myMapName, Long mymap_id) {
 		ActivityDao.mergeMyMap(myMapName, mymap_id);
 	}
+	
+	/**
+	 * finds MapMarkers for a given map id
+	 * 
+	 * @param mymap_id
+	 * @return
+	 */
+	public static List<MyMapMarker> findMyMapMarkersByMymap_id(Long mymap_id) {
+		return ActivityDao.findMyMapMarkersByMymap_id(mymap_id);
+	}
 }
