@@ -139,7 +139,9 @@ public class ActivityBean implements Serializable {
 		String aId = params.get("activityId");
 		Long id = Long.parseLong(aId);
 		//activityModel.findActivity(id).setName(inputTextActivityName.getValue().toString());
-		AthleticgisFacade.mergeActivity(inputTextActivityName.getValue().toString(), id);
+		if(inputTextActivityName.getValue().toString() != null && inputTextActivityName.getValue().toString().length() > 0) {
+			AthleticgisFacade.mergeActivity(inputTextActivityName.getValue().toString(), id);
+		}
 		return "dashboard?faces-redirect=true";
 	}
 	
