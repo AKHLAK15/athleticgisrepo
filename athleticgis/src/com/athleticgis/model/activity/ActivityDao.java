@@ -309,4 +309,39 @@ public class ActivityDao implements Serializable {
 		em.close();
 		return activities;
 	}
+	
+	/**
+	 * Count the total number of user defined maps.
+	 * 
+	 * @return
+	 */
+	public static Long findMyMapCount() {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		Query query =
+		  em.createQuery("SELECT count(mm) FROM MyMap mm");
+		Long count = (Long) query.getSingleResult();
+		em.close();
+		return count;
+	}
+	
+	/**
+	 * This method selects a subset of all maps for a given user.
+	 * 
+	 * @param start
+	 * @param max
+	 * @return
+	 */
+	public static List<MyMap> findMyMapsPaginated(int start, int max) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		TypedQuery<MyMap> query =
+		  em.createQuery("SELECT mm FROM MyMap mm order by mm.date desc", MyMap.class);
+		query.setFirstResult(start);
+		query.setMaxResults(max);
+		
+		List<MyMap> myMaps = query.getResultList();
+		em.close();
+		return myMaps;
+	}
 }

@@ -17,9 +17,11 @@ public class MyMapDataModel extends LazyDataModel<MyMap> {
 	private static final long serialVersionUID = 4332807581817979390L;
 	private List<MyMap> myMaps;
 	private Long user_id;
+	private boolean isAdmin;
 
-	public MyMapDataModel(Long user_id) {
+	public MyMapDataModel(Long user_id, boolean isAdmin) {
 		this.user_id = user_id;
+		this.isAdmin = isAdmin;
 	}
 
 	@Override
@@ -44,10 +46,20 @@ public class MyMapDataModel extends LazyDataModel<MyMap> {
 			
 		System.out.println("Loading....");
 		
-		myMaps = AthleticgisFacade.findMyMapsByUserIdPaginated(user_id, first, pageSize);
-
-		// set the total number of activities
-		Integer dataSize = AthleticgisFacade.findMyMapCountByUserId(user_id).intValue(); 
+		Integer dataSize;
+		if(!isAdmin) {
+			myMaps = AthleticgisFacade.findMyMapsByUserIdPaginated(user_id, first, pageSize);
+		
+		
+			// set the total number of activities
+			dataSize = AthleticgisFacade.findMyMapCountByUserId(user_id).intValue(); 
+		} else {
+			myMaps = AthleticgisFacade.findMyMapsPaginated(first, pageSize);
+			
+			
+			// set the total number of activities
+			dataSize = AthleticgisFacade.findMyMapCount().intValue(); 
+		}
 		this.setRowCount(dataSize);
 		
 		this.setPageSize(pageSize);

@@ -173,4 +173,24 @@ public class AthleticgisFacade implements Serializable {
 	public static List<Activity> findActivitiesPaginated(int start, int max) {
 		return ActivityDao.findActivitiesPaginated(start, max);
 	}
+	
+	/**
+	 * Count the total number of user defined maps.
+	 * 
+	 * @return
+	 */
+	public static Long findMyMapCount() {
+		return ActivityDao.findMyMapCount();
+	}
+	
+	/**
+	 * This method selects a subset of all maps for a given user.
+	 * 
+	 * @param start
+	 * @param max
+	 * @return
+	 */
+	public static List<MyMap> findMyMapsPaginated(int start, int max) {
+		return ActivityDao.findMyMapsPaginated(start, max);
+	}
 }

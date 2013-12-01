@@ -51,7 +51,7 @@ public class MyMapBean implements Serializable {
 	 */
 	public LazyDataModel<MyMap> getLazyModel() {
 		if (lazyModel == null) {
-			lazyModel = new MyMapDataModel(userInfoBean.getUser_id());
+			lazyModel = new MyMapDataModel(userInfoBean.getUser_id(), userInfoBean.getIsAdmin());
 		}
 		return lazyModel;
 		//return new ActivityDataModel(userInfoBean.getUser_id());
