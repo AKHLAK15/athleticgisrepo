@@ -90,4 +90,12 @@ public class CreatePathBean implements Serializable {
 		// did an average of the coordinates in getCoordinates
 		return "43.83193516,-91.22337865";
 	}
+    
+    public String savePath() {
+    	return null;
+    }
+    
+    public String restartPath() {
+    	return null;
+    }
 }

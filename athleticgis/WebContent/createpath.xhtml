@@ -48,16 +48,11 @@
 						<h:inputText binding="#{activityBean.inputTextActivityName}"
 							style="width : 400px" size="40"></h:inputText>
 
-						<h:commandButton value="Update"
-							action="#{activityBean.updateActivity}">
-							
+						<h:commandButton value="Save" action="#{createPathBean.savePath}">
 						</h:commandButton>
-						<h:commandButton value="Delete"
-							action="#{activityBean.removeActivity}">
-							
+						<h:commandButton value="Restart" action="#{createPathBean.restartPath}">
 						</h:commandButton>
 					</h:panelGrid>
-
 				</h:panelGrid>
 			</h:form>
 
