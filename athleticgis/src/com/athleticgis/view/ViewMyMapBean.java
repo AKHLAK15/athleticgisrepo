@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import org.primefaces.model.map.Polyline;
 
 import com.athleticgis.domain.activity.Activity;
@@ -46,11 +47,18 @@ public class ViewMyMapBean implements Serializable {
 		for (MyMapMarker m : myMapMarkers) {
 			polyline.getPaths().add(
 					new LatLng(m.getLatitude(), m.getLongitude()));
+			
+			//add markers
+			Marker marker = new Marker(new LatLng(m.getLatitude(), m.getLongitude()), m.getName());  
+			polylineModel.addOverlay(marker);
 		}
-		GISCalculator g = new GISCalculator();
+		//GISCalculator g = new GISCalculator();
 		//System.out.println("Distance is " + g.computePathDistance(activityPoints));
 		
 		polylineModel.addOverlay(polyline);
+		
+		
+		
 		return polylineModel;
 	}
 
