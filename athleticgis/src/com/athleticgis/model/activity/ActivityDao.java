@@ -175,4 +175,56 @@ public class ActivityDao implements Serializable {
 		transaction.commit();
 		em.close();
 	}
+	
+	/**
+	 * Count the number of maps created by user_id.
+	 * 
+	 * @param user_id
+	 * @return
+	 */
+	public static Long findMyMapCountByUserId(Long user_id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		Query query =
+		  em.createQuery("SELECT count(mm) FROM MyMap mm where mm.user.user_id="+ user_id);
+		Long count = (Long) query.getSingleResult();
+		em.close();
+		return count;
+	}
+	
+	/**
+	 * This method selects a subset of all maps for a given user.
+	 * 
+	 * @param user_id
+	 * @param start
+	 * @param max
+	 * @return
+	 */
+	public static List<MyMap> findMyMapsByUserIdPaginated(Long user_id, int start, int max) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		TypedQuery<MyMap> query =
+		  em.createQuery("SELECT mm FROM MyMap mm where mm.user.user_id="+ user_id  + " order by mm.date desc", MyMap.class);
+		query.setFirstResult(start);
+		query.setMaxResults(max);
+		
+		List<MyMap> myMaps = query.getResultList();
+		em.close();
+		return myMaps;
+	}
+	
+	/**
+	 * removes a map and its associated markers.
+	 * 
+	 * @param mymap_id
+	 */
+	public static void removeMyMap(Long mymap_id) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		MyMap mm = em.find(MyMap.class, mymap_id);
+		em.getTransaction().begin();
+		em.remove(mm);
+		em.getTransaction().commit();
+		em.close();
+	}
 }

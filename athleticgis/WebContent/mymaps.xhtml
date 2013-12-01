@@ -39,37 +39,37 @@
 					<p:menuitem value="Preferences" url="/faces/preferences.xhtml" />
 				</p:tabMenu>
 
-				<p:dataTable id="activityTable" value="#{dashboardBean.lazyModel}"
-					var="activity" rows="10" paginator="true" lazy="true">
+				<p:dataTable id="myMapTable" value="#{myMapBean.lazyModel}"
+					var="myMap" rows="10" paginator="true" lazy="true">
 
 
 
 
 					<p:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
 						<f:facet name="header">User Name</f:facet>
-						<h:outputText value="#{activity.user.username}" />
+						<h:outputText value="#{myMap.user.username}" />
 
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">Name</f:facet>
-						<h:link outcome="activity" value="#{activity.name}">
-							<f:param name="activityId" value="#{activity.activity_id}" />
+						<h:link outcome="mymap" value="#{myMap.name}">
+							<f:param name="mymap_id" value="#{myMap.mymap_id}" />
 						</h:link>
 
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">Date</f:facet>
-						<h:outputText value="#{activity.date}" />
+						<h:outputText value="#{myMap.date}" />
 
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">Delete</f:facet>
 						<h:commandLink value="Delete"
-							action="#{activityBean.removeActivity}">
-							<f:param name="activityId" value="#{activity.activity_id}" />
+							action="#{myMapBean.removeActivity}">
+							<f:param name="mymap_id" value="#{myMap.mymap_id}" />
 						</h:commandLink>
 
 					</p:column>

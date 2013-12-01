@@ -92,4 +92,35 @@ public class AthleticgisFacade implements Serializable {
 	public static void persistMapAndMyMapMarkers(MyMap myMap, List<MyMapMarker> myMapMarkers) {
 		ActivityDao.persistMapAndMyMapMarkers(myMap, myMapMarkers);
 	}
+	
+	/**
+	 * Count the number of maps created by user_id.
+	 * 
+	 * @param user_id
+	 * @return
+	 */
+	public static Long findMyMapCountByUserId(Long user_id) {
+		return ActivityDao.findMyMapCountByUserId(user_id);
+	}
+	
+	/**
+	 * This method selects a subset of all maps for a given user.
+	 * 
+	 * @param user_id
+	 * @param start
+	 * @param max
+	 * @return
+	 */
+	public static List<MyMap> findMyMapsByUserIdPaginated(Long user_id, int start, int max) {
+		return ActivityDao.findMyMapsByUserIdPaginated(user_id, start, max);
+	}
+	
+	/**
+	 * removes a map and its associated markers.
+	 * 
+	 * @param mymap_id
+	 */
+	public static void removeMyMap(Long mymap_id) {
+		ActivityDao.removeMyMap(mymap_id);
+	}
 }
