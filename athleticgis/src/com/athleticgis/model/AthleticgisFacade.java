@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.domain.activity.ActivityPoint;
+import com.athleticgis.domain.activity.MyMap;
+import com.athleticgis.domain.activity.MyMapMarker;
 import com.athleticgis.domain.user.User;
 import com.athleticgis.model.activity.ActivityDao;
 import com.athleticgis.model.user.UserDao;
@@ -79,5 +81,15 @@ public class AthleticgisFacade implements Serializable {
 	
 	public static void updateUserTheme(Long user_id, String theme) {
 		UserDao.updateUserTheme(user_id, theme);
+	}
+	
+	/**
+	 * This method persists a user created myMap along with its markers.
+	 * 
+	 * @param myMap
+	 * @param myMapMarkers
+	 */
+	public static void persistMapAndMyMapMarkers(MyMap myMap, List<MyMapMarker> myMapMarkers) {
+		ActivityDao.persistMapAndMyMapMarkers(myMap, myMapMarkers);
 	}
 }

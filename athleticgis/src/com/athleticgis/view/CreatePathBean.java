@@ -24,9 +24,9 @@ import org.primefaces.model.map.Polyline;
 @ViewScoped
 public class CreatePathBean implements Serializable {
 	private static final long serialVersionUID = -8907242457718889989L;
-	private MapModel emptyModel = new DefaultMapModel();
-	Polyline polyline;
-	
+//	private MapModel emptyModel = new DefaultMapModel();
+//	Polyline polyline;
+//	
     
     private String title;  
       
@@ -35,17 +35,17 @@ public class CreatePathBean implements Serializable {
     private double lng;  
   
     public CreatePathBean() {  
-    	//emptyModel = new DefaultMapModel(); 
-    	polyline = new Polyline();
-    	//are these necessary?
-        polyline.setStrokeWeight(2);
-		polyline.setStrokeColor("#FF0000");
-		polyline.setStrokeOpacity(1.0);
+//    	//emptyModel = new DefaultMapModel(); 
+//    	polyline = new Polyline();
+//    	//are these necessary?
+//        polyline.setStrokeWeight(2);
+//		polyline.setStrokeColor("#FF0000");
+//		polyline.setStrokeOpacity(1.0);
     }  
       
-    public MapModel getEmptyModel() {  
-        return emptyModel;  
-    }  
+//    public MapModel getEmptyModel() {  
+//        return emptyModel;  
+//    }  
       
     public void addMessage(FacesMessage message) {  
         FacesContext.getCurrentInstance().addMessage(null, message);  
@@ -78,10 +78,10 @@ public class CreatePathBean implements Serializable {
     public void addMarker(ActionEvent actionEvent) {  
         //Marker marker = new Marker(new LatLng(lat, lng), title);  
         //emptyModel.addOverlay(marker);  
-    	LatLng coord = new LatLng(lat, lng);
+    	//LatLng coord = new LatLng(lat, lng);
     	
-    	System.out.println("lat: " + lat + "," + "lng: " + lng);
-    	polyline.getPaths().add(coord);
+    	System.out.println("title: " + title + "," + "lat: " + lat + "," + "lng: " + lng);
+    	//polyline.getPaths().add(coord);
           
         addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Added", "Lat:" + lat + ", Lng:" + lng));  
     }

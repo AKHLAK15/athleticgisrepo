@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 
 import com.athleticgis.domain.activity.Activity;
 import com.athleticgis.domain.activity.ActivityPoint;
+import com.athleticgis.domain.activity.MyMap;
+import com.athleticgis.domain.activity.MyMapMarker;
 import com.athleticgis.domain.user.User;
 import com.athleticgis.domain.user.UserRole;
 import com.athleticgis.model.Dao;
@@ -126,6 +128,13 @@ public class ActivityDao implements Serializable {
 		return count;
 	}
 	
+	/**
+	 * 
+	 * @param user_id
+	 * @param start
+	 * @param max
+	 * @return
+	 */
 	public static List<Activity> findActivitiesByUserIdPaginated(Long user_id, int start, int max) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
@@ -137,5 +146,33 @@ public class ActivityDao implements Serializable {
 		List<Activity> activities = query.getResultList();
 		em.close();
 		return activities;
+	}
+	
+	/**
+	 * This method persists a user created myMap along with its markers.
+	 * 
+	 * @param myMap
+	 * @param myMapMarkers
+	 */
+	public static void persistMapAndMyMapMarkers(MyMap myMap, List<MyMapMarker> myMapMarkers) {
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
+				.createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		myMap.setMyMapMarkers(myMapMarkers);
+		
+		//set myMap date to the first marker date.
+		if(myMapMarkers != null && !myMapMarkers.isEmpty()) {
+			myMap.setDate(myMapMarkers.get(0).getTime());
+		}
+		
+		em.persist(myMap);
+		for(MyMapMarker mm : myMapMarkers) {
+			mm.setMyMap(myMap);
+			em.persist(mm);
+		}
+		
+		transaction.commit();
+		em.close();
 	}
 }
