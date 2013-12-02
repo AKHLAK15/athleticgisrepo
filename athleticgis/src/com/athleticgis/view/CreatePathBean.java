@@ -27,6 +27,7 @@ import javax.faces.event.ActionEvent;
 
 
 
+
 import org.primefaces.model.map.DefaultMapModel;  
 import org.primefaces.model.map.LatLng;  
 import org.primefaces.model.map.MapModel;
@@ -36,6 +37,7 @@ import org.primefaces.model.map.Polyline;
 import com.athleticgis.domain.activity.MyMap;
 import com.athleticgis.domain.activity.MyMapMarker;
 import com.athleticgis.model.AthleticgisFacade;
+import com.athleticgis.util.gis.GISCalculator;
 
 @ManagedBean
 @ViewScoped
@@ -137,10 +139,16 @@ public class CreatePathBean implements Serializable {
         MyMapMarker m = new MyMapMarker();  
         m.setLatitude(lat);
         m.setLongitude(lng);
+        
+        //not sure about this
+        m.setElevation(0.0);
+        
         m.setName(title);
         m.setTime(new Timestamp(new Date().getTime()));
         myMapMarkers.add(m);
-        //addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Added", "Lat:" + lat + ", Lng:" + lng));  
+        GISCalculator calc = new GISCalculator();
+        Double distance = calc.computeMarkerPathDistance(myMapMarkers);
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Added", "Lat:" + lat + ", Lng:" + lng + ". Your total distance is " + distance + " km."));  
     }
     
     public String getCenter() {

@@ -35,6 +35,19 @@ public class GISCalculator {
 		}
 		return distance;
 	}
+	
+	public double computeMarkerPathDistance(List<MyMapMarker> markers) {
+		double distance = 0;
+		for (int i = 0; i < markers.size() - 1; i++) {
+			distance = distance
+					+ distance(markers.get(i).getLatitude(), markers.get(i + 1)
+							.getLatitude(), markers.get(i).getLongitude(),
+							markers.get(i + 1).getLongitude(), markers.get(i)
+									.getElevation(), markers.get(i + 1)
+									.getElevation());
+		}
+		return distance;
+	}
 
 	/*
 	 * Calculate distance between two points in latitude and longitude taking
