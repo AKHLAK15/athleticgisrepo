@@ -57,7 +57,8 @@
 						</h:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
-				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />  
+				
+				<p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true" /> 
 			</h:form>
 
 			<p:gmap id="gmap" center="#{createPathBean.center}" zoom="13"
