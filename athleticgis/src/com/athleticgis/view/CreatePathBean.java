@@ -2,6 +2,7 @@ package com.athleticgis.view;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;  
 import javax.faces.event.ActionEvent;  
   
+
 
 
 
@@ -147,8 +149,9 @@ public class CreatePathBean implements Serializable {
         m.setTime(new Timestamp(new Date().getTime()));
         myMapMarkers.add(m);
         GISCalculator calc = new GISCalculator();
-        Double distance = calc.computeMarkerPathDistance(myMapMarkers);
-        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Added", "Lat:" + lat + ", Lng:" + lng + ". Your total distance is " + distance + " km."));  
+        Double distance = calc.computeMarkerPathDistance(myMapMarkers)/1000;
+        DecimalFormat df = new DecimalFormat("#.##");
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Added", "Lat:" + df.format(lat) + ", Lng:" + df.format(lng) + ". Your total distance is " + df.format(distance) + " km."));  
     }
     
     public String getCenter() {
