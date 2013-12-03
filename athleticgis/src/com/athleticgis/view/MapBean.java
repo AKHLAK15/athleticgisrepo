@@ -2,11 +2,13 @@ package com.athleticgis.view;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -54,8 +56,9 @@ public class MapBean implements Serializable {
 		//
 		// polylineModel.addOverlay(polyline);
 	}
-
-	public MapModel getPolylineModel() {
+	
+	@PostConstruct
+    public void initialize() {
 		Polyline polyline = new Polyline();
 		polyline.setStrokeWeight(2);
 		polyline.setStrokeColor("#FF0000");
@@ -66,10 +69,16 @@ public class MapBean implements Serializable {
 			polyline.getPaths().add(
 					new LatLng(ap.getLatitude(), ap.getLongitude()));
 		}
-		GISCalculator g = new GISCalculator();
-		System.out.println("Distance is " + g.computePathDistance(activityPoints));
+		GISCalculator calc = new GISCalculator();
+	    Double distance = calc.computePathDistance(activityPoints)/1000;
+	    DecimalFormat df = new DecimalFormat("#.##");
+	    addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Distance", "Your total distance is " + df.format(distance) + " km."));
 		
 		polylineModel.addOverlay(polyline);
+	}
+
+	public MapModel getPolylineModel() {
+		
 		return polylineModel;
 	}
 
