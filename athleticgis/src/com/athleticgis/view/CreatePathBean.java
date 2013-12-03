@@ -41,23 +41,23 @@ import com.athleticgis.domain.activity.MyMapMarker;
 import com.athleticgis.model.AthleticgisFacade;
 import com.athleticgis.util.gis.GISCalculator;
 
+/**
+ * Managed Bean for createpath.xhtml
+ * @author Matthew Allen
+ * @version 20131203
+ *
+ */
 @ManagedBean
 @ViewScoped
 public class CreatePathBean implements Serializable {
 	private static final long serialVersionUID = -8907242457718889989L;
 	private List<MyMapMarker> myMapMarkers = new ArrayList<MyMapMarker>();
-//	private MapModel emptyModel = new DefaultMapModel();
-//	Polyline polyline;
-//	
-    
     private String title;  
-      
     private double lat;  
-      
     private double lng; 
     private String myMapName;
-    
-
+    @ManagedProperty(value = "#{userInfoBean}")
+	private UserInfoBean userInfoBean;
 
 	/**
 	 * @return the myMapName
@@ -73,9 +73,6 @@ public class CreatePathBean implements Serializable {
 		this.myMapName = myMapName;
 	}
 
-	@ManagedProperty(value = "#{userInfoBean}")
-	private UserInfoBean userInfoBean;
-  
     /**
 	 * @return the userInfoBean
 	 */
@@ -89,20 +86,12 @@ public class CreatePathBean implements Serializable {
 	public void setUserInfoBean(UserInfoBean userInfoBean) {
 		this.userInfoBean = userInfoBean;
 	}
-
-	public CreatePathBean() {  
-//    	//emptyModel = new DefaultMapModel(); 
-//    	polyline = new Polyline();
-//    	//are these necessary?
-//        polyline.setStrokeWeight(2);
-//		polyline.setStrokeColor("#FF0000");
-//		polyline.setStrokeOpacity(1.0);
-    }  
-      
-//    public MapModel getEmptyModel() {  
-//        return emptyModel;  
-//    }  
-      
+    
+	/**
+	 * add a new message to the FacesContext.
+	 * 
+	 * @param message
+	 */
     public void addMessage(FacesMessage message) {  
         FacesContext.getCurrentInstance().addMessage(null, message);  
     }  
@@ -130,14 +119,14 @@ public class CreatePathBean implements Serializable {
     public void setLng(double lng) {  
         this.lng = lng;  
     }  
-      
+    
+    /**
+     * Responds to event where user adds a new marker to map.
+     * addMarker to myMarkers and update distance.
+     * 
+     * @param actionEvent
+     */
     public void addMarker(ActionEvent actionEvent) {  
-        //Marker marker = new Marker(new LatLng(lat, lng), title);  
-        //emptyModel.addOverlay(marker);  
-    	//LatLng coord = new LatLng(lat, lng);
-    	
-    	System.out.println("title: " + title + "," + "lat: " + lat + "," + "lng: " + lng);
-    	//polyline.getPaths().add(coord);
         MyMapMarker m = new MyMapMarker();  
         m.setLatitude(lat);
         m.setLongitude(lng);
@@ -155,8 +144,13 @@ public class CreatePathBean implements Serializable {
         addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Added", "Lat:" + df.format(lat) + ", Lng:" + df.format(lng) + ". Your total distance is " + df.format(distance) + " km."));  
     }
     
+    /**
+     * This is the location where the map will be centered at the beginning of creating a map.
+     * 
+     * @return
+     */
     public String getCenter() {
-		// did an average of the coordinates in getCoordinates
+		// could maybe figure out a center based on users ip to get an approximate location.
 		return "43.83193516,-91.22337865";
 	}
     
