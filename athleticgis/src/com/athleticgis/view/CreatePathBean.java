@@ -154,6 +154,10 @@ public class CreatePathBean implements Serializable {
 		return "43.83193516,-91.22337865";
 	}
     
+    /**
+     * 
+     * @return
+     */
     public String savePath() {
     	MyMap myMap = new MyMap();
     	myMap.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getUsername()));
@@ -166,6 +170,10 @@ public class CreatePathBean implements Serializable {
     	return "mymaps?faces-redirect=true";
     }
     
+    /**
+     * 
+     * @return
+     */
     public String restartPath() {
     	myMapMarkers = new ArrayList<MyMapMarker>();
     	return "createpath?faces-redirect=true";

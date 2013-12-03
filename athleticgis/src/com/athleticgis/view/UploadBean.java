@@ -83,7 +83,7 @@ public class UploadBean implements Serializable {
             com.athleticgis.domain.activity.Activity a = new com.athleticgis.domain.activity.Activity();
             a.setName(activityName);
             //AthleticgisFacade af = new AthleticgisFacade();
-            a.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getName()));
+            a.setUser(AthleticgisFacade.findUserByUsername(userInfoBean.getUsername()));
             
             List<ActivityPoint> activityPoints = new ArrayList<ActivityPoint>();
             for(Track t : gpx.getTracks()) {

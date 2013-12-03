@@ -1,5 +1,6 @@
 package com.athleticgis.view;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -19,7 +20,7 @@ import java.util.Collection;
 @SessionScoped
 public class UserInfoBean implements Serializable {
 	private static final long serialVersionUID = 5066455190365405534L;
-	private String name;
+	private String username;
 	private String password;
 	private Boolean rememberMe;
 	private Boolean isAdmin;
@@ -27,21 +28,10 @@ public class UserInfoBean implements Serializable {
 	private Long user_id;
 	private User user;
 	private String theme;
-	private String username;
-
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
+	
+	@PostConstruct
+	public void initialize() {
+		
 	}
 	
 	public boolean isAuthenticated() {
@@ -91,8 +81,8 @@ public class UserInfoBean implements Serializable {
 		if (user_id == null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder
 					.getContext().getAuthentication().getPrincipal();
-			name = userDetails.getUsername();
-			user = AthleticgisFacade.findUserByUsername(name);
+			username = userDetails.getUsername();
+			user = AthleticgisFacade.findUserByUsername(username);
 		}
 		return user.getUser_id();
 	}
@@ -101,8 +91,8 @@ public class UserInfoBean implements Serializable {
 		if (user_id == null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder
 					.getContext().getAuthentication().getPrincipal();
-			name = userDetails.getUsername();
-			user = AthleticgisFacade.findUserByUsername(name);
+			username = userDetails.getUsername();
+			user = AthleticgisFacade.findUserByUsername(username);
 		}
 		return user;
 	}
@@ -131,13 +121,18 @@ public class UserInfoBean implements Serializable {
 		this.isGeneral = isGeneral;
 	}
 
-	public String getName() {
-		if (name == null) {
+	/**
+	 * This is the username of the logged in user.
+	 * 
+	 * @return
+	 */
+	public String getUsername() {
+		if (username == null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder
 					.getContext().getAuthentication().getPrincipal();
-			name = userDetails.getUsername();
+			username = userDetails.getUsername();
 		}
-		return name;
+		return username;
 	}
 
 	// public void setName(String name) {
@@ -160,7 +155,7 @@ public class UserInfoBean implements Serializable {
 	}
 
 	public Boolean getLoggedIn() {
-		return name != null;
+		return username != null;
 	}
 
 	/**

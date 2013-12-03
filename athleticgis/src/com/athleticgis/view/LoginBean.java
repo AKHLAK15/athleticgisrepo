@@ -62,18 +62,6 @@ public class LoginBean {
 		// It's OK to return null here because Faces is just going to exit.
 		return null;
 	}
-	
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(final String username) {
-		if(userInfoBean.getUsername() == null) {
-			userInfoBean.setUsername(username);
-		}
-	
-		this.username = username;
-	}
 
 	public String getPassword() {
 		return this.password;
