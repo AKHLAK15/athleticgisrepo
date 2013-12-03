@@ -142,7 +142,8 @@ public class CreatePathBean implements Serializable {
         m.setLatitude(lat);
         m.setLongitude(lng);
         
-        //not sure about this
+        //this is necessary elevation is used in calculating distance
+        //hopefully will get elevation from google service, will make distance more accurate
         m.setElevation(0.0);
         
         m.setName(title);
