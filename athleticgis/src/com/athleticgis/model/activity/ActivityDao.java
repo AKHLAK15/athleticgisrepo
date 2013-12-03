@@ -25,9 +25,11 @@ public class ActivityDao implements Serializable {
 	public static List<ActivityPoint> findActivityPointsByActivityId(Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<ActivityPoint> query =
 		  em.createQuery("SELECT ap FROM ActivityPoint ap where ap.activity.activity_id="+activityId+ " order by ap.time", ActivityPoint.class);
 		List<ActivityPoint> activityPoints = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return activityPoints;
 	}
@@ -35,9 +37,11 @@ public class ActivityDao implements Serializable {
 	public static List<Activity> findActivitiesByUserId(Long user_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<Activity> query =
 		  em.createQuery("SELECT a FROM Activity a where a.user.user_id="+ user_id  + " order by a.date", Activity.class);
 		List<Activity> activities = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return activities;
 	}
@@ -46,18 +50,17 @@ public class ActivityDao implements Serializable {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
 
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
+		em.getTransaction().begin();
 		em.persist(entity);
-		transaction.commit();
+		em.getTransaction().commit();
 		em.close();
 	}
 
 	public static void remove(Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
-		Activity a = em.find(Activity.class, activityId);
 		em.getTransaction().begin();
+		Activity a = em.find(Activity.class, activityId);
 		em.remove(a);
 		em.getTransaction().commit();
 		em.close();
@@ -66,7 +69,9 @@ public class ActivityDao implements Serializable {
 	public static Activity findById(Long id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		Activity a = em.find(Activity.class, id);
+		em.getTransaction().commit();
 		em.close();
 		return a;
 	}
@@ -74,8 +79,7 @@ public class ActivityDao implements Serializable {
 	public static void persistActivityAndActivityPoints(Activity a, List<ActivityPoint> activityPoints) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
+		em.getTransaction().begin();
 		a.setWaypoints(activityPoints);
 		
 		//set the timestamp of the activity to the timestamp of the first waypoint
@@ -89,7 +93,7 @@ public class ActivityDao implements Serializable {
 			em.persist(ap);
 		}
 		
-		transaction.commit();
+		em.getTransaction().commit();
 		em.close();
 	}
 	
@@ -100,9 +104,11 @@ public class ActivityDao implements Serializable {
 	public static List<Activity> findAllActivities() {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<Activity> query =
 		  em.createQuery("SELECT a FROM Activity a order by a.date", Activity.class);
 		List<Activity> activities = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return activities;
 	}
@@ -110,9 +116,10 @@ public class ActivityDao implements Serializable {
 	public static void mergeActivity(String activityName, Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		Activity a = em.find(Activity.class, activityId);
 		a.setName(activityName);
-		em.getTransaction().begin();
+		
 		em.merge(a);
 		em.getTransaction().commit();
 		em.close();
@@ -121,9 +128,11 @@ public class ActivityDao implements Serializable {
 	public static Long findActivityCountByUserId(Long user_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		Query query =
 		  em.createQuery("SELECT count(a) FROM Activity a where a.user.user_id="+ user_id);
 		Long count = (Long) query.getSingleResult();
+		em.getTransaction().commit();
 		em.close();
 		return count;
 	}
@@ -138,12 +147,14 @@ public class ActivityDao implements Serializable {
 	public static List<Activity> findActivitiesByUserIdPaginated(Long user_id, int start, int max) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<Activity> query =
 		  em.createQuery("SELECT a FROM Activity a where a.user.user_id="+ user_id  + " order by a.date desc", Activity.class);
 		query.setFirstResult(start);
 		query.setMaxResults(max);
 		
 		List<Activity> activities = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return activities;
 	}
@@ -157,8 +168,7 @@ public class ActivityDao implements Serializable {
 	public static void persistMapAndMyMapMarkers(MyMap myMap, List<MyMapMarker> myMapMarkers) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
+		em.getTransaction().begin();
 		myMap.setMyMapMarkers(myMapMarkers);
 		
 		//set myMap date to the first marker date.
@@ -172,7 +182,7 @@ public class ActivityDao implements Serializable {
 			em.persist(mm);
 		}
 		
-		transaction.commit();
+		em.getTransaction().commit();
 		em.close();
 	}
 	
@@ -185,9 +195,11 @@ public class ActivityDao implements Serializable {
 	public static Long findMyMapCountByUserId(Long user_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		Query query =
 		  em.createQuery("SELECT count(mm) FROM MyMap mm where mm.user.user_id="+ user_id);
 		Long count = (Long) query.getSingleResult();
+		em.getTransaction().commit();
 		em.close();
 		return count;
 	}
@@ -203,12 +215,14 @@ public class ActivityDao implements Serializable {
 	public static List<MyMap> findMyMapsByUserIdPaginated(Long user_id, int start, int max) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<MyMap> query =
 		  em.createQuery("SELECT mm FROM MyMap mm where mm.user.user_id="+ user_id  + " order by mm.date desc", MyMap.class);
 		query.setFirstResult(start);
 		query.setMaxResults(max);
 		
 		List<MyMap> myMaps = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return myMaps;
 	}
@@ -221,8 +235,8 @@ public class ActivityDao implements Serializable {
 	public static void removeMyMap(Long mymap_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
-		MyMap mm = em.find(MyMap.class, mymap_id);
 		em.getTransaction().begin();
+		MyMap mm = em.find(MyMap.class, mymap_id);
 		em.remove(mm);
 		em.getTransaction().commit();
 		em.close();
@@ -237,7 +251,9 @@ public class ActivityDao implements Serializable {
 	public static MyMap findMyMapById(Long id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		MyMap mm = em.find(MyMap.class, id);
+		em.getTransaction().commit();
 		em.close();
 		return mm;
 	}
@@ -251,9 +267,9 @@ public class ActivityDao implements Serializable {
 	public static void mergeMyMap(String myMapName, Long mymap_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		MyMap mm = em.find(MyMap.class, mymap_id);
 		mm.setName(myMapName);
-		em.getTransaction().begin();
 		em.merge(mm);
 		em.getTransaction().commit();
 		em.close();
@@ -268,9 +284,11 @@ public class ActivityDao implements Serializable {
 	public static List<MyMapMarker> findMyMapMarkersByMymap_id(Long mymap_id) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<MyMapMarker> query =
 		  em.createQuery("SELECT m FROM MyMapMarker m where m.myMap.mymap_id="+mymap_id+ " order by m.time", MyMapMarker.class);
 		List<MyMapMarker> myMapMarkers = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return myMapMarkers;
 	}
@@ -283,9 +301,11 @@ public class ActivityDao implements Serializable {
 	public static Long findActivityCount() {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		Query query =
 		  em.createQuery("SELECT count(a) FROM Activity a");
 		Long count = (Long) query.getSingleResult();
+		em.getTransaction().commit();
 		em.close();
 		return count;
 	}
@@ -300,12 +320,14 @@ public class ActivityDao implements Serializable {
 	public static List<Activity> findActivitiesPaginated(int start, int max) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<Activity> query =
 		  em.createQuery("SELECT a FROM Activity a order by a.date desc", Activity.class);
 		query.setFirstResult(start);
 		query.setMaxResults(max);
 		
 		List<Activity> activities = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return activities;
 	}
@@ -318,9 +340,11 @@ public class ActivityDao implements Serializable {
 	public static Long findMyMapCount() {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		Query query =
 		  em.createQuery("SELECT count(mm) FROM MyMap mm");
 		Long count = (Long) query.getSingleResult();
+		em.getTransaction().commit();
 		em.close();
 		return count;
 	}
@@ -335,12 +359,14 @@ public class ActivityDao implements Serializable {
 	public static List<MyMap> findMyMapsPaginated(int start, int max) {
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
 				.createEntityManager();
+		em.getTransaction().begin();
 		TypedQuery<MyMap> query =
 		  em.createQuery("SELECT mm FROM MyMap mm order by mm.date desc", MyMap.class);
 		query.setFirstResult(start);
 		query.setMaxResults(max);
 		
 		List<MyMap> myMaps = query.getResultList();
+		em.getTransaction().commit();
 		em.close();
 		return myMaps;
 	}
