@@ -24,8 +24,7 @@ public class UserDao implements Dao<User>, Serializable {
 	// this is for development, remove in production
 	public void initializeDB() {
 		
-		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
-				.createEntityManager();
+		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 
@@ -91,12 +90,14 @@ public class UserDao implements Dao<User>, Serializable {
 		em.close();
 	}
 
+	//Warning Not sure if this method is used or it correct
 	public void persistUserAndRoles(User user, List<UserRole> roles) {
-		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
-				.createEntityManager();
+		EntityManager em = EntityManagerUtil.getEntityManager();
 		em.getTransaction().begin();
 		
 		em.persist(user);
+		
+		//maybe persist user, then set userRole.user to new user meallen 20131203
 		for(UserRole r : roles) {
 			em.persist(r);
 		}
@@ -106,9 +107,8 @@ public class UserDao implements Dao<User>, Serializable {
 	}
 	
 	public static User findUserByUsername(String username) {
-		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
-				.createEntityManager();
-		em.getTransaction().begin();
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		
 		TypedQuery<User> query =
 	      em.createQuery("SELECT u FROM User u where u.username='"+username+"'", User.class);
 		List<User> users = query.getResultList();
@@ -116,7 +116,7 @@ public class UserDao implements Dao<User>, Serializable {
 		if(users != null && !users.isEmpty()) {
 			u = users.get(0);
 		}
-		em.getTransaction().commit();
+		
 		em.close();
 		return u;
 	}
@@ -130,9 +130,8 @@ public class UserDao implements Dao<User>, Serializable {
 	@Override
 	public User findById(Long id) {
 		// TODO Auto-generated method stub
-		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
-				.createEntityManager();
-		em.getTransaction().begin();
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		
 		//EntityTransaction transaction = em.getTransaction();
 		//transaction.begin();
 		//SELECT c.currency FROM Country AS c WHERE c.name LIKE 'I%'
@@ -142,7 +141,7 @@ public class UserDao implements Dao<User>, Serializable {
 		
 		
 		User u = em.find(User.class, id);
-		em.getTransaction().commit();
+		
 		em.close();
 		return u;
 	}
@@ -177,8 +176,7 @@ public class UserDao implements Dao<User>, Serializable {
 //	}
 	
 	public static void updateUserTheme(Long user_id, String theme) {
-		EntityManager em = EntityManagerUtil.getEntityManagerFactory()
-				.createEntityManager();
+		EntityManager em = EntityManagerUtil.getEntityManager();
 		em.getTransaction().begin();
 		User u = em.find(User.class, user_id);
 		u.setTheme(theme);

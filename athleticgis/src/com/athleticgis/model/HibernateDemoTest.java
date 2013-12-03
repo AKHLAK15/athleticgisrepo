@@ -19,7 +19,7 @@ public class HibernateDemoTest
    @Before
    public void beforeEach()
    {
-      em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+      //em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
    }
 
    @After

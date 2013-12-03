@@ -1,17 +1,16 @@
 package com.athleticgis.util.model;
 
-//import java.io.Serializable;
-
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class EntityManagerUtil //implements Serializable
-{
-	//private static final long serialVersionUID = 8475609181382197029L;
-
-public static EntityManagerFactory getEntityManagerFactory()
-   {
-      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.athleticgis.jpa");
-      return emf;
-   }
+public class EntityManagerUtil {
+	private static EntityManagerFactory emf;
+	static {
+		emf = Persistence.createEntityManagerFactory("com.athleticgis.jpa");
+	}
+	
+	public static EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
 }
