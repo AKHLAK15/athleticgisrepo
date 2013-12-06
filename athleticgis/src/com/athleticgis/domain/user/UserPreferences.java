@@ -9,6 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Matthew Allen
+ * @version 20131206
+ * Entity class for UserPreferences.
+ * This entity is not currently being used.
+ * Will expand when more UserPreferences are added
+ * Right now preferences are stored in User.
+ * This Entity will hold data related to UserPreferences.
+ */
 @Entity
 @Table(name="userpreferences")
 public class UserPreferences implements Serializable {

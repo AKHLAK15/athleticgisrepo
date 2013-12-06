@@ -17,6 +17,13 @@ import javax.persistence.Table;
 
 import com.athleticgis.domain.activity.Activity;
 
+/**
+ * @author Matthew Allen
+ * @version 20131206
+ * Entity class for User.
+ * This Entity holds data related to User from the users table.
+ * The table users is used by Spring Security.
+ */
 @Entity
 @Table(name="users")
 public class User implements Serializable {

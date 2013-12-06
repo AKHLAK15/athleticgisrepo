@@ -12,6 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Matthew Allen
+ * @version 20131206
+ * Entity class for UserRole.
+ * This Entity holds data related to UserRole from the user_roles table.
+ * The table user_roles is used for Spring Security.
+ */
 @Entity
 @Table(name="user_roles")
 public class UserRole implements Serializable {

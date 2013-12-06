@@ -11,6 +11,14 @@ import com.athleticgis.domain.user.User;
 import com.athleticgis.model.activity.ActivityDao;
 import com.athleticgis.model.user.UserDao;
 
+/**
+ * @author Matthew Allen
+ * @version 20131206
+ * Facade for Athletic GIS data access.
+ * The facade is a pattern that is intended to abstact the underlying DAOs.
+ * It also allows just one reference in classes using it versus multiple DAO references.
+ * 
+ */
 public class AthleticgisFacade implements Serializable {
 	private static final long serialVersionUID = -6486526059229360289L;
 	//private UserDao userDao = new UserDao();
@@ -55,9 +63,10 @@ public class AthleticgisFacade implements Serializable {
 		return UserDao.findUserByUsername(username);
 	}
 	
-	public static List<Activity> findAllActivities() {
-		return ActivityDao.findAllActivities();
-	}
+	//may remove if not being used
+//	public static List<Activity> findAllActivities() {
+//		return ActivityDao.findAllActivities();
+//	}
 	
 	public static void mergeActivity(String activityName, Long activityId) {
 		ActivityDao.mergeActivity(activityName, activityId);

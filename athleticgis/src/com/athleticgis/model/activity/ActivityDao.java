@@ -17,11 +17,23 @@ import com.athleticgis.domain.user.UserRole;
 import com.athleticgis.model.Dao;
 import com.athleticgis.util.model.EntityManagerUtil;
 
+/**
+ * @author Matthew Allen
+ * @version 20131206
+ * This is a DAO related to Activities.
+ * It is intended as a class to do the data CRUD for data related to Activities.
+ * It lies behind the AthleticgisFacade.
+ */
 public class ActivityDao implements Serializable {
 	private static final long serialVersionUID = 5546876539130483879L;
 	
 	//SELECT DISTINCT mag FROM Magazine mag JOIN mag.articles art JOIN art.author auth WHERE auth.firstName = 'John'
 
+	/**
+	 * 
+	 * @param activityId
+	 * @return
+	 */
 	public static List<ActivityPoint> findActivityPointsByActivityId(Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		
@@ -33,6 +45,13 @@ public class ActivityDao implements Serializable {
 		return activityPoints;
 	}
 	
+	
+	/**
+	 * 
+	 * 
+	 * @param user_id
+	 * @return
+	 */
 	public static List<Activity> findActivitiesByUserId(Long user_id) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		
@@ -44,6 +63,11 @@ public class ActivityDao implements Serializable {
 		return activities;
 	}
 	
+	
+	/**
+	 * 
+	 * @param entity
+	 */
 	public static void persist(Activity entity) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -52,6 +76,10 @@ public class ActivityDao implements Serializable {
 		em.close();
 	}
 
+	
+	/**
+	 * @param activityId
+	 */
 	public static void remove(Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -61,6 +89,10 @@ public class ActivityDao implements Serializable {
 		em.close();
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	public static Activity findById(Long id) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		
@@ -70,6 +102,10 @@ public class ActivityDao implements Serializable {
 		return a;
 	}
 	
+	/**
+	 * @param a
+	 * @param activityPoints
+	 */
 	public static void persistActivityAndActivityPoints(Activity a, List<ActivityPoint> activityPoints) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -90,19 +126,25 @@ public class ActivityDao implements Serializable {
 		em.close();
 	}
 	
-	//TODO
-	//use findActivitiesByUserIdPaginated as an example
-	//need to update this for pagination
-	//this is the method that should be being called for an admin
-	public static List<Activity> findAllActivities() {
-		EntityManager em = EntityManagerUtil.getEntityManager();
-		TypedQuery<Activity> query =
-		  em.createQuery("SELECT a FROM Activity a order by a.date", Activity.class);
-		List<Activity> activities = query.getResultList();
-		em.close();
-		return activities;
-	}
+//	//TODO this is done below comment out and see if effects program
+//	//use findActivitiesByUserIdPaginated as an example
+//	//need to update this for pagination
+//	//this is the method that should be being called for an admin
+//	public static List<Activity> findAllActivities() {
+//		EntityManager em = EntityManagerUtil.getEntityManager();
+//		TypedQuery<Activity> query =
+//		  em.createQuery("SELECT a FROM Activity a order by a.date", Activity.class);
+//		List<Activity> activities = query.getResultList();
+//		em.close();
+//		return activities;
+//	}
 	
+	/**
+	 * 
+	 * 
+	 * @param activityName
+	 * @param activityId
+	 */
 	public static void mergeActivity(String activityName, Long activityId) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -114,6 +156,10 @@ public class ActivityDao implements Serializable {
 		em.close();
 	}
 	
+	/**
+	 * @param user_id
+	 * @return
+	 */
 	public static Long findActivityCountByUserId(Long user_id) {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		Query query =
